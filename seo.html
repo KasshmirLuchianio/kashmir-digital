@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO — Kashmir Digital | Optimizare pentru Motoare de Căutare</title>
+  <meta name="description" content="Servicii SEO profesionale de la Kashmir Digital. Optimizare on-page, off-page și tehnică pentru vizibilitate maximă pe Google.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --font-heading: 'Syne', sans-serif;
+      --font-brand: 'Outfit', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      --bg-primary: #0a1530;
+      --bg-secondary: #0e1d40;
+      --bg-elevated: #142650;
+
+      --text-primary: #ffffff;
+      --text-secondary: #c8d0e8;
+      --text-muted: #5c6490;
+
+      --accent: #4A90FF;
+      --accent-rgb: 74, 144, 255;
+      --accent-glow: rgba(74, 144, 255, 0.35);
+      --accent-light: #7ab4ff;
+
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-strong: rgba(255, 255, 255, 0.12);
+
+      --glass-bg: rgba(22, 24, 54, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: 24px;
+
+      --crystal-bg: rgba(255, 255, 255, 0.04);
+      --crystal-border: rgba(255, 255, 255, 0.12);
+      --crystal-blur: 40px;
+      --crystal-shine: rgba(255, 255, 255, 0.06);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: transparent;
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.25);
+    }
+
+    /* ===== NOISE TEXTURE ===== */
+    svg.noise-svg { position: absolute; width: 0; height: 0; }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      filter: url(#noise);
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* ===== NAVBAR ===== */
+    #navbar {
+      position: fixed;
+      top: 16px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 0 24px;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav-logo {
+      font-family: var(--font-brand);
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+      padding-bottom: 2px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    }
+    .nav-logo .logo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+      flex-shrink: 0;
+    }
+    .nav-cta-btn {
+      background:
+        linear-gradient(165deg, rgba(130, 190, 255, 0.4) 0%, rgba(74, 144, 255, 0.2) 40%, rgba(74, 144, 255, 0.3) 100%),
+        linear-gradient(180deg, rgba(74, 144, 255, 0.85) 0%, rgba(50, 100, 200, 0.95) 100%);
+      color: #fff;
+      padding: 11px 28px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1.5px solid rgba(130, 190, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.3),
+        inset 0 -2px 4px rgba(0,0,0,0.2),
+        0 0 20px rgba(var(--accent-rgb), 0.2),
+        0 4px 12px rgba(0,0,0,0.2);
+    }
+    .nav-cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 100%);
+      border-radius: 100px 100px 50% 50%;
+      pointer-events: none;
+    }
+    .nav-cta-btn:hover {
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.35),
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        0 0 35px rgba(var(--accent-rgb), 0.35),
+        0 6px 18px rgba(0,0,0,0.25);
+      transform: translateY(-1px) scale(1.02);
+      filter: brightness(1.1);
+    }
+    .nav-cta-btn:active {
+      transform: scale(0.97);
+      filter: brightness(0.95);
+    }
+
+    /* Scrolled pill */
+    #navbar.scrolled .nav-inner {
+      max-width: 820px;
+      background:
+        linear-gradient(165deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.06) 100%),
+        linear-gradient(180deg, rgba(15, 20, 50, 0.6) 0%, rgba(10, 15, 40, 0.8) 100%);
+      border: 1.5px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(60px) saturate(1.9) brightness(1.05);
+      -webkit-backdrop-filter: blur(60px) saturate(1.9) brightness(1.05);
+      border-radius: 100px;
+      padding: 10px 24px;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.4),
+        0 2px 8px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    #navbar.scrolled .nav-cta-btn {
+      padding: 8px 22px;
+      font-size: 0.82rem;
+    }
+
+    /* ===== MOBILE NAV ===== */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+    .nav-mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    /* ===== BACKGROUND ORBS ===== */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(120px);
+      z-index: 0;
+    }
+    .bg-orb-1 {
+      width: 600px; height: 600px;
+      top: -10%; left: -10%;
+      background: radial-gradient(circle, rgba(74, 144, 255, 0.12) 0%, transparent 70%);
+    }
+    .bg-orb-2 {
+      width: 500px; height: 500px;
+      bottom: 10%; right: -10%;
+      background: radial-gradient(circle, rgba(122, 180, 255, 0.08) 0%, transparent 70%);
+    }
+    .bg-orb-3 {
+      width: 400px; height: 400px;
+      top: 40%; left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(74, 144, 255, 0.06) 0%, transparent 70%);
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 24px;
+    }
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* ===== SECTION DIVIDER ===== */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(74, 144, 255, 0.2) 30%, rgba(74, 144, 255, 0.3) 50%, rgba(74, 144, 255, 0.2) 70%, transparent 100%);
+      position: relative;
+      z-index: 1;
+    }
+    .section-divider::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 160px 24px 100px;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .global-video-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 0;
+    }
+    .global-video-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,21,48,0.65);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 100px;
+      background: rgba(74, 144, 255, 0.08);
+      border: 1px solid rgba(74, 144, 255, 0.2);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent-light);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-title {
+      font-family: var(--font-brand);
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4);
+    }
+    .hero-title .accent {
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4);
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: #d8e0f5;
+      max-width: 640px;
+      margin: 0 auto;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent-light);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4);
+    }
+    .section-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: 680px;
+    }
+    .section-desc.centered {
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section-subtitle {
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* ===== CRYSTAL CARDS ===== */
+    .crystal-card {
+      background: var(--crystal-bg);
+      border: 1.5px solid var(--crystal-border);
+      backdrop-filter: blur(var(--crystal-blur));
+      -webkit-backdrop-filter: blur(var(--crystal-blur));
+      border-radius: 20px;
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .crystal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    }
+    .crystal-card:hover {
+      border-color: rgba(74, 144, 255, 0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 30px rgba(74, 144, 255, 0.06);
+    }
+
+    /* ===== PILLAR CARDS GRID ===== */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .pillar-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(74, 144, 255, 0.1);
+      border: 1px solid rgba(74, 144, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+    }
+    .pillar-title {
+      font-family: var(--font-brand);
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 14px;
+      color: var(--text-primary);
+    }
+    .pillar-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* ===== STATS GRID ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .stat-card {
+      background: var(--crystal-bg);
+      border: 1.5px solid var(--crystal-border);
+      backdrop-filter: blur(var(--crystal-blur));
+      -webkit-backdrop-filter: blur(var(--crystal-blur));
+      border-radius: 20px;
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    }
+    .stat-card:hover {
+      border-color: rgba(74, 144, 255, 0.25);
+      transform: translateY(-3px);
+    }
+    .stat-number {
+      font-family: var(--font-brand);
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--accent-light);
+      text-shadow: 0 2px 12px rgba(74,144,255,0.4), 0 1px 3px rgba(0,0,0,0.4);
+      margin-bottom: 10px;
+      line-height: 1.1;
+    }
+    .stat-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* ===== PROCESS LIST ===== */
+    .process-list {
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .process-item {
+      background: var(--crystal-bg);
+      border: 1.5px solid var(--crystal-border);
+      backdrop-filter: blur(var(--crystal-blur));
+      -webkit-backdrop-filter: blur(var(--crystal-blur));
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .process-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    }
+    .process-item:hover {
+      border-color: rgba(74, 144, 255, 0.2);
+      transform: translateX(6px);
+    }
+    .process-number {
+      font-family: var(--font-brand);
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--accent);
+      min-width: 36px;
+      text-align: center;
+      opacity: 0.7;
+    }
+    .process-text {
+      font-size: 1.02rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .process-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      text-align: center;
+      padding: 120px 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-section .section-inner {
+      max-width: 700px;
+    }
+    .cta-title {
+      font-family: var(--font-brand);
+      font-weight: 800;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4);
+    }
+    .cta-desc {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background:
+        linear-gradient(165deg, rgba(130, 190, 255, 0.4) 0%, rgba(74, 144, 255, 0.2) 40%, rgba(74, 144, 255, 0.3) 100%),
+        linear-gradient(180deg, rgba(74, 144, 255, 0.85) 0%, rgba(50, 100, 200, 0.95) 100%);
+      color: #fff;
+      padding: 16px 40px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      font-family: var(--font-body);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 1.5px solid rgba(130, 190, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.3),
+        inset 0 -2px 4px rgba(0,0,0,0.2),
+        0 0 30px rgba(var(--accent-rgb), 0.25),
+        0 6px 18px rgba(0,0,0,0.25);
+    }
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 100%);
+      border-radius: 100px 100px 50% 50%;
+      pointer-events: none;
+    }
+    .cta-btn:hover {
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.35),
+        inset 0 -2px 4px rgba(0,0,0,0.15),
+        0 0 50px rgba(var(--accent-rgb), 0.4),
+        0 8px 24px rgba(0,0,0,0.3);
+      transform: translateY(-2px) scale(1.03);
+      filter: brightness(1.1);
+    }
+    .cta-btn:active {
+      transform: scale(0.97);
+      filter: brightness(0.95);
+    }
+    .cta-btn svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.3s ease;
+    }
+    .cta-btn:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ===== GLOW LINE BEHIND CTA ===== */
+    .cta-glow {
+      position: absolute;
+      bottom: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74, 144, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(80px);
+    }
+
+    /* ===== REVEAL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+
+    /* ===== CE ESTE SEO - TEXT BLOCK ===== */
+    .text-block {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border-radius: 20px;
+      padding: 48px 44px;
+      margin-top: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .text-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+    .text-block p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+    .text-block p + p {
+      margin-top: 16px;
+    }
+    .text-block strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    .text-highlight {
+      color: var(--accent-light);
+      font-weight: 500;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 1;
+    }
+    .footer a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+    @media (max-width: 640px) {
+      .hero { padding: 140px 20px 80px; }
+      .hero-title { font-size: 2rem; }
+      .section { padding: 72px 16px; }
+      .crystal-card { padding: 28px 22px; }
+      .text-block { padding: 28px 22px; }
+      .stat-card { padding: 24px 20px; }
+      .process-item { padding: 20px 18px; gap: 16px; }
+      .nav-mobile-toggle { display: flex; }
+      .nav-cta-btn.desktop { display: none; }
+      #navbar.scrolled .nav-inner {
+        border-radius: 20px;
+        max-width: 100%;
+      }
+      .cta-section { padding: 80px 16px; }
+    }
+  </style>
+  <link rel="alternate" hreflang="ro" href="https://kashmirdigital.ro/seo.html" />
+  <link rel="alternate" hreflang="en" href="https://kashmirdigital.ro/en/seo.html" />
+  <link rel="alternate" hreflang="x-default" href="https://kashmirdigital.ro/en/seo.html" />
+</head>
+<body>
+
+  <!-- Global fixed video background -->
+  <video class="global-video-bg" autoplay muted loop playsinline src="about-video.mp4"></video>
+  <div class="global-video-overlay"></div>
+
+  <!-- Noise SVG filter -->
+  <svg class="noise-svg">
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </svg>
+
+  <!-- Background orbs -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-dot"></span>
+        Kashmir Digital
+      </a>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <a href="index.html" style="color:rgba(255,255,255,0.7);font-size:0.85rem;font-weight:500;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Înapoi</a>
+        <div class="lang-switcher" style="display:flex;align-items:center;gap:6px;">
+          <a href="en/seo.html" style="color:rgba(255,255,255,0.4);text-decoration:none;font-size:0.8rem;font-weight:600;transition:opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">EN</a>
+          <span style="color:rgba(255,255,255,0.2);font-size:0.75rem;">|</span>
+          <a href="seo.html" style="color:#fff;text-decoration:none;font-size:0.8rem;font-weight:600;">RO</a>
+        </div>
+        <a href="javascript:void(0)" onclick="document.getElementById('contact-form-wrap').style.display='flex'" class="nav-cta-btn desktop">Contacteaz&#259;-ne</a>
+        <button class="nav-mobile-toggle" aria-label="Meniu" onclick="this.classList.toggle('active')">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title reveal">Fii g&#259;sit de clien&#539;ii care te caut&#259; deja</h1>
+      <p class="hero-subtitle reveal reveal-delay-1">Cre&#537;te vizibilitatea afacerii tale pe Google prin strategii SEO testate, bazate pe date. Trafic organic, constant &#537;i gratuit &#8212; f&#259;r&#259; s&#259; pl&#259;te&#537;ti pentru fiecare click.</p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Ce este SEO? -->
+  <section class="section" id="ce-este-seo">
+    <div class="section-inner">
+      <span class="section-label reveal">Bazele</span>
+      <h2 class="section-title reveal reveal-delay-1">Ce este SEO?</h2>
+      <div class="text-block reveal reveal-delay-2">
+        <p><strong>SEO (Search Engine Optimization)</strong> = optimizarea site-ului t&#259;u pentru motoarele de c&#259;utare. Scopul? S&#259; apari pe <span class="text-highlight">prima pagin&#259; Google</span> c&#226;nd cineva caut&#259; exact serviciile pe care tu le oferi.</p>
+        <p>Spre deosebire de publicitatea pl&#259;tit&#259; (Google Ads, Facebook Ads), SEO aduce <strong>trafic organic</strong> &#8212; vizitatori care ajung la tine f&#259;r&#259; s&#259; pl&#259;te&#537;ti pentru fiecare click. E un canal constant, predictibil &#537;i cu cel mai mare ROI pe termen lung din tot marketingul digital.</p>
+        <p>Un site optimizat SEO nu doar arat&#259; bine &#8212; este <strong>structurat, rapid &#537;i relevant</strong> pentru c&#259;ut&#259;rile reale ale clien&#539;ilor t&#259;i.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Cele 3 piloane SEO -->
+  <section class="section" id="piloane-seo">
+    <div class="section-inner" style="text-align: center;">
+      <span class="section-label reveal" style="justify-content: center;">Strategie</span>
+      <h2 class="section-title reveal reveal-delay-1">Cele 3 piloane SEO</h2>
+      <p class="section-desc centered reveal reveal-delay-2">O strategie SEO complet&#259; se bazeaz&#259; pe trei piloane esențiale care lucrează împreună pentru a-ți crește vizibilitatea.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="crystal-card reveal reveal-delay-1">
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+        <h3 class="pillar-title">SEO On-Page</h3>
+        <p class="pillar-desc">Optimizarea con&#539;inutului, titlurilor, meta descrierilor, structurii URL-urilor &#537;i a vitezei de &#238;nc&#259;rcare. Tot ce &#539;ine de paginile tale &#537;i de cum le vede Google.</p>
+      </div>
+      <div class="crystal-card reveal reveal-delay-2">
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+        </div>
+        <h3 class="pillar-title">SEO Off-Page</h3>
+        <p class="pillar-desc">Link building strategic, cre&#537;terea autorit&#259;&#539;ii de domeniu, men&#539;iuni pe site-uri relevante, recenzii &#537;i prezen&#539;&#259; pe directoare de business.</p>
+      </div>
+      <div class="crystal-card reveal reveal-delay-3">
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <h3 class="pillar-title">SEO Tehnic</h3>
+        <p class="pillar-desc">Indexare corect&#259;, sitemap XML, schema markup, Core Web Vitals, arhitectur&#259; mobile-first &#537;i tot ce asigur&#259; c&#259; Google poate accesa &#537;i &#238;n&#539;elege site-ul t&#259;u.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- De ce contează SEO -->
+  <section class="section" id="de-ce-seo">
+    <div class="section-inner" style="text-align: center;">
+      <span class="section-label reveal" style="justify-content: center;">Date &#537;i fapte</span>
+      <h2 class="section-title reveal reveal-delay-1">De ce conteaz&#259; SEO pentru afacerea ta</h2>
+      <p class="section-desc centered reveal reveal-delay-2">Numerele vorbesc de la sine. SEO nu este op&#539;ional &#8212; este infrastructura vizibilit&#259;&#539;ii tale digitale.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-number">93%</div>
+        <p class="stat-text">din toate experien&#539;ele online &#238;ncep cu un motor de c&#259;utare. Dac&#259; nu e&#537;ti acolo, nu exi&#537;ti.</p>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-number">75%</div>
+        <p class="stat-text">din utilizatori nu trec niciodat&#259; de prima pagin&#259; Google. Pozi&#539;ia conteaz&#259; enorm.</p>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-number">5.6x</div>
+        <p class="stat-text">mai bine converte&#537;te traficul organic fa&#539;&#259; de cel din reclame pl&#259;tite. Vizitatorii organici au inten&#539;ie real&#259;.</p>
+      </div>
+      <div class="stat-card reveal reveal-delay-4">
+        <div class="stat-number">#1 ROI</div>
+        <p class="stat-text">SEO are cel mai mare ROI pe termen lung din tot marketingul digital. Este o investi&#539;ie, nu o cheltuial&#259;.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Ce include un proiect SEO -->
+  <section class="section" id="proiect-seo">
+    <div class="section-inner">
+      <span class="section-label reveal">Procesul nostru</span>
+      <h2 class="section-title reveal reveal-delay-1">Ce include un proiect SEO cu noi</h2>
+      <p class="section-desc reveal reveal-delay-2">Fiecare proiect SEO urmeaz&#259; un proces structurat, transparent &#537;i orientat pe rezultate m&#259;surabile.</p>
+      <div class="process-list">
+        <div class="process-item reveal reveal-delay-1">
+          <span class="process-number">01</span>
+          <p class="process-text"><strong>Audit tehnic complet</strong> &#8212; Analiz&#259;m site-ul de la cap la coad&#259;: vitez&#259;, indexare, erori, structur&#259;, securitate &#537;i compatibilitate mobil&#259;.</p>
+        </div>
+        <div class="process-item reveal reveal-delay-2">
+          <span class="process-number">02</span>
+          <p class="process-text"><strong>Cercetare de cuvinte cheie &#537;i analiz&#259; competitori</strong> &#8212; Identific&#259;m oportunit&#259;&#539;ile reale de c&#259;utare &#537;i analiz&#259;m ce fac competitorii t&#259;i bine (&#537;i unde sunt vulnerabili).</p>
+        </div>
+        <div class="process-item reveal reveal-delay-3">
+          <span class="process-number">03</span>
+          <p class="process-text"><strong>Optimizare on-page</strong> &#8212; Titluri, meta descrieri, headinguri, imagini, URL-uri &#537;i con&#539;inut &#8212; fiecare pagin&#259; optimizat&#259; individual.</p>
+        </div>
+        <div class="process-item reveal reveal-delay-4">
+          <span class="process-number">04</span>
+          <p class="process-text"><strong>Strategie de con&#539;inut &#537;i calendar editorial</strong> &#8212; Plan de con&#539;inut bazat pe cuvinte cheie, cu articole &#537;i pagini care atrag trafic relevant.</p>
+        </div>
+        <div class="process-item reveal reveal-delay-5">
+          <span class="process-number">05</span>
+          <p class="process-text"><strong>Link building organic &#537;i outreach</strong> &#8212; Construim profilul de link-uri al site-ului prin parteneriate, men&#539;iuni &#537;i con&#539;inut de calitate.</p>
+        </div>
+        <div class="process-item reveal reveal-delay-6">
+          <span class="process-number">06</span>
+          <p class="process-text"><strong>Raportare lunar&#259; cu metrici clare</strong> &#8212; Trafic, pozi&#539;ii &#238;n Google, conversii &#537;i recomand&#259;ri. &#536;tii mereu unde e&#537;ti &#537;i unde mergi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="section-inner">
+      <h2 class="cta-title reveal">Preg&#259;tit s&#259; urci &#238;n Google?</h2>
+      <p class="cta-desc reveal reveal-delay-1">Hai s&#259; discut&#259;m despre cum putem cre&#537;te vizibilitatea afacerii tale. Analiz&#259; gratuit&#259; &#537;i strategie personalizat&#259;.</p>
+      <a href="javascript:void(0)" onclick="document.getElementById('contact-form-wrap').style.display='flex'" class="cta-btn reveal reveal-delay-2">
+        Discut&#259; cu noi
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="section-divider"></div>
+  <footer class="footer">
+    <p>&copy; 2026 <a href="index.html">Kashmir Digital</a>. Toate drepturile rezervate.</p>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+      lastScroll = currentScroll;
+    }, { passive: true });
+
+    // Scroll reveal with IntersectionObserver
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+
+<!-- Contact Form Modal -->
+<div id="contact-form-wrap" style="display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center;background:rgba(0,0,0,0.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow-y:auto;padding:40px 16px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="position:relative;max-width:580px;width:100%;padding:48px 40px;border-radius:24px;background:linear-gradient(135deg,rgba(20,25,60,0.95),rgba(15,18,45,0.98));border:1px solid rgba(255,255,255,0.15);backdrop-filter:blur(25px) saturate(150%);-webkit-backdrop-filter:blur(25px) saturate(150%);box-shadow:inset 0 1px 2px rgba(255,255,255,0.12),0 20px 60px rgba(0,0,0,0.5);margin:auto;">
+    <button onclick="document.getElementById('contact-form-wrap').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.5rem;cursor:pointer;line-height:1;">&#10005;</button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+      <div style="width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,0.5);"></div>
+      <span style="color:rgba(255,255,255,0.5);font-size:0.8rem;font-weight:500;">Răspundem în maxim 24h</span>
+    </div>
+    <h3 style="font-family:var(--font-brand);font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:6px;">Spune-ne despre proiectul tău</h3>
+    <p style="color:rgba(255,255,255,0.45);font-size:0.88rem;margin-bottom:32px;line-height:1.6;">Completează formularul și te contactăm noi în maxim 24h.</p>
+    <form id="contact-form" onsubmit="sendContactForm(event)" style="display:flex;flex-direction:column;gap:14px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Nume complet *</label>
+          <input type="text" name="name" placeholder="ex: Ion Popescu" required style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:0.9rem;font-family:var(--font-body);outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(74,144,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+        <div>
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Email *</label>
+          <input type="email" name="email" placeholder="email@exemplu.com" required style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:0.9rem;font-family:var(--font-body);outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(74,144,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Telefon</label>
+          <input type="tel" name="phone" placeholder="+40 7XX XXX XXX" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:0.9rem;font-family:var(--font-body);outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(74,144,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+        <div>
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Companie / Brand</label>
+          <input type="text" name="company" placeholder="ex: Firma SRL" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:0.9rem;font-family:var(--font-body);outline:none;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(74,144,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+      </div>
+      <div>
+        <label style="display:block;color:rgba(255,255,255,0.5);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Descrie proiectul tău *</label>
+        <textarea name="message" placeholder="Ce vrei să construim?" rows="4" required style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:0.9rem;font-family:var(--font-body);outline:none;resize:vertical;transition:border-color 0.3s;" onfocus="this.style.borderColor='rgba(74,144,255,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="Cerere nouă de proiect — Kashmir Digital">
+      <input type="hidden" name="_template" value="table">
+      <button type="submit" style="width:100%;padding:16px 32px;border-radius:14px;border:none;background:linear-gradient(135deg,#4A90FF,#6eb4ff);color:#fff;font-size:1rem;font-weight:700;font-family:var(--font-brand);cursor:pointer;margin-top:8px;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 30px rgba(74,144,255,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        Trimite cererea
+      </button>
+      <p id="contact-status" style="text-align:center;font-size:0.85rem;color:rgba(255,255,255,0.5);display:none;"></p>
+    </form>
+  </div>
+</div>
+<script>
+function sendContactForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const status = document.getElementById('contact-status');
+  const btn = form.querySelector('button[type="submit"]');
+  const origText = btn.textContent;
+  btn.textContent = 'Se trimite...';
+  btn.disabled = true;
+  status.style.display = 'block';
+  status.textContent = '';
+  const data = new FormData(form);
+  fetch('https://formsubmit.co/ajax/vladgrigorov1@gmail.com', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: data
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      status.style.color = '#4ade80';
+      status.textContent = 'Mesajul a fost trimis cu succes!';
+      form.reset();
+      setTimeout(() => {
+        document.getElementById('contact-form-wrap').style.display = 'none';
+        status.style.display = 'none';
+      }, 2500);
+    } else {
+      status.style.color = '#ff6b6b';
+      status.textContent = 'Eroare la trimitere. Încearcă din nou.';
+    }
+  })
+  .catch(() => {
+    status.style.color = '#ff6b6b';
+    status.textContent = 'Eroare de rețea. Încearcă din nou.';
+  })
+  .finally(() => {
+    btn.textContent = origText;
+    btn.disabled = false;
+  });
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var w = document.getElementById('contact-form-wrap');
+    if (w) w.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>

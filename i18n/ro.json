@@ -1,0 +1,132 @@
+{
+  "lang": "ro",
+  "dir": "ltr",
+  "nav": {
+    "about": "Despre",
+    "services": "Servicii",
+    "portfolio": "Portofoliu",
+    "press": "Presă",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "back": "Înapoi"
+  },
+  "hero": {
+    "title": "Kashmir Digital",
+    "subtitle": "Creăm experiențe digitale complete — de la website-uri premium și agenți AI, până la content de conversie și automatizări care muncesc pentru tine 24/7.",
+    "cta_primary": "Hai să vorbim",
+    "cta_secondary": "Vezi proiectele"
+  },
+  "services": {
+    "label": "Servicii",
+    "title": "Tot ce ai nevoie, într-un singur loc",
+    "subtitle": "De la dezvoltare web la inteligență artificială și producție creativă — oferim un ecosistem complet de servicii digitale.",
+    "items": {
+      "premium_websites": "Website-uri Premium",
+      "ai_agents": "Agenți AI & Automatizări",
+      "voice_agents": "Voice Agents AI",
+      "seo": "SEO & Copywriting",
+      "video_editing": "High-Conversion Content for Ads",
+      "sound_engineering": "Voice AI & Audio Branding"
+    }
+  },
+  "about": {
+    "title": "Construim digital cu pasiune",
+    "p1": "Nu suntem doar o agenție — suntem creatori compleți. Combinăm tehnologia cu creativitatea pentru a livra soluții care nu doar funcționează, ci impresionează.",
+    "p2": "Lucrăm cu branduri și artiști care vor mai mult decât un simplu site. Vor o prezență digitală care vorbește pentru ei — și exact asta livrăm."
+  },
+  "faq": {
+    "title": "Întrebări frecvente",
+    "q1": "Ce servicii oferă Kashmir Digital?",
+    "a1": "Îți oferim o gamă completă de servicii digitale: website-uri premium, agenți AI, automatizări inteligente, content de conversie pentru ads, copywriting, SEO, Voice AI & Audio Branding și multe altele.",
+    "q2": "Cât durează un proiect tipic?",
+    "a2": "Depinde de complexitate. Un landing page premium poate fi gata în 1-2 săptămâni. Un proiect complet cu agenți AI poate dura 3-6 săptămâni.",
+    "q3": "Ce sunt voice agents și cum funcționează?",
+    "a3": "Sunt agenți AI care vorbesc la telefon exact ca un om real. Pot prelua apeluri, face programări, vinde produse sau oferi suport — 24/7.",
+    "q4": "Kashmir Digital lucrează cu clienți din afara României?",
+    "a4": "Absolut. Poți lucra cu noi de oriunde — video call, WhatsApp, email.",
+    "q5": "Kashmir Digital oferă și mentenanță după livrare?",
+    "a5": "Da, beneficiezi de mentenanță continuă — update-uri, optimizări, monitoring și suport tehnic."
+  },
+  "contact": {
+    "modal_title": "Spune-ne despre proiectul tău",
+    "modal_subtitle": "Completează formularul și te contactăm noi în maxim 24h.",
+    "response_time": "Răspundem în maxim 24h",
+    "name": "Nume complet",
+    "name_placeholder": "ex: Ion Popescu",
+    "email": "Email",
+    "email_placeholder": "email@exemplu.com",
+    "phone": "Telefon",
+    "phone_placeholder": "+40 7XX XXX XXX",
+    "company": "Companie / Brand",
+    "company_placeholder": "ex: Firma SRL",
+    "budget": "Buget estimativ",
+    "budget_placeholder": "Selectează un interval",
+    "budget_options": ["1.000€ - 2.500€", "2.500€ - 5.000€", "5.000€+"],
+    "message": "Descrie proiectul tău",
+    "message_placeholder": "Ce vrei să construim?",
+    "submit": "Trimite cererea",
+    "sending": "Se trimite...",
+    "success": "Mesajul a fost trimis cu succes!",
+    "error": "Eroare la trimitere. Încearcă din nou.",
+    "network_error": "Eroare de rețea. Încearcă din nou."
+  },
+  "cta": {
+    "label": "Contact",
+    "title": "Hai să construim ceva excepțional",
+    "subtitle": "Spune-ne despre proiectul tău și hai să transformăm viziunea ta în realitate digitală.",
+    "send_message": "Trimite un mesaj",
+    "whatsapp": "WhatsApp"
+  },
+  "pricing": {
+    "label": "Planuri",
+    "title": "Investiția în automatizare",
+    "subtitle": "Alege planul potrivit pentru afacerea ta.",
+    "essential": {
+      "name": "Essential",
+      "price": "250€",
+      "period": "/lună",
+      "setup": "+ setup fee personalizat",
+      "features": [
+        "1 agent AI configurat",
+        "Automatizare email și CRM",
+        "Mentenanță lunară inclusă",
+        "Suport prin email",
+        "Rapoarte lunare de performanță"
+      ],
+      "cta": "Alege Essential"
+    },
+    "growth": {
+      "name": "Growth",
+      "price": "$599",
+      "period": "/lună",
+      "setup": "+ setup fee personalizat",
+      "features": [
+        "Agenți AI multipli",
+        "Integrări complexe (ERP, CRM, API)",
+        "Antrenare și optimizare continuă",
+        "Suport prioritar 24/7",
+        "Dashboard analytics avansat",
+        "Scalare automată a volumului"
+      ],
+      "cta": "Alege Growth"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Custom",
+      "period": "preț personalizat",
+      "setup": "proiect la cheie",
+      "features": [
+        "Arhitectură AI dedicată",
+        "Integrare full-stack cu ecosistemul existent",
+        "SLA garantat și uptime 99.9%",
+        "Manager de proiect dedicat",
+        "Training echipă inclus",
+        "Dezvoltare și scalare nelimitată"
+      ],
+      "cta": "Contactează-ne"
+    }
+  },
+  "footer": {
+    "copyright": "Toate drepturile rezervate."
+  }
+}
