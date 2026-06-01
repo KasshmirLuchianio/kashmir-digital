@@ -1,3 +1,11 @@
+# Dependencies
+node_modules/
+kashmir-react/
+
+# Build output
+dist/
+dist-ssr/
+
 # Large video files (>100MB - GitHub limit)
 services-video.mp4
 services-video-mobile.mp4
@@ -8,3 +16,20 @@ New hero portofoliu.mov
 kashmir-site/
 .claude/
 *.skill
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
