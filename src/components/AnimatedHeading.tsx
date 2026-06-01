@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import React from 'react'
+import type { CSSProperties } from 'react'
 
 interface AnimatedHeadingProps {
   text: string
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
   initialDelay?: number
   charDelay?: number
 }
