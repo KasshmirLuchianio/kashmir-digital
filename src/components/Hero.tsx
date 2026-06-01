@@ -24,11 +24,11 @@ export default function Hero() {
         <div className="pt-6">
           <nav className="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
             {/* Logo */}
-            <span className="text-2xl font-semibold tracking-tight text-white">VEX</span>
+            <span className="text-2xl font-semibold tracking-tight text-white">Kashmir Digital</span>
 
             {/* Center links */}
             <div className="hidden md:flex items-center gap-8">
-              {['Story', 'Investing', 'Building', 'Advisory'].map((link) => (
+              {['Despre', 'Servicii', 'Portofoliu', 'Contact'].map((link) => (
                 <a
                   key={link}
                   href="#"
@@ -41,7 +41,7 @@ export default function Hero() {
 
             {/* CTA */}
             <button className="bg-white text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200 hover:bg-gray-100">
-              Start a Chat
+              Hai să vorbim
             </button>
           </nav>
         </div>
@@ -53,7 +53,7 @@ export default function Hero() {
             {/* Left column */}
             <div>
               <AnimatedHeading
-                text={"Shaping tomorrow\nwith vision and action."}
+                text={"Prezență digitală\ncare generează rezultate."}
                 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal mb-4 text-white"
                 style={{ letterSpacing: '-0.04em' }}
                 initialDelay={200}
@@ -62,16 +62,16 @@ export default function Hero() {
 
               <FadeIn delay={800} duration={1000}>
                 <p className="text-base md:text-lg text-gray-300 mb-5">
-                  We back visionaries and craft ventures that define what comes next.
+                  Website-uri premium, agenți AI și content de conversie — totul sub un singur acoperiș.
                 </p>
               </FadeIn>
 
               <FadeIn delay={1200} duration={1000} className="flex flex-wrap gap-4">
                 <button className="bg-white text-black px-8 py-3 rounded-lg font-medium transition-colors duration-200 hover:bg-gray-100">
-                  Start a Chat
+                  Hai să vorbim
                 </button>
                 <button className="liquid-glass border border-white/20 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200 hover:bg-white hover:text-black">
-                  Explore Now
+                  Vezi proiectele
                 </button>
               </FadeIn>
             </div>
@@ -80,7 +80,7 @@ export default function Hero() {
             <FadeIn delay={1400} duration={1000} className="flex items-end justify-start lg:justify-end mt-8 lg:mt-0">
               <div className="liquid-glass border border-white/20 px-6 py-3 rounded-xl">
                 <span className="text-lg md:text-xl lg:text-2xl font-light text-white">
-                  Investing. Building. Advisory.
+                  Web. AI. Content.
                 </span>
               </div>
             </FadeIn>
