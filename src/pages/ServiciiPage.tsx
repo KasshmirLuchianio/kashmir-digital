@@ -1,320 +1,173 @@
-import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-const SENSITIVITY = 0.8
-const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260530_042513_df96a13b-6155-4f6e-8b93-c9dee66fba08.mp4'
-const EMAIL = 'hello@kashmirdigital.org'
-
-const VARIANTS = {
-  default: {
-    intro: ['Bun venit în zona noastră de servicii,', 'Kashmir Digital — Agenție Full Service'],
-    typewriter: 'Construim mai mult decât website-uri. Creăm experiențe digitale care vând, automatizează și cresc afaceri 24/7.',
-    pills: ['Website Premium', 'Agenți AI', 'Automatizări', 'Content & SEO'],
+const ALL_SERVICES = [
+  {
+    num: '01',
+    name: 'Voice Agents AI',
+    tagline: 'Un call center întreg într-un singur agent AI',
+    desc: 'Agenți vocali care sună natural în română, preiau apeluri 24/7, califică lead-uri și programează clienți. Reduci costurile cu 80% și nu mai pierzi niciun apel.',
+    features: ['Vocifera românească naturală', 'Programări automate', 'Calificare lead-uri AI', 'Rapoarte săptămânale'],
+    path: '/voice-agents',
   },
-  'ai-agenti': {
-    intro: ['Agenți AI care lucrează non-stop,', 'Kashmir Digital — Inteligență Artificială Aplicată'],
-    typewriter: 'Agenții noștri AI răspund clienților, califică lead-urile și automatizează conversațiile — oricând, oriunde.',
-    pills: ['Voice Agents', 'Chatboți AI', 'Lead Calificare', 'Integrare CRM'],
+  {
+    num: '02',
+    name: 'Website-uri Premium',
+    tagline: 'Site-uri care arată de milioane și convertesc ca atare',
+    desc: 'Design personalizat, performanță ultra-rapidă, optimizat SEO și construit pentru conversie. Fiecare pixel e gândit să-ți aducă clienți.',
+    features: ['Design unic premium', 'Viteză < 1s încărcare', 'Optimizare SEO', 'Panou administrare'],
+    path: '/servicii',
   },
-  'ai-automatizari': {
-    intro: ['Automatizări care elimină munca repetitivă,', 'Kashmir Digital — Fluxuri Inteligente'],
-    typewriter: 'Conectăm aplicațiile tale și automatizăm procesele manuale. Tu te concentrezi pe business, noi pe automatizare.',
-    pills: ['n8n Workflows', 'Make / Zapier', 'API Integrări', 'Raportare Auto'],
+  {
+    num: '03',
+    name: 'AI & Automatizări',
+    tagline: 'Munca repetitivă dispare. Tu te concentrezi pe business.',
+    desc: 'Conectăm aplicațiile tale și automatizăm procesele manuale cu n8n, Make și API-uri personalizate. Fluxuri inteligente care lucrează pentru tine non-stop.',
+    features: ['n8n Workflows', 'Integrări API', 'Raportare automată', 'CRM sync'],
+    path: '/ai-automatizari',
   },
-}
-
-function useTypewriter(text: string, speed = 38, startDelay = 600) {
-  const [displayed, setDisplayed] = useState('')
-  const [done, setDone] = useState(false)
-
-  useEffect(() => {
-    setDisplayed('')
-    setDone(false)
-    let idx = 0
-    const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        idx++
-        setDisplayed(text.slice(0, idx))
-        if (idx >= text.length) {
-          clearInterval(interval)
-          setDone(true)
-        }
-      }, speed)
-      return () => clearInterval(interval)
-    }, startDelay)
-    return () => clearTimeout(timeout)
-  }, [text, speed, startDelay])
-
-  return { displayed, done }
-}
-
-interface Props {
-  variant?: 'default' | 'ai-agenti' | 'ai-automatizari'
-}
-
-const NAV_LINKS = [
-  { label: 'Acasă', to: '/' },
-  { label: 'Servicii', to: '/servicii' },
-  { label: 'Portofoliu', to: '/portofoliu' },
-  { label: 'Contact', to: '/#contact' },
+  {
+    num: '04',
+    name: 'SEO & Content',
+    tagline: 'Apară primul în Google. Acolo unde clienții te caută.',
+    desc: 'Strategie completă de conținut și optimizare pentru motoarele de căutare. Articole, optimizări on-page și content care atrage trafic organic.',
+    features: ['Audit SEO complet', 'Optimizare on-page', 'Content strategy', 'Link building'],
+    path: '/seo',
+  },
+  {
+    num: '05',
+    name: 'Video Production',
+    tagline: 'Content vizual care oprește scroll-ul',
+    desc: 'Reclame video, content pentru social media și producții vizuale de înaltă calitate. De la concept la livrare, totul într-un singur loc.',
+    features: ['Reclame video', 'Social media content', 'Produse vizuale', 'Animații 3D'],
+    path: '/video-editing',
+  },
+  {
+    num: '06',
+    name: 'Sound Engineering',
+    tagline: 'Sunetul care definește brandul tău',
+    desc: 'Producție audio profesională, voice AI branding, jingle-uri și peisaje sonore pentru campanii și produse digitale.',
+    features: ['Voice AI branding', 'Producție audio', 'Jingle-uri', 'Sound design'],
+    path: '/sound-engineering',
+  },
 ]
 
-export default function ServiciiPage({ variant = 'default' }: Props) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const prevXRef = useRef<number | null>(null)
-  const targetTimeRef = useRef(0)
-  const seekingRef = useRef(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [pillsVisible, setPillsVisible] = useState(false)
-  const [copied, setCopied] = useState(false)
-
-  const content = VARIANTS[variant]
-  const { displayed, done } = useTypewriter(content.typewriter, 38, 600)
-
-  useEffect(() => {
-    const t = setTimeout(() => setPillsVisible(true), 400)
-    return () => clearTimeout(t)
-  }, [])
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const handleSeeked = () => {
-      seekingRef.current = false
-      if (video.currentTime !== targetTimeRef.current) {
-        video.currentTime = targetTimeRef.current
-        seekingRef.current = true
-      }
-    }
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (prevXRef.current === null) {
-        prevXRef.current = e.clientX
-        return
-      }
-      const delta = e.clientX - prevXRef.current
-      prevXRef.current = e.clientX
-      if (!video.duration) return
-      const offset = (delta / window.innerWidth) * SENSITIVITY * video.duration
-      targetTimeRef.current = Math.max(0, Math.min(video.duration, targetTimeRef.current + offset))
-      if (!seekingRef.current) {
-        video.currentTime = targetTimeRef.current
-        seekingRef.current = true
-      }
-    }
-
-    video.addEventListener('seeked', handleSeeked)
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => {
-      video.removeEventListener('seeked', handleSeeked)
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [])
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(EMAIL)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  const pillBase: React.CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '9999px',
-    fontSize: 'clamp(13px, 1.5vw, 15px)',
-    padding: '0.3em 1.25rem',
-    margin: '0.2em',
-    marginBottom: '0.4em',
-    whiteSpace: 'nowrap',
-    fontFamily: 'var(--font-body)',
-    cursor: 'pointer',
-    transition: 'background 0.2s, color 0.2s',
-  }
-
+export default function ServiciiPage() {
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', background: '#000', overflowX: 'hidden' }}>
-      {/* Video */}
-      <video
-        ref={videoRef}
-        src={VIDEO_URL}
-        muted
-        playsInline
-        preload="auto"
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: '70% center',
-        }}
-      />
-
-      {/* Navbar */}
-      <nav
-        style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 10 }}
-        className="px-5 sm:px-8 py-4 sm:py-5 flex justify-between items-center"
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <Link to="/" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(18px, 2.5vw, 26px)', letterSpacing: '-0.02em', color: '#fff', textDecoration: 'none' }}>
-            Kashmir Digital®
-          </Link>
-          <span style={{ fontSize: 'clamp(22px, 3vw, 30px)', color: '#fff', userSelect: 'none', letterSpacing: '-0.02em' }}>
-            ✳︎
-          </span>
-        </div>
-
-        {/* Desktop nav */}
-        <div className="hidden md:flex" style={{ gap: '2rem' }}>
-          {NAV_LINKS.map(({ label, to }) => (
-            <Link
-              key={label}
-              to={to}
-              style={{ fontFamily: 'var(--font-body)', fontSize: '20px', color: '#fff', textDecoration: 'none' }}
-              className="hover:opacity-60 transition-opacity"
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Desktop CTA */}
-        <a
-          href={`mailto:${EMAIL}`}
-          style={{ fontFamily: 'var(--font-body)', fontSize: '20px', color: '#fff', textDecoration: 'underline', textUnderlineOffset: '2px' }}
-          className="hidden md:block hover:opacity-60 transition-opacity"
-        >
-          Contactează-ne
-        </a>
-
-        {/* Hamburger */}
-        <button
-          className="md:hidden flex flex-col cursor-pointer p-1"
-          style={{ gap: '5px', background: 'none', border: 'none' }}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Meniu"
-        >
-          {[0, 1, 2].map(i => (
-            <span key={i} style={{
-              display: 'block',
-              width: '24px',
-              height: '2px',
-              background: '#fff',
-              transition: 'all 0.3s',
-              transform: menuOpen && i === 0 ? 'rotate(45deg) translateY(7px)'
-                : menuOpen && i === 2 ? 'rotate(-45deg) translateY(-7px)' : 'none',
-              opacity: menuOpen && i === 1 ? 0 : 1,
-            }} />
-          ))}
-        </button>
-      </nav>
-
-      {/* Mobile overlay */}
-      <div
-        className="md:hidden"
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 9,
-          background: 'rgba(0,0,0,0.95)',
-          backdropFilter: 'blur(4px)',
-          opacity: menuOpen ? 1 : 0,
-          pointerEvents: menuOpen ? 'auto' : 'none',
-          transition: 'opacity 0.3s ease',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          paddingLeft: '2rem',
-          gap: '2rem',
-        }}
-      >
-        {NAV_LINKS.map(({ label, to }) => (
-          <Link
-            key={label}
-            to={to}
-            style={{ fontFamily: 'var(--font-body)', fontSize: '32px', fontWeight: 500, color: '#fff', textDecoration: 'none' }}
-            onClick={() => setMenuOpen(false)}
+    <div style={{ paddingTop: '6rem' }}>
+      <section style={{ padding: '4rem 2rem 6rem' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              fontFamily: "'Kanit', sans-serif",
+              fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+              fontWeight: 800,
+              lineHeight: 1.05,
+              letterSpacing: '-0.03em',
+              marginBottom: '1rem',
+            }}
           >
-            {label}
-          </Link>
-        ))}
-        <a
-          href={`mailto:${EMAIL}`}
-          style={{ fontFamily: 'var(--font-body)', fontSize: '32px', fontWeight: 500, color: '#fff', textDecoration: 'underline' }}
-        >
-          Contactează-ne
-        </a>
-      </div>
+            Tot ce ai nevoie,{' '}
+            <span style={{
+              background: 'linear-gradient(135deg, #4A90FF 0%, #7ab4ff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>
+              într-un singur loc
+            </span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: '1.05rem',
+              maxWidth: '600px',
+              marginBottom: '3rem',
+              lineHeight: 1.6,
+            }}
+          >
+            De la voice agents AI și website-uri premium, la automatizări și content — 
+            oferim un ecosistem digital complet pentru business-ul tău.
+          </motion.p>
 
-      {/* Hero section */}
-      <section
-        style={{ position: 'relative', zIndex: 1, height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
-        className="justify-end pb-12 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10"
-      >
-        <div style={{ maxWidth: '600px', position: 'relative', zIndex: 10 }}>
-          {/* Blurred intro */}
-          <p style={{
-            pointerEvents: 'none',
-            userSelect: 'none',
-            marginBottom: '1.5rem',
-            fontSize: 'clamp(18px, 4vw, 26px)',
-            lineHeight: 1.3,
-            fontWeight: 400,
-            color: '#fff',
-            filter: 'blur(4px)',
-            fontFamily: 'var(--font-body)',
-          }}>
-            {content.intro[0]}<br />{content.intro[1]}
-          </p>
-
-          {/* Typewriter */}
-          <p style={{
-            color: '#fff',
-            marginBottom: '1.5rem',
-            fontSize: 'clamp(18px, 4vw, 26px)',
-            lineHeight: 1.35,
-            fontWeight: 400,
-            minHeight: '54px',
-            fontFamily: 'var(--font-body)',
-          }}>
-            {displayed}
-            {!done && <span className="blink-cursor" style={{ display: 'inline-block', width: '2px', height: '1.1em', background: '#fff', verticalAlign: 'middle', marginLeft: '2px' }} />}
-          </p>
-
-          {/* Pills */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            opacity: pillsVisible ? 1 : 0,
-            transform: pillsVisible ? 'translateY(0)' : 'translateY(8px)',
-            transition: 'opacity 0.4s ease, transform 0.4s ease',
-          }}>
-            {content.pills.map(label => (
-              <button
-                key={label}
-                style={{ ...pillBase, background: 'white', color: 'black', border: '1px solid rgba(0,0,0,0.1)' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#000'; (e.currentTarget as HTMLButtonElement).style.color = '#fff' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#fff'; (e.currentTarget as HTMLButtonElement).style.color = '#000' }}
-              >
-                {label}
-              </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'rgba(255,255,255,0.06)', borderRadius: '20px', overflow: 'hidden' }}>
+            {ALL_SERVICES.map((s, i) => (
+              <Link key={s.num} to={s.path} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + i * 0.06 }}
+                  style={{
+                    padding: '2.5rem 2rem',
+                    background: 'rgba(255,255,255,0.02)',
+                    transition: 'background 0.3s',
+                  }}
+                  className="hover:bg-white/[0.04]"
+                >
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.5rem', flexWrap: 'wrap' }}>
+                    <span style={{
+                      fontFamily: "'Kanit', sans-serif",
+                      fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                      fontWeight: 800,
+                      lineHeight: 1,
+                      background: 'linear-gradient(180deg, rgba(74,144,255,0.3) 0%, transparent 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      flexShrink: 0,
+                    }}>
+                      {s.num}
+                    </span>
+                    <div style={{ flex: 1, minWidth: '200px' }}>
+                      <h2 style={{
+                        fontFamily: "'Kanit', sans-serif",
+                        fontSize: '1.3rem',
+                        fontWeight: 600,
+                        marginBottom: '0.25rem',
+                      }}>
+                        {s.name}
+                      </h2>
+                      <p style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        color: 'rgba(74,144,255,0.6)',
+                        fontSize: '0.85rem',
+                        fontWeight: 500,
+                        marginBottom: '0.5rem',
+                      }}>
+                        {s.tagline}
+                      </p>
+                      <p style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        color: 'rgba(255,255,255,0.45)',
+                        fontSize: '0.85rem',
+                        lineHeight: 1.5,
+                        marginBottom: '0.75rem',
+                      }}>
+                        {s.desc}
+                      </p>
+                      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        {s.features.map(f => (
+                          <span key={f} style={{
+                            fontFamily: "'DM Sans', sans-serif",
+                            fontSize: '0.75rem',
+                            color: 'rgba(255,255,255,0.4)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            borderRadius: '9999px',
+                            padding: '0.2rem 0.75rem',
+                          }}>
+                            {f}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
             ))}
-            {/* Email pill */}
-            <button
-              onClick={handleCopy}
-              style={{ ...pillBase, background: 'transparent', color: 'white', border: '1px solid rgba(255,255,255,0.6)', gap: '0.5rem' }}
-              onMouseEnter={e => { const el = e.currentTarget; el.style.background = '#fff'; el.style.color = '#000' }}
-              onMouseLeave={e => { const el = e.currentTarget; el.style.background = 'transparent'; el.style.color = '#fff' }}
-            >
-              {copied ? 'Copiat! ✓' : `Scrie-ne: ${EMAIL}`}
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-                <rect x="4" y="0" width="8" height="8" rx="1" />
-                <rect x="0" y="4" width="8" height="8" rx="1" opacity="0.5" />
-              </svg>
-            </button>
           </div>
         </div>
       </section>
