@@ -1527,16 +1527,29 @@
     </div>
   </div>
 
-  <!-- ===== HERO — cinematic video ===== -->
-  <section id="hero" class="vhero">
-    <div class="vh-sticky">
-      <div class="vh-media" id="vhMedia">
-        <video id="heroVideo" autoplay muted loop playsinline preload="auto"
-               src="assets/hero-keyboard.mp4"
-               poster="assets/hero-keyboard.jpg"></video>
-        <div class="vh-veil"></div>
+  <!-- ===== HERO — scroll-driven isometric world ===== -->
+  <section id="hero" class="world">
+    <div class="world-sticky">
+      <canvas id="worldCanvas"></canvas>
+      <div class="world-vignette" aria-hidden="true"></div>
+
+      <div class="svc-tab" data-stop="0"><span class="st-num">01</span><h4>Website-uri Premium</h4><p>Landing page-uri și platforme web cu design modern, animații fluide și performanță de top.</p><a href="website-uri-premium.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="1"><span class="st-num">02</span><h4>Voice Agents AI</h4><p>Agenți vocali care sună exact ca oamenii. Asistență, vânzări și suport — non-stop.</p><a href="voice-agents.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="2"><span class="st-num">03</span><h4>Agenți AI & Automatizări</h4><p>Angajați digitali 24/7: emailuri, date, task-uri complexe — fără pauze, fără erori.</p><a href="agent-ai.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="3"><span class="st-num">04</span><h4>High-Conversion Ads</h4><p>Video-uri de conversie pentru reclame și campanii, editate cu tehnici avansate.</p><a href="video-editing.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="4"><span class="st-num">05</span><h4>Copywriting & SEO</h4><p>Texte care convertesc și strategii SEO care aduc trafic organic, non-stop.</p><a href="seo.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="5"><span class="st-num">06</span><h4>Voice AI & Audio Branding</h4><p>Voci pentru agenți AI, audio branding și producție sonoră profesională.</p><a href="inginerie-sunet.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="6"><span class="st-num">07</span><h4>Visual Assets for AI & Web</h4><p>3D renders, motion graphics și asset-uri vizuale premium pentru produsele tale.</p><a href="visual-assets.html">Explorează →</a></div>
+
+      <div class="finale" id="finale">
+        <div class="finale-keys" id="finaleKeys"></div>
+        <p class="finale-tag" id="finaleTag">Imaginația devine realitate</p>
       </div>
-      <div class="vh-content" id="vhContent">
+
+      <div class="world-progress" id="worldProgress"><i></i></div>
+
+      <div class="world-hero" id="worldHero">
+        <div class="wh-inner">
         <div class="hero-eyebrow">
           <div class="he-inner"><span class="he-line"></span><span>Agenție digitală premium · România</span></div>
         </div>
@@ -1587,33 +1600,24 @@
     </div>
   </section>
 
-  <!-- ===== SERVICES — scroll-driven isometric world ===== -->
-  <section id="services" class="world">
-    <div class="world-sticky">
-      <canvas id="worldCanvas"></canvas>
-      <div class="world-vignette" aria-hidden="true"></div>
-
-      <div class="world-head">
-        <div class="wh-wrap">
-          <span class="sec-tag">Servicii</span>
-          <h2 class="sec-title" style="font-size:clamp(1.6rem,3.4vw,2.6rem);">Călătorește prin <span class="accent-i">ecosistem</span></h2>
-        </div>
+  <!-- ===== SERVICES — editorial list ===== -->
+  <section id="services">
+    <div class="orb"></div>
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-tag rv">Servicii</span>
+        <h2 class="sec-title rv">Tot ce ai nevoie,<br><span class="accent-i">într-un singur loc</span></h2>
+        <p class="sec-desc rv">De la dezvoltare web la inteligență artificială și producție creativă — un ecosistem complet de servicii digitale.</p>
       </div>
-
-      <div class="svc-tab" data-stop="0"><span class="st-num">01</span><h4>Website-uri Premium</h4><p>Landing page-uri și platforme web cu design modern, animații fluide și performanță de top.</p><a href="website-uri-premium.html">Explorează →</a></div>
-      <div class="svc-tab" data-stop="1"><span class="st-num">02</span><h4>Voice Agents AI</h4><p>Agenți vocali care sună exact ca oamenii. Asistență, vânzări și suport — non-stop.</p><a href="voice-agents.html">Explorează →</a></div>
-      <div class="svc-tab" data-stop="2"><span class="st-num">03</span><h4>Agenți AI & Automatizări</h4><p>Angajați digitali 24/7: emailuri, date, task-uri complexe — fără pauze, fără erori.</p><a href="agent-ai.html">Explorează →</a></div>
-      <div class="svc-tab" data-stop="3"><span class="st-num">04</span><h4>High-Conversion Ads</h4><p>Video-uri de conversie pentru reclame și campanii, editate cu tehnici avansate.</p><a href="video-editing.html">Explorează →</a></div>
-      <div class="svc-tab" data-stop="4"><span class="st-num">05</span><h4>Copywriting & SEO</h4><p>Texte care convertesc și strategii SEO care aduc trafic organic, non-stop.</p><a href="seo.html">Explorează →</a></div>
-      <div class="svc-tab" data-stop="5"><span class="st-num">06</span><h4>Voice AI & Audio Branding</h4><p>Voci pentru agenți AI, audio branding și producție sonoră profesională.</p><a href="inginerie-sunet.html">Explorează →</a></div>
-      <div class="svc-tab" data-stop="6"><span class="st-num">07</span><h4>Visual Assets for AI & Web</h4><p>3D renders, motion graphics și asset-uri vizuale premium pentru produsele tale.</p><a href="visual-assets.html">Explorează →</a></div>
-
-      <div class="finale" id="finale">
-        <div class="finale-keys" id="finaleKeys"></div>
-        <p class="finale-tag" id="finaleTag">Imaginația devine realitate</p>
+      <div class="svc-list">
+        <a href="website-uri-premium.html" class="svc-row rv"><span class="svc-num">01</span><span class="svc-name">Website-uri Premium</span><span class="svc-desc">Landing page-uri, portofolii și platforme web cu design modern, animații fluide și performanță de top.</span><span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="voice-agents.html" class="svc-row rv"><span class="svc-num">02</span><span class="svc-name">Voice Agents AI</span><span class="svc-desc">Agenți vocali care sună exact ca oamenii. Asistență telefonică, vânzări și suport — non-stop.</span><span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="agent-ai.html" class="svc-row rv"><span class="svc-num">03</span><span class="svc-name">Agenți AI & Automatizări</span><span class="svc-desc">Agenți inteligenți care trimit mail-uri, gestionează date și execută task-uri complexe — angajați digitali 24/7.</span><span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="video-editing.html" class="svc-row rv"><span class="svc-num">04</span><span class="svc-name">High-Conversion Ads</span><span class="svc-desc">Video-uri de conversie pentru reclame și campanii — editate profesional, cu tehnici avansate.</span><span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="seo.html" class="svc-row rv"><span class="svc-num">05</span><span class="svc-name">Copywriting & SEO</span><span class="svc-desc">Texte care convertesc și strategii SEO care aduc trafic organic, non-stop.</span><span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="inginerie-sunet.html" class="svc-row rv"><span class="svc-num">06</span><span class="svc-name">Voice AI & Audio Branding</span><span class="svc-desc">Voci pentru agenții AI, audio branding și producție sonoră profesională.</span><span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a href="visual-assets.html" class="svc-row rv"><span class="svc-num">07</span><span class="svc-name">Visual Assets for AI & Web</span><span class="svc-desc">3D renders, motion graphics și asset-uri vizuale premium pentru produsele tale.</span><span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
-
-      <div class="world-progress" id="worldProgress"><i></i></div>
     </div>
   </section>
 
@@ -2364,7 +2368,7 @@
       target.copy(desired);
 
       ScrollTrigger.create({
-        trigger: '#services',
+        trigger: '#hero',
         start: 'top top',
         end: 'bottom bottom',
         scrub: true,
@@ -2387,11 +2391,15 @@
       const progressBar = document.querySelector('#worldProgress i');
       const progressWrap = document.getElementById('worldProgress');
       const finaleEl = document.getElementById('finale');
+      const heroOverlay = document.getElementById('worldHero');
       const TAB_WIN = 0.058;
       let finaleOn = false;
       const proj = new THREE.Vector3();
 
       function syncUI(p) {
+        const heroOp = Math.max(0, 1 - p / 0.07);
+        heroOverlay.style.opacity = heroOp.toFixed(3);
+        heroOverlay.style.visibility = heroOp <= 0.01 ? 'hidden' : 'visible';
         progressWrap.style.opacity = (p > 0.02 && p < 0.985) ? 1 : 0;
         progressBar.style.height = (p * 100).toFixed(1) + '%';
         for (let i = 0; i < tabs.length; i++) {
@@ -2430,7 +2438,7 @@
       /* ---------- render loop ---------- */
       let inView = true;
       new IntersectionObserver(en => { inView = en[0].isIntersecting; }, { threshold: 0 })
-        .observe(document.getElementById('services'));
+        .observe(document.getElementById('hero'));
 
       const clock = new THREE.Clock();
       const headPos = new THREE.Vector3();
@@ -2487,22 +2495,6 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
     })();
-
-    /* ================= HERO VIDEO SCRUB ================= */
-    if (!prefersReduced) {
-      gsap.fromTo('#vhMedia', { scale: 0.92, borderRadius: '28px' }, {
-        scale: 1, borderRadius: '0px', ease: 'none',
-        scrollTrigger: { trigger: '#hero', start: 'top top', end: '55% top', scrub: 0.4 }
-      });
-      gsap.to('#vhContent', {
-        y: -120, opacity: 0, ease: 'none',
-        scrollTrigger: { trigger: '#hero', start: '15% top', end: '70% top', scrub: 0.4 }
-      });
-      gsap.to('#heroScroll', {
-        opacity: 0, ease: 'none',
-        scrollTrigger: { trigger: '#hero', start: 'top top', end: '20% top', scrub: true }
-      });
-    }
 
     /* ================= PHANTOM GALLERY ================= */
     const PG_ITEMS = [
