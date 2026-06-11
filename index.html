@@ -363,9 +363,9 @@
     .mm-lang a.active { color: #fff; }
 
     /* ===== WORLD — scroll-driven 3D experience ===== */
-    #hero.world {
+    section.world {
       position: relative;
-      height: 560vh;
+      height: 620vh;
       background: var(--world-bg);
     }
     .world-sticky {
@@ -635,6 +635,223 @@
       .step-body p { margin-left: 44px; font-size: 0.84rem; }
       .world-progress { display: none; }
     }
+
+    /* ===== VIDEO HERO ===== */
+    #hero.vhero { position: relative; height: 220vh; background: var(--bg); }
+    .vh-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: flex-end; }
+    .vh-media {
+      position: absolute; inset: 0;
+      transform: scale(0.92);
+      border-radius: 28px;
+      overflow: hidden;
+      will-change: transform, border-radius;
+      background: #060b1c;
+    }
+    .vh-media video, .vh-media img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .vh-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(5,10,24,0.5) 0%, rgba(5,10,24,0.06) 35%, rgba(5,10,24,0.12) 60%, rgba(5,10,24,0.78) 92%);
+    }
+    .vh-content { position: relative; z-index: 3; width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 32px 9vh; will-change: transform, opacity; }
+    @media (max-width: 768px) { .vh-content { padding: 0 24px 11vh; } .vh-media { border-radius: 16px; } }
+
+    /* ===== SERVICE TABS (world popups) ===== */
+    .svc-tab {
+      position: absolute;
+      left: 0; top: 0;
+      z-index: 5;
+      width: min(330px, 78vw);
+      background: linear-gradient(160deg, rgba(12,20,46,0.92), rgba(6,10,26,0.96));
+      border: 1px solid rgba(var(--accent-rgb), 0.4);
+      border-radius: 16px;
+      padding: 18px 20px 16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.55), 0 0 34px rgba(var(--accent-rgb), 0.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      opacity: 0;
+      transform: translate(-50%, calc(-100% - 26px)) scale(0.85);
+      transform-origin: bottom center;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.5s var(--ease-out);
+      will-change: transform, opacity;
+    }
+    .svc-tab::after {
+      content: '';
+      position: absolute;
+      left: 50%; bottom: -7px;
+      width: 12px; height: 12px;
+      background: inherit;
+      border-right: 1px solid rgba(var(--accent-rgb), 0.4);
+      border-bottom: 1px solid rgba(var(--accent-rgb), 0.4);
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .svc-tab.on { opacity: 1; transform: translate(-50%, calc(-100% - 26px)) scale(1); pointer-events: auto; }
+    .svc-tab .st-num {
+      display: inline-block;
+      font-size: 0.62rem; font-weight: 800;
+      letter-spacing: 2px;
+      color: #fff;
+      background: var(--accent);
+      border-radius: 7px;
+      padding: 4px 9px;
+      margin-bottom: 9px;
+    }
+    .svc-tab h4 { font-family: var(--font-heading); font-weight: 600; font-size: 1.12rem; color: #fff; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .svc-tab p { font-size: 0.8rem; line-height: 1.55; color: var(--text-2); margin-bottom: 10px; }
+    .svc-tab a { font-size: 0.76rem; font-weight: 700; color: var(--accent-light); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .svc-tab a:hover { color: #fff; }
+    .world-head {
+      position: absolute;
+      top: 96px; left: 0; right: 0;
+      z-index: 4;
+      pointer-events: none;
+    }
+    .world-head .wh-wrap { max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+    @media (max-width: 768px) { .svc-tab { width: min(280px, 84vw); padding: 14px 16px 13px; } .world-head { top: 84px; } }
+
+    /* ===== FINALE — keyboard blast ===== */
+    .finale {
+      position: absolute; inset: 0;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 26px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(var(--accent-rgb), 0.12), transparent 70%);
+    }
+    .finale.on { opacity: 1; }
+    .finale-keys { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; padding: 0 20px; }
+    .kcap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: clamp(40px, 5.6vw, 64px);
+      height: clamp(40px, 5.6vw, 64px);
+      border-radius: 12px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: clamp(1.1rem, 2.6vw, 1.9rem);
+      color: #fff;
+      background: linear-gradient(180deg, #1b2a55 0%, #0d1733 100%);
+      border: 1px solid rgba(var(--accent-rgb), 0.5);
+      box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.18), inset 0 -3px 0 rgba(0,0,0,0.45),
+                  0 6px 18px rgba(0,0,0,0.5), 0 0 26px rgba(var(--accent-rgb), 0.3);
+      transform: scale(0);
+    }
+    .kcap.space { width: clamp(70px, 9vw, 120px); }
+    .kcap.accent { background: linear-gradient(180deg, var(--accent) 0%, #0044bb 100%); border-color: rgba(255,255,255,0.35); }
+    .finale-tag {
+      font-size: clamp(0.7rem, 1.6vw, 0.95rem);
+      font-weight: 700;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      text-shadow: 0 0 24px rgba(var(--accent-rgb), 0.8);
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    /* ===== PHANTOM GALLERY ===== */
+    #portfolio { padding: clamp(100px, 13vw, 180px) 0 0; background: var(--bg); overflow: hidden; }
+    .pg-stage {
+      position: relative;
+      height: 78vh;
+      min-height: 520px;
+      margin-top: clamp(24px, 4vw, 48px);
+      perspective: 1400px;
+      overflow: hidden;
+      cursor: grab;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(var(--accent-rgb), 0.05), transparent 70%),
+        var(--bg);
+    }
+    .pg-stage.grabbing { cursor: grabbing; }
+    .pg-plane {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .pg-item {
+      position: absolute;
+      width: 340px; height: 215px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      background: #0a1226;
+      box-shadow: 0 22px 60px rgba(0,0,0,0.5);
+      will-change: transform;
+      transition: border-color 0.3s ease;
+    }
+    .pg-item:hover { border-color: rgba(var(--accent-rgb), 0.6); }
+    .pg-item img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+    .pg-item .pg-cover {
+      position: absolute; inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      padding: 18px;
+    }
+    .pg-cover b { font-family: var(--font-heading); font-weight: 600; font-size: 1.35rem; color: #fff; letter-spacing: -0.01em; }
+    .pg-cover small { font-size: 0.68rem; letter-spacing: 2.4px; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 700; }
+    .pg-meta {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 26px 14px 10px;
+      background: linear-gradient(180deg, transparent, rgba(3,6,15,0.88));
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .pg-meta b { font-size: 0.82rem; font-weight: 700; color: #fff; line-height: 1.25; }
+    .pg-meta span { font-size: 0.58rem; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent-light); white-space: nowrap; }
+    .pg-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(5,10,24,0.6);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .pg-play::after { content: ''; margin-left: 4px; border-left: 14px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent; }
+    .pg-hint { text-align: center; padding: 18px 0 0; color: var(--text-3); font-size: 0.74rem; letter-spacing: 2.4px; text-transform: uppercase; }
+    @media (max-width: 768px) { .pg-item { width: 250px; height: 158px; } .pg-stage { height: 64vh; min-height: 420px; } }
+
+    /* Lightbox */
+    #pgLight {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 100001;
+      background: rgba(2,4,12,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      align-items: center;
+      justify-content: center;
+      padding: 4vh 4vw;
+    }
+    #pgLight.open { display: flex; }
+    .pgl-box { position: relative; width: min(960px, 94vw); }
+    .pgl-box video { width: 100%; max-height: 82vh; border-radius: 16px; border: 1px solid var(--line-strong); box-shadow: 0 40px 120px rgba(0,0,0,0.7); background: #000; display: block; }
+    .pgl-title { margin-top: 14px; text-align: center; color: var(--text-2); font-size: 0.9rem; font-weight: 600; }
 
     /* ===== MARQUEE ===== */
     .marquee {
@@ -1282,7 +1499,6 @@
           </div>
         </div>
         <a href="#portfolio">Portofoliu</a>
-        <a href="#reclame">Reclame</a>
         <a href="#press">Presă</a>
         <a href="#faq">FAQ</a>
       </div>
@@ -1302,9 +1518,8 @@
       <a href="#about" class="mm-link" onclick="closeMobile()"><i>01</i>Despre</a>
       <a href="#services" class="mm-link" onclick="closeMobile()"><i>02</i>Servicii</a>
       <a href="#portfolio" class="mm-link" onclick="closeMobile()"><i>03</i>Portofoliu</a>
-      <a href="#reclame" class="mm-link" onclick="closeMobile()"><i>04</i>Reclame</a>
-      <a href="#press" class="mm-link" onclick="closeMobile()"><i>05</i>Presă</a>
-      <a href="#faq" class="mm-link" onclick="closeMobile()"><i>06</i>FAQ</a>
+      <a href="#press" class="mm-link" onclick="closeMobile()"><i>04</i>Presă</a>
+      <a href="#faq" class="mm-link" onclick="closeMobile()"><i>05</i>FAQ</a>
     </nav>
     <div class="mm-footer">
       <button type="button" class="nav-cta" onclick="closeMobile(); openContact()">Contact</button>
@@ -1312,60 +1527,33 @@
     </div>
   </div>
 
-  <!-- ===== WORLD — scroll-driven isometric experience ===== -->
-  <section id="hero" class="world">
-    <div class="world-sticky">
-      <canvas id="worldCanvas"></canvas>
-      <div class="world-vignette" aria-hidden="true"></div>
-      <div class="world-fade-bottom" id="worldFade" aria-hidden="true"></div>
-
-      <!-- Hero overlay -->
-      <div class="world-hero" id="worldHero">
-        <div class="wh-inner">
-          <div class="hero-eyebrow">
-            <div class="he-inner"><span class="he-line"></span><span>Agenție digitală premium · România</span></div>
-          </div>
-          <h1 class="hero-title" id="heroTitle">
-            <span class="ht-line" data-text="Kashmir"></span>
-            <span class="ht-line" data-text="Digital" data-thin="true"></span>
-          </h1>
-          <div class="hero-bottom">
-            <p class="hero-sub" id="heroSub">Creăm experiențe digitale complete — scrollează și explorează ecosistemul: website-uri premium, agenți AI, voice agents și content de conversie.</p>
-            <div class="hero-actions" id="heroActions">
-              <a href="javascript:void(0)" class="btn btn-fill" onclick="openContact()">Hai să vorbim
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <a href="#portfolio" class="btn btn-ghost">Vezi proiectele</a>
-            </div>
+  <!-- ===== HERO — cinematic video ===== -->
+  <section id="hero" class="vhero">
+    <div class="vh-sticky">
+      <div class="vh-media" id="vhMedia">
+        <video id="heroVideo" autoplay muted loop playsinline preload="auto"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_33Ej8t2gAxUeQ3elHCepqWYPaUg/hf_20260611_094143_5ac05500-bcfd-48fc-9b50-c402587c77e0.mp4"
+               poster="https://d8j0ntlcm91z4.cloudfront.net/user_33Ej8t2gAxUeQ3elHCepqWYPaUg/hf_20260611_094015_c0b8ac33-bac4-4385-b793-45ea15bacaa7.png"></video>
+        <div class="vh-veil"></div>
+      </div>
+      <div class="vh-content" id="vhContent">
+        <div class="hero-eyebrow">
+          <div class="he-inner"><span class="he-line"></span><span>Agenție digitală premium · România</span></div>
+        </div>
+        <h1 class="hero-title" id="heroTitle">
+          <span class="ht-line" data-text="Kashmir"></span>
+          <span class="ht-line" data-text="Digital" data-thin="true"></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub" id="heroSub">Imaginația devine realitate — website-uri premium, agenți AI, voice agents și content de conversie, construite dintr-o singură tastatură.</p>
+          <div class="hero-actions" id="heroActions">
+            <a href="javascript:void(0)" class="btn btn-fill" onclick="openContact()">Hai să vorbim
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#portfolio" class="btn btn-ghost">Vezi proiectele</a>
           </div>
         </div>
       </div>
-
-      <!-- Steps (vectr-style) -->
-      <div class="world-steps" id="worldSteps">
-        <div class="ws-inner">
-          <div class="step-list">
-            <div class="step" data-step="0">
-              <div class="step-head"><span class="step-num">01</span><span class="step-title">Website-uri Premium</span></div>
-              <div class="step-body"><p>Site-uri care se simt vii — 3D, animații, performanță de top. Prima impresie devine avantajul tău competitiv.</p></div>
-            </div>
-            <div class="step" data-step="1">
-              <div class="step-head"><span class="step-num">02</span><span class="step-title">Agenți AI & Automatizări</span></div>
-              <div class="step-body"><p>Angajați digitali care lucrează 24/7: emailuri, date, task-uri complexe — fără pauze, fără erori.</p></div>
-            </div>
-            <div class="step" data-step="2">
-              <div class="step-head"><span class="step-num">03</span><span class="step-title">Voice Agents AI</span></div>
-              <div class="step-body"><p>Telefonie AI care sună uman. Preia apeluri, programează și vinde — non-stop, fără să rateze vreun apel.</p></div>
-            </div>
-            <div class="step" data-step="3">
-              <div class="step-head"><span class="step-num">04</span><span class="step-title">Content & High-Conversion Ads</span></div>
-              <div class="step-body"><p>Video, copywriting și SEO care transformă atenția în clienți. Fiecare secundă de content e gândită să convertească.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="world-progress" id="worldProgress"><i></i></div>
       <div class="hero-scroll" id="heroScroll" aria-hidden="true"><span>Scroll</span><div class="hs-track"></div></div>
     </div>
   </section>
@@ -1399,59 +1587,33 @@
     </div>
   </section>
 
-  <!-- ===== SERVICES ===== -->
-  <section id="services">
-    <div class="orb"></div>
-    <div class="container">
-      <div class="sec-head">
-        <span class="sec-tag rv">Servicii</span>
-        <h2 class="sec-title rv">Tot ce ai nevoie,<br><span class="accent-i">într-un singur loc</span></h2>
-        <p class="sec-desc rv">De la dezvoltare web la inteligență artificială și producție creativă — un ecosistem complet de servicii digitale.</p>
+  <!-- ===== SERVICES — scroll-driven isometric world ===== -->
+  <section id="services" class="world">
+    <div class="world-sticky">
+      <canvas id="worldCanvas"></canvas>
+      <div class="world-vignette" aria-hidden="true"></div>
+
+      <div class="world-head">
+        <div class="wh-wrap">
+          <span class="sec-tag">Servicii</span>
+          <h2 class="sec-title" style="font-size:clamp(1.6rem,3.4vw,2.6rem);">Călătorește prin <span class="accent-i">ecosistem</span></h2>
+        </div>
       </div>
-      <div class="svc-list">
-        <a href="website-uri-premium.html" class="svc-row rv">
-          <span class="svc-num">01</span>
-          <span class="svc-name">Website-uri Premium</span>
-          <span class="svc-desc">Landing page-uri, portofolii și platforme web cu design modern, animații fluide și performanță de top.</span>
-          <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a href="voice-agents.html" class="svc-row rv">
-          <span class="svc-num">02</span>
-          <span class="svc-name">Voice Agents AI</span>
-          <span class="svc-desc">Agenți vocali care sună exact ca oamenii. Asistență telefonică, vânzări și suport — non-stop.</span>
-          <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a href="agent-ai.html" class="svc-row rv">
-          <span class="svc-num">03</span>
-          <span class="svc-name">Agenți AI & Automatizări</span>
-          <span class="svc-desc">Agenți inteligenți care trimit mail-uri, gestionează date și execută task-uri complexe — angajați digitali 24/7.</span>
-          <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a href="video-editing.html" class="svc-row rv">
-          <span class="svc-num">04</span>
-          <span class="svc-name">High-Conversion Ads</span>
-          <span class="svc-desc">Video-uri de conversie pentru reclame și campanii — editate profesional, cu tehnici avansate de manipulare video.</span>
-          <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a href="seo.html" class="svc-row rv">
-          <span class="svc-num">05</span>
-          <span class="svc-name">Copywriting & SEO</span>
-          <span class="svc-desc">Texte care convertesc și strategii SEO care aduc trafic organic, non-stop.</span>
-          <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a href="inginerie-sunet.html" class="svc-row rv">
-          <span class="svc-num">06</span>
-          <span class="svc-name">Voice AI & Audio Branding</span>
-          <span class="svc-desc">Voci pentru agenții AI, audio branding și producție sonoră profesională.</span>
-          <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
-        <a href="visual-assets.html" class="svc-row rv">
-          <span class="svc-num">07</span>
-          <span class="svc-name">Visual Assets for AI & Web</span>
-          <span class="svc-desc">3D renders, motion graphics și asset-uri vizuale premium — de la landing page-uri la pitch deck-uri.</span>
-          <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
+
+      <div class="svc-tab" data-stop="0"><span class="st-num">01</span><h4>Website-uri Premium</h4><p>Landing page-uri și platforme web cu design modern, animații fluide și performanță de top.</p><a href="website-uri-premium.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="1"><span class="st-num">02</span><h4>Voice Agents AI</h4><p>Agenți vocali care sună exact ca oamenii. Asistență, vânzări și suport — non-stop.</p><a href="voice-agents.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="2"><span class="st-num">03</span><h4>Agenți AI & Automatizări</h4><p>Angajați digitali 24/7: emailuri, date, task-uri complexe — fără pauze, fără erori.</p><a href="agent-ai.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="3"><span class="st-num">04</span><h4>High-Conversion Ads</h4><p>Video-uri de conversie pentru reclame și campanii, editate cu tehnici avansate.</p><a href="video-editing.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="4"><span class="st-num">05</span><h4>Copywriting & SEO</h4><p>Texte care convertesc și strategii SEO care aduc trafic organic, non-stop.</p><a href="seo.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="5"><span class="st-num">06</span><h4>Voice AI & Audio Branding</h4><p>Voci pentru agenți AI, audio branding și producție sonoră profesională.</p><a href="inginerie-sunet.html">Explorează →</a></div>
+      <div class="svc-tab" data-stop="6"><span class="st-num">07</span><h4>Visual Assets for AI & Web</h4><p>3D renders, motion graphics și asset-uri vizuale premium pentru produsele tale.</p><a href="visual-assets.html">Explorează →</a></div>
+
+      <div class="finale" id="finale">
+        <div class="finale-keys" id="finaleKeys"></div>
+        <p class="finale-tag" id="finaleTag">Imaginația devine realitate</p>
       </div>
+
+      <div class="world-progress" id="worldProgress"><i></i></div>
     </div>
   </section>
 
@@ -1463,104 +1625,20 @@
         <h2 class="sec-title rv">Proiecte <span class="accent-i">recente</span></h2>
         <p class="sec-desc rv">Fiecare proiect e o poveste — de la concept la lansare, cu atenție la fiecare detaliu.</p>
       </div>
-      <div class="pf-stack" id="pfStack">
-
-        <div class="pf-card">
-          <div class="pf-media">
-            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">casacartarum.ro</div></div>
-            <div class="pf-view"><iframe src="https://casacartarum.ro" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Casa Cartarum"></iframe></div>
-          </div>
-          <div class="pf-info">
-            <span class="pf-tag">Website Interactiv</span>
-            <h3>Casa Cartarum</h3>
-            <p>Galerie interactivă de hărți istorice ale României. O experiență digitală imersivă care aduce la viață patrimoniul cartografic românesc.</p>
-            <div class="pf-tech"><span>React</span><span>Three.js</span><span>GSAP</span><span>Custom Design</span></div>
-            <a href="https://casacartarum.ro" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
-          </div>
-        </div>
-
-        <div class="pf-card">
-          <div class="pf-media">
-            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">kashmirluchiano.com</div></div>
-            <div class="pf-view"><iframe src="https://kashmirluchiano.com" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Kashmir Luchiano"></iframe></div>
-          </div>
-          <div class="pf-info">
-            <span class="pf-tag">Artist Website</span>
-            <h3>Kashmir Luchiano</h3>
-            <p>Website de artist cu vizual puternic și atmosferă cinematică. Identitate digitală completă pentru lansarea albumului „Gigi Gazon".</p>
-            <div class="pf-tech"><span>HTML / CSS / JS</span><span>Video Integration</span><span>Custom Animations</span></div>
-            <a href="https://kashmirluchiano.com" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
-          </div>
-        </div>
-
-        <div class="pf-card">
-          <div class="pf-media">
-            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">oamenii-deltei.app</div></div>
-            <div class="pf-view">
-              <div class="chat-preview">
-                <div class="chat-head"><div class="chat-ava">OD</div><div><b>Oamenii Deltei — Agent AI</b><i>● Online</i></div></div>
-                <div class="chat-body">
-                  <div class="bubble a">Bună! Sunt asistentul virtual Oamenii Deltei. Te pot ajuta cu informații despre proiecte europene și consultanță SDL.</div>
-                  <div class="bubble u">Aș vrea să mă programez pentru o consultanță.</div>
-                  <div class="bubble a">Cu plăcere! Care este domeniul tău de interes pentru proiectele europene?</div>
-                  <div class="bubble u">Agricultură și dezvoltare rurală.</div>
-                  <div class="bubble a">Excelent! Avem mai multe linii de finanțare disponibile. Îți recomand o întâlnire cu consultantul nostru specializat.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="pf-info">
-            <span class="pf-tag">Agent AI</span>
-            <h3>Oamenii Deltei</h3>
-            <p>Agent AI construit pe baza unui raport SDL — programări la consultanță pentru proiecte europene și semi-consultanță automată, înainte de vizita fizică la birou.</p>
-            <div class="pf-tech"><span>AI Agent</span><span>SDL Report</span><span>Consultanță EU</span></div>
-            <a href="https://oamenii-deltei.app" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
-          </div>
-        </div>
-
-        <div class="pf-card">
-          <div class="pf-media">
-            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">meetings-ro.app</div></div>
-            <div class="pf-view"><iframe src="https://www.meetings-ro.app" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Meetings RO"></iframe></div>
-          </div>
-          <div class="pf-info">
-            <span class="pf-tag">Aplicație Web</span>
-            <h3>Meetings RO</h3>
-            <p>Platformă de programare a întâlnirilor pentru business-ul românesc. Calendare sincronizate, confirmare automată și management complet — fără e-mailuri înainte și înapoi.</p>
-            <div class="pf-tech"><span>React</span><span>Node.js</span><span>Calendar API</span><span>Custom Design</span></div>
-            <a href="https://www.meetings-ro.app" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
-          </div>
-        </div>
-
-      </div>
     </div>
+    <div class="pg-stage" id="pgStage">
+      <div class="pg-plane" id="pgPlane"></div>
+    </div>
+    <p class="pg-hint">Trage pentru a explora · Click pentru a deschide</p>
   </section>
 
-  <!-- ===== RECLAME ===== -->
-  <section id="reclame">
-    <div class="orb"></div>
-    <div class="container" style="max-width: 1000px;">
-      <div class="sec-head" style="text-align:center;">
-        <span class="sec-tag rv" style="justify-content:center;">Reclame</span>
-        <h2 class="sec-title rv">Campanii <span class="accent-i">video</span></h2>
-        <p class="sec-desc rv" style="margin-left:auto;margin-right:auto;">Reclame care convertesc — de la concept la producție finală, fiecare secundă contează.</p>
-      </div>
-      <div class="ad-frame rv">
-        <div class="ad-badge">Meetings RO · 2026</div>
-        <video controls preload="metadata">
-          <source src="meetings-v6.mov" type="video/mp4">
-          <source src="meetings-v6.mov" type="video/quicktime">
-        </video>
-      </div>
-      <div class="ad-meta rv">
-        <div>
-          <b>Meetings RO — Campanie de lansare</b>
-          <small>Platformă de programare · Producție video · 2026</small>
-        </div>
-        <a href="https://www.meetings-ro.app" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
-      </div>
+  <!-- Gallery lightbox -->
+  <div id="pgLight" onclick="if(event.target===this)closeLight()">
+    <div class="pgl-box">
+      <video id="pglVideo" controls playsinline></video>
+      <p class="pgl-title" id="pglTitle"></p>
     </div>
-  </section>
+  </div>
 
   <!-- ===== PRESS ===== -->
   <section id="press">
@@ -1645,7 +1723,6 @@
           <a href="#about">Despre</a>
           <a href="#services">Servicii</a>
           <a href="#portfolio">Portofoliu</a>
-          <a href="#reclame">Reclame</a>
           <a href="#press">Presă</a>
           <a href="javascript:void(0)" onclick="openContact()">Contact</a>
         </div>
@@ -2164,6 +2241,75 @@
         building(6.0, -28.2, 0.8, 0.8, 1.3, buildMat2, true);
       })();
 
+      /* ---------- START: PC tower + monitor → trail leaves the screen ---------- */
+      const STOPS_T = [0.09, 0.225, 0.36, 0.495, 0.63, 0.765, 0.9];
+      const stopAnchors = [];
+      (function landmarks() {
+        const s0 = curve.getPoint(0);
+        const tower = new THREE.Mesh(new THREE.BoxGeometry(0.7, 1.5, 0.7), darkMat);
+        tower.position.set(s0.x - 1.2, 0.75, s0.z - 0.5);
+        addEdges(tower); scene.add(tower);
+        const led = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.1, 0.1), winMat);
+        led.position.set(tower.position.x + 0.37, 0.75, tower.position.z + 0.18);
+        scene.add(led);
+        const mon = new THREE.Group();
+        const mFrame = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.05, 0.08), buildMat2);
+        addEdges(mFrame); mon.add(mFrame);
+        const mScreen = new THREE.Mesh(new THREE.PlaneGeometry(1.54, 0.9), new THREE.MeshBasicMaterial({ color: 0x2e6fe0 }));
+        mScreen.position.z = 0.045; mon.add(mScreen);
+        const mPole = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.09, 0.5, 8), darkMat);
+        mPole.position.y = -0.72; mon.add(mPole);
+        mon.position.set(s0.x, 1.05, s0.z);
+        mon.rotation.y = Math.PI / 4;
+        scene.add(mon);
+        animated.push({ fn: t => { mScreen.material.color.setHSL(0.58, 0.85, 0.4 + 0.1 * Math.sin(t * 2.4)); } });
+
+        /* 7 service blocks beside the path */
+        const up = new THREE.Vector3(0, 1, 0);
+        STOPS_T.forEach((st, i) => {
+          const pt = curve.getPoint(st);
+          const tan = curve.getTangent(st);
+          const side = new THREE.Vector3().crossVectors(tan, up).normalize().multiplyScalar(i % 2 ? 1.6 : -1.6);
+          const bx = pt.x + side.x, bz = pt.z + side.z;
+          const h = 1.5 + (i % 3) * 0.45;
+          const block = new THREE.Mesh(new THREE.BoxGeometry(0.95, h, 0.95), buildMat);
+          block.position.set(bx, h / 2, bz);
+          scene.add(block);
+          block.add(new THREE.LineSegments(new THREE.EdgesGeometry(block.geometry),
+            new THREE.LineBasicMaterial({ color: 0x4d9aff, transparent: true, opacity: 0.85 })));
+          const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 10), new THREE.MeshBasicMaterial({ color: 0x9cc8ff }));
+          beacon.position.set(bx, h + 0.24, bz);
+          scene.add(beacon);
+          animated.push({ fn: t => { beacon.scale.setScalar(1 + Math.sin(t * 3 + i * 1.7) * 0.3); } });
+          stopAnchors.push(new THREE.Vector3(bx, h + 0.5, bz));
+        });
+
+        /* final destination pad */
+        const e1 = curve.getPoint(1);
+        const pad = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.95, 0.12, 32),
+          new THREE.MeshStandardMaterial({ color: 0x0e1a3a, emissive: 0x0a3fa8, emissiveIntensity: 0.9, roughness: 0.4 }));
+        pad.position.set(e1.x, 0.06, e1.z);
+        scene.add(pad);
+        const padRing = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.03, 8, 48),
+          new THREE.MeshBasicMaterial({ color: 0x4d9aff, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false }));
+        padRing.rotation.x = Math.PI / 2;
+        padRing.position.set(e1.x, 0.12, e1.z);
+        scene.add(padRing);
+        animated.push({ fn: t => {
+          const k = 0.5 + 0.5 * Math.sin(t * 2.2);
+          padRing.scale.setScalar(1 + k * 0.6);
+          padRing.material.opacity = 0.85 - k * 0.5;
+        }});
+      })();
+
+      /* blast ring for the finale */
+      const blastMat = new THREE.MeshBasicMaterial({ color: 0x6db4ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+      const endP = curve.getPoint(1);
+      const blastRing = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.06, 8, 64), blastMat);
+      blastRing.position.set(endP.x, 0.3, endP.z);
+      blastRing.rotation.x = Math.PI / 2;
+      scene.add(blastRing);
+
       /* ---------- scatter fillers along the corridor ---------- */
       (function scatter() {
         const samples = [];
@@ -2218,45 +2364,57 @@
       target.copy(desired);
 
       ScrollTrigger.create({
-        trigger: '#hero',
+        trigger: '#services',
         start: 'top top',
         end: 'bottom bottom',
         scrub: true,
         onUpdate: self => { W.p = self.progress; }
       });
 
-      /* ---------- UI sync (hero overlay, steps, progress bar) ---------- */
-      const heroOverlay = document.getElementById('worldHero');
-      const stepsPanel = document.getElementById('worldSteps');
-      const heroScrollHint = document.getElementById('heroScroll');
+      /* ---------- finale keycaps DOM ---------- */
+      (function buildKeys() {
+        const wrap = document.getElementById('finaleKeys');
+        'KASHMIR DIGITAL'.split('').forEach((ch, i) => {
+          const k = document.createElement('span');
+          k.className = 'kcap' + (ch === ' ' ? ' space' : '') + (i >= 8 ? ' accent' : '');
+          k.textContent = ch === ' ' ? '' : ch;
+          wrap.appendChild(k);
+        });
+      })();
+
+      /* ---------- UI sync (service tabs, finale, progress bar) ---------- */
+      const tabs = Array.from(document.querySelectorAll('.svc-tab'));
       const progressBar = document.querySelector('#worldProgress i');
       const progressWrap = document.getElementById('worldProgress');
-      const worldFade = document.getElementById('worldFade');
-      const stepEls = Array.from(document.querySelectorAll('.world-steps .step'));
-      const bounds = [0.13, 0.36, 0.58, 0.80, 1.01];
-      let activeStep = -1;
+      const finaleEl = document.getElementById('finale');
+      const TAB_WIN = 0.058;
+      let finaleOn = false;
+      const proj = new THREE.Vector3();
 
       function syncUI(p) {
-        const heroOp = Math.max(0, 1 - p / 0.07);
-        heroOverlay.style.opacity = heroOp.toFixed(3);
-        heroOverlay.style.visibility = heroOp <= 0.01 ? 'hidden' : 'visible';
-        heroScrollHint.style.opacity = heroOp.toFixed(3);
-
-        const stepsOp = Math.min(1, Math.max(0, (p - 0.085) / 0.045));
-        stepsPanel.style.opacity = stepsOp.toFixed(3);
-        progressWrap.style.opacity = stepsOp > 0.5 ? 1 : 0;
+        progressWrap.style.opacity = (p > 0.02 && p < 0.985) ? 1 : 0;
         progressBar.style.height = (p * 100).toFixed(1) + '%';
-        worldFade.style.opacity = p > 0.94 ? 1 : 0;
+        for (let i = 0; i < tabs.length; i++) {
+          const on = Math.abs(p - STOPS_T[i]) < TAB_WIN;
+          if (on) {
+            proj.copy(stopAnchors[i]).project(camera);
+            tabs[i].style.left = ((proj.x * 0.5 + 0.5) * window.innerWidth).toFixed(1) + 'px';
+            tabs[i].style.top = ((-proj.y * 0.5 + 0.5) * window.innerHeight).toFixed(1) + 'px';
+          }
+          if (tabs[i].classList.contains('on') !== on) tabs[i].classList.toggle('on', on);
+        }
+        if (p >= 0.962 && !finaleOn) { finaleOn = true; playFinale(); }
+        else if (p < 0.93 && finaleOn) { finaleOn = false; finaleEl.classList.remove('on'); }
+      }
 
-        let idx = -1;
-        if (p >= bounds[0]) {
-          idx = 0;
-          for (let i = 1; i < 4; i++) if (p >= bounds[i]) idx = i;
-        }
-        if (idx !== activeStep) {
-          activeStep = idx;
-          stepEls.forEach((el, i) => el.classList.toggle('active', i === idx));
-        }
+      function playFinale() {
+        finaleEl.classList.add('on');
+        blastMat.opacity = 0.9;
+        blastRing.scale.setScalar(0.3);
+        gsap.to(blastRing.scale, { x: 12, y: 12, z: 12, duration: 1.5, ease: 'power3.out', overwrite: true });
+        gsap.to(blastMat, { opacity: 0, duration: 1.5, ease: 'power2.out', overwrite: true });
+        gsap.fromTo('.kcap', { scale: 0, rotate: -14 }, { scale: 1, rotate: 0, duration: 0.7, stagger: 0.045, ease: 'back.out(2.4)', overwrite: true });
+        gsap.fromTo('#finaleTag', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.75, ease: 'power3.out', overwrite: true });
       }
 
       /* ---------- mouse parallax ---------- */
@@ -2272,11 +2430,10 @@
       /* ---------- render loop ---------- */
       let inView = true;
       new IntersectionObserver(en => { inView = en[0].isIntersecting; }, { threshold: 0 })
-        .observe(document.getElementById('hero'));
+        .observe(document.getElementById('services'));
 
       const clock = new THREE.Clock();
       const headPos = new THREE.Vector3();
-      let lastUIp = -1;
 
       function tick() {
         requestAnimationFrame(tick);
@@ -2312,8 +2469,7 @@
         // animated bits
         for (const a of animated) a.fn(t);
 
-        // UI sync (throttle: only when progress changed meaningfully)
-        if (Math.abs(p - lastUIp) > 0.0015) { syncUI(p); lastUIp = p; }
+        syncUI(p);
 
         renderer.render(scene, camera);
       }
@@ -2329,6 +2485,133 @@
         camera.bottom = -viewSize;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+
+    /* ================= HERO VIDEO SCRUB ================= */
+    if (!prefersReduced) {
+      gsap.fromTo('#vhMedia', { scale: 0.92, borderRadius: '28px' }, {
+        scale: 1, borderRadius: '0px', ease: 'none',
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: '55% top', scrub: 0.4 }
+      });
+      gsap.to('#vhContent', {
+        y: -120, opacity: 0, ease: 'none',
+        scrollTrigger: { trigger: '#hero', start: '15% top', end: '70% top', scrub: 0.4 }
+      });
+      gsap.to('#heroScroll', {
+        opacity: 0, ease: 'none',
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: '20% top', scrub: true }
+      });
+    }
+
+    /* ================= PHANTOM GALLERY ================= */
+    const PG_ITEMS = [
+      { kind: 'site', title: 'Casa Cartarum', tag: 'Website interactiv', url: 'https://casacartarum.ro', g: ['#0a1628', '#1b2f55', 'CC'] },
+      { kind: 'video', title: 'Meetings RO — Spot V6', tag: 'High-Conversion Ad', src: 'meetings-v6.mov', poster: 'assets/portfolio/meetings-v6.jpg' },
+      { kind: 'yt', title: 'Kashmir Luchiano — BRR', tag: 'Videoclip muzical', url: 'https://www.youtube.com/watch?v=9l3zFDCcYqc', poster: 'assets/portfolio/yt-brr.jpg' },
+      { kind: 'video', title: 'Venit Din Timp — România 1791', tag: 'Episod istoric', src: 'assets/portfolio/vdt-1791.mp4', poster: 'assets/portfolio/vdt-1791.jpg' },
+      { kind: 'site', title: 'Kashmir Luchiano', tag: 'Artist website', url: 'https://kashmirluchiano.com', g: ['#170b22', '#3a1454', 'KL'] },
+      { kind: 'video', title: 'Meetings RO — Reclama 2', tag: 'High-Conversion Ad', src: 'assets/portfolio/meetings-r2.mp4', poster: 'assets/portfolio/meetings-r2.jpg' },
+      { kind: 'yt', title: 'Kashmir Luchiano — MA JOLIE', tag: 'Videoclip muzical', url: 'https://www.youtube.com/watch?v=N71k6MbbMSY', poster: 'assets/portfolio/yt-majolie.jpg' },
+      { kind: 'site', title: 'Oamenii Deltei', tag: 'Agent AI', url: 'https://oamenii-deltei.app', g: ['#0a1f1a', '#14523f', 'OD'] },
+      { kind: 'video', title: 'Venit Din Timp — Weissmann la Isaccea', tag: 'Episod istoric', src: 'assets/portfolio/vdt-isaccea.mp4', poster: 'assets/portfolio/vdt-isaccea.jpg' },
+      { kind: 'yt', title: 'Kashmir Luchiano — MILIOANE', tag: 'Videoclip muzical', url: 'https://www.youtube.com/watch?v=gbmisj87ykg', poster: 'assets/portfolio/yt-milioane.jpg' },
+      { kind: 'site', title: 'Meetings RO', tag: 'Aplicație web', url: 'https://www.meetings-ro.app', g: ['#0a1430', '#123a7a', 'M'] },
+      { kind: 'video', title: 'Meetings RO — Reclama 3', tag: 'High-Conversion Ad', src: 'assets/portfolio/meetings-r3.mp4', poster: 'assets/portfolio/meetings-r3.jpg' }
+    ];
+
+    function closeLight() {
+      const l = document.getElementById('pgLight');
+      const v = document.getElementById('pglVideo');
+      v.pause(); v.removeAttribute('src'); v.load();
+      l.classList.remove('open');
+    }
+
+    (function gallery() {
+      const stage = document.getElementById('pgStage');
+      const plane = document.getElementById('pgPlane');
+      const COLS = 4, IW = 340, IH = 215, GX = 42, GY = 40;
+      const isM = window.innerWidth < 768;
+      const iw = isM ? 250 : IW, ih = isM ? 158 : IH;
+      const cellW = iw + GX, cellH = ih + GY;
+      const rows = Math.ceil(PG_ITEMS.length / COLS);
+      const els = [];
+
+      PG_ITEMS.forEach((it, i) => {
+        const c = i % COLS, r = Math.floor(i / COLS);
+        const x = (c - (COLS - 1) / 2) * cellW;
+        const y = (r - (rows - 1) / 2) * cellH;
+        const el = document.createElement('div');
+        el.className = 'pg-item';
+        el.style.left = (x - iw / 2) + 'px';
+        el.style.top = (y - ih / 2) + 'px';
+        el.style.width = iw + 'px';
+        el.style.height = ih + 'px';
+        let inner = '';
+        if (it.poster) inner += '<img src="' + it.poster + '" alt="" loading="lazy" draggable="false">';
+        else inner += '<div class="pg-cover" style="background:linear-gradient(150deg,' + it.g[0] + ',' + it.g[1] + ');"><small>' + it.tag + '</small><b>' + it.title + '</b></div>';
+        if (it.kind !== 'site') inner += '<div class="pg-play"></div>';
+        if (it.poster) inner += '<div class="pg-meta"><b>' + it.title + '</b><span>' + it.tag + '</span></div>';
+        el.innerHTML = inner;
+        el.dataset.idx = i;
+        plane.appendChild(el);
+        els.push({ el, x, y });
+      });
+
+      const maxX = ((COLS - 1) / 2) * cellW, maxY = ((rows - 1) / 2) * cellH;
+      let tx = 0, ty = 0, cx = 0, cy = 0;
+      let dragging = false, moved = 0, sx = 0, sy = 0, ox = 0, oy = 0;
+
+      stage.addEventListener('pointerdown', e => {
+        dragging = true; moved = 0;
+        sx = e.clientX; sy = e.clientY; ox = tx; oy = ty;
+        stage.classList.add('grabbing');
+        stage.setPointerCapture(e.pointerId);
+      });
+      stage.addEventListener('pointermove', e => {
+        if (!dragging) return;
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        moved = Math.max(moved, Math.abs(dx) + Math.abs(dy));
+        tx = Math.max(-maxX, Math.min(maxX, ox + dx));
+        ty = Math.max(-maxY, Math.min(maxY, oy + dy));
+      });
+      stage.addEventListener('pointerup', e => {
+        dragging = false;
+        stage.classList.remove('grabbing');
+        if (moved < 8) {
+          const item = e.target.closest('.pg-item');
+          if (item) openItem(PG_ITEMS[+item.dataset.idx]);
+        }
+      });
+      stage.addEventListener('wheel', e => {
+        e.preventDefault();
+        tx = Math.max(-maxX, Math.min(maxX, tx - e.deltaX * 0.8 - (e.shiftKey ? e.deltaY * 0.8 : 0)));
+        ty = Math.max(-maxY, Math.min(maxY, ty - (e.shiftKey ? 0 : e.deltaY * 0.8)));
+      }, { passive: false });
+
+      function openItem(it) {
+        if (it.kind === 'site' || it.kind === 'yt') { window.open(it.url, '_blank', 'noopener'); return; }
+        const l = document.getElementById('pgLight');
+        const v = document.getElementById('pglVideo');
+        document.getElementById('pglTitle').textContent = it.title;
+        v.src = it.src;
+        l.classList.add('open');
+        v.play().catch(() => {});
+      }
+
+      const stW = () => stage.clientWidth;
+      gsap.ticker.add(() => {
+        if (!stage.isConnected) return;
+        cx += (tx - cx) * 0.08;
+        cy += (ty - cy) * 0.08;
+        plane.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
+        const w2 = stW() / 2;
+        for (const o of els) {
+          const offX = (o.x + cx) / w2;
+          const ry = Math.max(-1, Math.min(1, offX)) * -16;
+          const tz = -Math.min(180, Math.abs(offX) * 160);
+          o.el.style.transform = 'perspective(1200px) rotateY(' + ry.toFixed(2) + 'deg) translateZ(' + tz.toFixed(1) + 'px)';
+        }
       });
     })();
 
@@ -2461,7 +2744,10 @@
       document.getElementById('contact-form-wrap').style.display = 'flex';
     }
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') document.getElementById('contact-form-wrap').style.display = 'none';
+      if (e.key === 'Escape') {
+        document.getElementById('contact-form-wrap').style.display = 'none';
+        closeLight();
+      }
     });
     function sendContactForm(e) {
       e.preventDefault();
