@@ -105,11 +105,22 @@
     </div>
   </section>
 
-  <!-- marquee -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track" id="mqA"></div>
-    <div class="marquee-track" id="mqB"></div>
-  </div>
+  <!-- ============ MANIFEST — diamond cinematic scrub ============ -->
+  <section class="cinematic" id="manifest">
+    <div class="sticky">
+      <canvas></canvas>
+      <div class="vignette"></div>
+      <div class="overlay">
+        <div class="reveal-line" data-in="-0.05" data-out="0.5">
+          <h1 style="font-size:clamp(2.2rem,6.4vw,5.6rem);">Fluid ca <span class="thin">ideea ta</span></h1>
+        </div>
+        <div class="reveal-line" data-in="0.5" data-out="1.08">
+          <h1 style="font-size:clamp(2.2rem,6.4vw,5.6rem);">Precis ca <span class="thin">execuția noastră</span></h1>
+        </div>
+      </div>
+      <div class="progress"><div class="progress-fill"></div></div>
+    </div>
+  </section>
 
   <!-- ============ DESPRE ============ -->
   <section id="despre">
@@ -136,27 +147,6 @@
     </div>
   </section>
 
-  <!-- ============ MANIFEST — cinematic scrub (liquid glass) ============ -->
-  <section class="cinematic" id="manifest">
-    <div class="sticky">
-      <canvas></canvas>
-      <div class="vignette"></div>
-      <div class="overlay">
-        <div class="reveal-line" data-in="-0.1" data-out="0.34">
-          <h1 style="font-size:clamp(2.2rem,6.4vw,5.6rem);">Fluid ca <span class="thin">ideea ta</span></h1>
-        </div>
-        <div class="reveal-line" data-in="0.38" data-out="0.66">
-          <h1 style="font-size:clamp(2.2rem,6.4vw,5.6rem);">Precis ca <span class="thin">execuția noastră</span></h1>
-        </div>
-        <div class="reveal-line" data-in="0.70" data-out="1.1">
-          <h1 style="font-size:clamp(2.2rem,6.4vw,5.6rem);">Web. AI. <span class="thin">Content.</span></h1>
-          <p>Fiecare piesă amplifică restul. Asta e diferența dintre prezență online și dominație digitală.</p>
-        </div>
-      </div>
-      <div class="progress"><div class="progress-fill"></div></div>
-    </div>
-  </section>
-
   <!-- ============ SERVICII ============ -->
   <section id="services">
     <div class="orb"></div>
@@ -178,28 +168,86 @@
     </div>
   </section>
 
-  <!-- ============ PORTOFOLIU — phantom gallery ============ -->
+  <!-- ============ PORTOFOLIU — 3D sticky stack ============ -->
   <section id="portfolio">
     <div class="container">
       <div class="sec-head">
         <span class="sec-tag reveal">Portofoliu</span>
         <h2 class="sec-title reveal">Proiecte <span class="accent-i">recente</span></h2>
-        <p class="sec-desc reveal">Site-uri, reclame, episoade istorice și videoclipuri muzicale — trage și explorează.</p>
+        <p class="sec-desc reveal">Fiecare proiect e o poveste — de la concept la lansare, cu atenție la fiecare detaliu.</p>
+      </div>
+      <div class="pf-stack" id="pfStack">
+
+        <div class="pf-card">
+          <div class="pf-media">
+            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">casacartarum.ro</div></div>
+            <div class="pf-view"><iframe src="https://casacartarum.ro" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Casa Cartarum"></iframe></div>
+          </div>
+          <div class="pf-info">
+            <span class="pf-tag">Website Interactiv</span>
+            <h3>Casa Cartarum</h3>
+            <p>Galerie interactivă de hărți istorice ale României. O experiență digitală imersivă care aduce la viață patrimoniul cartografic românesc.</p>
+            <div class="pf-tech"><span>React</span><span>Three.js</span><span>GSAP</span><span>Custom Design</span></div>
+            <a href="https://casacartarum.ro" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
+          </div>
+        </div>
+
+        <div class="pf-card">
+          <div class="pf-media">
+            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">kashmirluchiano.com</div></div>
+            <div class="pf-view"><iframe src="https://kashmirluchiano.com" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Kashmir Luchiano"></iframe></div>
+          </div>
+          <div class="pf-info">
+            <span class="pf-tag">Artist Website</span>
+            <h3>Kashmir Luchiano</h3>
+            <p>Website de artist cu vizual puternic și atmosferă cinematică. Identitate digitală completă pentru lansarea albumului „Gigi Gazon".</p>
+            <div class="pf-tech"><span>HTML / CSS / JS</span><span>Video Integration</span><span>Custom Animations</span></div>
+            <a href="https://kashmirluchiano.com" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
+          </div>
+        </div>
+
+        <div class="pf-card">
+          <div class="pf-media">
+            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">oamenii-deltei.app</div></div>
+            <div class="pf-view">
+              <div class="chat-preview">
+                <div class="chat-head"><div class="chat-ava">OD</div><div><b>Oamenii Deltei — Agent AI</b><i>● Online</i></div></div>
+                <div class="chat-body">
+                  <div class="bubble a">Bună! Sunt asistentul virtual Oamenii Deltei. Te pot ajuta cu informații despre proiecte europene și consultanță SDL.</div>
+                  <div class="bubble u">Aș vrea să mă programez pentru o consultanță.</div>
+                  <div class="bubble a">Cu plăcere! Care este domeniul tău de interes pentru proiectele europene?</div>
+                  <div class="bubble u">Agricultură și dezvoltare rurală.</div>
+                  <div class="bubble a">Excelent! Avem mai multe linii de finanțare disponibile. Îți recomand o întâlnire cu consultantul nostru specializat.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pf-info">
+            <span class="pf-tag">Agent AI</span>
+            <h3>Oamenii Deltei</h3>
+            <p>Agent AI construit pe baza unui raport SDL — programări la consultanță pentru proiecte europene și semi-consultanță automată, înainte de vizita fizică la birou.</p>
+            <div class="pf-tech"><span>AI Agent</span><span>SDL Report</span><span>Consultanță EU</span></div>
+            <a href="https://oamenii-deltei.app" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
+          </div>
+        </div>
+
+        <div class="pf-card">
+          <div class="pf-media">
+            <div class="pf-bar"><div class="pf-dots"><span></span><span></span><span></span></div><div class="pf-url">meetings-ro.app</div></div>
+            <div class="pf-view"><iframe src="https://www.meetings-ro.app" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Meetings RO"></iframe></div>
+          </div>
+          <div class="pf-info">
+            <span class="pf-tag">Aplicație Web</span>
+            <h3>Meetings RO</h3>
+            <p>Platformă de programare a întâlnirilor pentru business-ul românesc. Calendare sincronizate, confirmare automată și management complet — fără e-mailuri înainte și înapoi.</p>
+            <div class="pf-tech"><span>React</span><span>Node.js</span><span>Calendar API</span><span>Custom Design</span></div>
+            <a href="https://www.meetings-ro.app" target="_blank" rel="noopener" class="pf-link">Vizitează site-ul <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg></a>
+          </div>
+        </div>
+
       </div>
     </div>
-    <div class="pg-stage" id="pgStage">
-      <div class="pg-plane" id="pgPlane"></div>
-    </div>
-    <p class="pg-hint">Trage pentru a explora · Click pentru a deschide</p>
   </section>
-
-  <!-- lightbox -->
-  <div id="pgLight" onclick="if(event.target===this)closeLight()">
-    <div class="pgl-box">
-      <video id="pglVideo" controls playsinline></video>
-      <p class="pgl-title" id="pglTitle"></p>
-    </div>
-  </div>
 
   <!-- ============ PRESĂ ============ -->
   <section id="press">
@@ -348,20 +396,6 @@
     window.SCRUB_SECTIONS = [
       { section: '#hero',     frameCount: 240, bg: '#04070f', framePath: (i) => 'frames/hero/frame_' + String(i).padStart(4, '0') + '.jpg' },
       { section: '#manifest', frameCount: 240, bg: '#04070f', framePath: (i) => 'frames/mono/frame_' + String(i).padStart(4, '0') + '.jpg' }
-    ];
-    window.PG_ITEMS = [
-      { kind: 'site', title: 'Casa Cartarum', tag: 'Website interactiv', url: 'https://casacartarum.ro', g: ['#0a1628', '#1b2f55'] },
-      { kind: 'video', title: 'Meetings RO — Spot V6', tag: 'High-Conversion Ad', src: 'meetings-v6.mov', poster: 'assets/portfolio/meetings-v6.jpg' },
-      { kind: 'yt', title: 'Kashmir Luchiano — BRR', tag: 'Videoclip muzical', url: 'https://www.youtube.com/watch?v=9l3zFDCcYqc', poster: 'assets/portfolio/yt-brr.jpg' },
-      { kind: 'video', title: 'Venit Din Timp — România 1791', tag: 'Episod istoric', src: 'assets/portfolio/vdt-1791.mp4', poster: 'assets/portfolio/vdt-1791.jpg' },
-      { kind: 'site', title: 'Kashmir Luchiano', tag: 'Artist website', url: 'https://kashmirluchiano.com', g: ['#170b22', '#3a1454'] },
-      { kind: 'video', title: 'Meetings RO — Reclama 2', tag: 'High-Conversion Ad', src: 'assets/portfolio/meetings-r2.mp4', poster: 'assets/portfolio/meetings-r2.jpg' },
-      { kind: 'yt', title: 'Kashmir Luchiano — MA JOLIE', tag: 'Videoclip muzical', url: 'https://www.youtube.com/watch?v=N71k6MbbMSY', poster: 'assets/portfolio/yt-majolie.jpg' },
-      { kind: 'site', title: 'Oamenii Deltei', tag: 'Agent AI', url: 'https://oamenii-deltei.app', g: ['#0a1f1a', '#14523f'] },
-      { kind: 'video', title: 'Venit Din Timp — Weissmann la Isaccea', tag: 'Episod istoric', src: 'assets/portfolio/vdt-isaccea.mp4', poster: 'assets/portfolio/vdt-isaccea.jpg' },
-      { kind: 'yt', title: 'Kashmir Luchiano — MILIOANE', tag: 'Videoclip muzical', url: 'https://www.youtube.com/watch?v=gbmisj87ykg', poster: 'assets/portfolio/yt-milioane.jpg' },
-      { kind: 'site', title: 'Meetings RO', tag: 'Aplicație web', url: 'https://www.meetings-ro.app', g: ['#0a1430', '#123a7a'] },
-      { kind: 'video', title: 'Meetings RO — Reclama 3', tag: 'High-Conversion Ad', src: 'assets/portfolio/meetings-r3.mp4', poster: 'assets/portfolio/meetings-r3.jpg' }
     ];
   </script>
   <script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>

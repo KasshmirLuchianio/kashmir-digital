@@ -115,7 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
   window.__lenis = lenis;
-  function raf(t) { lenis.raf(t); scrubs.forEach((s) => s.update()); requestAnimationFrame(raf); }
+  let pfUpdate = null;
+  function raf(t) { lenis.raf(t); scrubs.forEach((s) => s.update()); if (pfUpdate) pfUpdate(); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
 
   /* reveals + counters */
@@ -167,14 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
     lenis.start();
   };
 
-  /* marquee */
-  (function marquee() {
-    const items = ['Website-uri Premium', 'Agenți AI', 'Voice Agents', 'High-Conversion Ads', 'SEO & Copywriting', 'Audio Branding', 'Visual Assets'];
-    const html = items.map((t) => '<span class="marquee-item">' + t + '<em>✦</em></span>').join('');
-    document.getElementById('mqA').innerHTML = html;
-    document.getElementById('mqB').innerHTML = html;
-  })();
-
   /* custom cursor */
   (function cursor() {
     if (isMobile) return;
@@ -189,105 +182,35 @@ document.addEventListener('DOMContentLoaded', () => {
       ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
       requestAnimationFrame(loop);
     })();
-    const hov = 'a, button, .svc-row, .faq-q, .pg-item, input, select, textarea';
+    const hov = 'a, button, .svc-row, .faq-q, .pf-card, input, select, textarea';
     document.addEventListener('mouseover', (e) => { if (e.target.closest(hov)) document.body.classList.add('cursor-hover'); });
     document.addEventListener('mouseout', (e) => { if (e.target.closest(hov)) document.body.classList.remove('cursor-hover'); });
   })();
 
-  /* phantom gallery */
-  (function gallery() {
-    const stage = document.getElementById('pgStage');
-    const plane = document.getElementById('pgPlane');
-    if (!stage || !window.PG_ITEMS) return;
-    const COLS = 4, GX = 42, GY = 40;
-    const iw = isMobile ? 250 : 340, ih = isMobile ? 158 : 215;
-    const cellW = iw + GX, cellH = ih + GY;
-    const rows = Math.ceil(PG_ITEMS.length / COLS);
-    const els = [];
-
-    PG_ITEMS.forEach((it, i) => {
-      const c = i % COLS, r = Math.floor(i / COLS);
-      const x = (c - (COLS - 1) / 2) * cellW;
-      const y = (r - (rows - 1) / 2) * cellH;
-      const el = document.createElement('div');
-      el.className = 'pg-item';
-      el.style.cssText = 'left:' + (x - iw / 2) + 'px;top:' + (y - ih / 2) + 'px;width:' + iw + 'px;height:' + ih + 'px;';
-      let inner = '';
-      if (it.poster) inner += '<img src="' + it.poster + '" alt="" loading="lazy" draggable="false">';
-      else inner += '<div class="pg-cover" style="background:linear-gradient(150deg,' + it.g[0] + ',' + it.g[1] + ');"><small>' + it.tag + '</small><b>' + it.title + '</b></div>';
-      if (it.kind !== 'site') inner += '<div class="pg-play"></div>';
-      if (it.poster) inner += '<div class="pg-meta"><b>' + it.title + '</b><span>' + it.tag + '</span></div>';
-      el.innerHTML = inner;
-      el.dataset.idx = i;
-      plane.appendChild(el);
-      els.push({ el, x, y });
-    });
-
-    const maxX = ((COLS - 1) / 2) * cellW, maxY = ((rows - 1) / 2) * cellH;
-    let tx = 0, ty = 0, cx = 0, cy = 0;
-    let dragging = false, moved = 0, sx = 0, sy = 0, ox = 0, oy = 0;
-
-    stage.addEventListener('pointerdown', (e) => {
-      dragging = true; moved = 0;
-      sx = e.clientX; sy = e.clientY; ox = tx; oy = ty;
-      stage.classList.add('grabbing');
-      stage.setPointerCapture(e.pointerId);
-    });
-    stage.addEventListener('pointermove', (e) => {
-      if (!dragging) return;
-      const dx = e.clientX - sx, dy = e.clientY - sy;
-      moved = Math.max(moved, Math.abs(dx) + Math.abs(dy));
-      tx = Math.max(-maxX, Math.min(maxX, ox + dx));
-      ty = Math.max(-maxY, Math.min(maxY, oy + dy));
-    });
-    stage.addEventListener('pointerup', (e) => {
-      dragging = false;
-      stage.classList.remove('grabbing');
-      if (moved < 8) {
-        const item = e.target.closest('.pg-item');
-        if (item) openItem(PG_ITEMS[+item.dataset.idx]);
+  /* portfolio — 3D sticky stack (cards scale down as the next slides over) */
+  (function pfStack() {
+    const cards = Array.from(document.querySelectorAll('.pf-card'));
+    if (!cards.length) return;
+    cards.forEach((c, i) => { c.style.top = (96 + i * 26) + 'px'; c.style.zIndex = String(i + 1); });
+    let wasDesktop = false;
+    pfUpdate = function () {
+      if (window.innerWidth < 900) {
+        if (wasDesktop) { cards.forEach((c) => { c.style.transform = ''; c.style.opacity = ''; c.style.filter = ''; }); wasDesktop = false; }
+        return;
       }
-    });
-    stage.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      tx = Math.max(-maxX, Math.min(maxX, tx - e.deltaX * 0.8 - (e.shiftKey ? e.deltaY * 0.8 : 0)));
-      ty = Math.max(-maxY, Math.min(maxY, ty - (e.shiftKey ? 0 : e.deltaY * 0.8)));
-    }, { passive: false });
-
-    function openItem(it) {
-      if (it.kind === 'site' || it.kind === 'yt') { window.open(it.url, '_blank', 'noopener'); return; }
-      const l = document.getElementById('pgLight');
-      const v = document.getElementById('pglVideo');
-      document.getElementById('pglTitle').textContent = it.title;
-      v.src = it.src;
-      l.classList.add('open');
-      lenis.stop();
-      v.play().catch(() => {});
-    }
-
-    (function tilt() {
-      requestAnimationFrame(tilt);
-      cx += (tx - cx) * 0.08;
-      cy += (ty - cy) * 0.08;
-      plane.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
-      const w2 = stage.clientWidth / 2;
-      for (const o of els) {
-        const offX = (o.x + cx) / w2;
-        const ry2 = Math.max(-1, Math.min(1, offX)) * -16;
-        const tz = -Math.min(180, Math.abs(offX) * 160);
-        o.el.style.transform = 'perspective(1200px) rotateY(' + ry2.toFixed(2) + 'deg) translateZ(' + tz.toFixed(1) + 'px)';
+      wasDesktop = true;
+      const vh = window.innerHeight;
+      for (let i = 0; i < cards.length - 1; i++) {
+        const next = cards[i + 1].getBoundingClientRect();
+        const p = Math.max(0, Math.min(1, (vh - next.top) / (vh - 130)));
+        cards[i].style.transform = 'scale(' + (1 - p * 0.06).toFixed(4) + ')';
+        cards[i].style.opacity = (1 - p * 0.45).toFixed(3);
+        cards[i].style.filter = 'blur(' + (p * 2).toFixed(2) + 'px)';
       }
-    })();
+      const last = cards[cards.length - 1];
+      last.style.transform = ''; last.style.opacity = ''; last.style.filter = '';
+    };
   })();
-
-  window.closeLight = function () {
-    const l = document.getElementById('pgLight');
-    const v = document.getElementById('pglVideo');
-    v.pause(); v.removeAttribute('src'); v.load();
-    l.classList.remove('open');
-    lenis.start();
-  };
 
   /* FAQ */
   document.querySelectorAll('.faq-q').forEach((btn) => {
@@ -316,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lenis.start();
   };
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { window.closeContact(); window.closeLight(); }
+    if (e.key === 'Escape') { window.closeContact(); }
   });
   window.sendContactForm = function (e) {
     e.preventDefault();
