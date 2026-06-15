@@ -15,11 +15,11 @@ function initScrub(cfg) {
   const images = [];
 
   /* fade overlays: fade-to-black at end, optional fade-from-black at start */
-  function makeFade(startOpacity) {
+  function makeFade(startOpacity, withText) {
     const el = document.createElement('div');
     el.className = 'section-end-fade';
     el.style.opacity = startOpacity;
-    if (cfg.transitionText) {
+    if (withText && cfg.transitionText) {
       const txt = document.createElement('span');
       txt.className = 'transition-text';
       txt.textContent = cfg.transitionText;
@@ -28,8 +28,8 @@ function initScrub(cfg) {
     section.querySelector('.sticky').appendChild(el);
     return el;
   }
-  const endFade = makeFade('0');
-  const startFade = cfg.fadeIn ? makeFade('1') : null;
+  const endFade = makeFade('0', false);
+  const startFade = cfg.fadeIn ? makeFade('1', true) : null;
   let loaded = 0, firstDrawn = false;
 
   for (let i = 0; i < cfg.frameCount; i++) {
