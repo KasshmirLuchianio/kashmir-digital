@@ -15,17 +15,21 @@ function initScrub(cfg) {
   const images = [];
 
   /* fade overlays: fade-to-black at end, optional fade-from-black at start */
-  const endFade = document.createElement('div');
-  endFade.className = 'section-end-fade';
-  section.querySelector('.sticky').appendChild(endFade);
-
-  let startFade = null;
-  if (cfg.fadeIn) {
-    startFade = document.createElement('div');
-    startFade.className = 'section-end-fade';
-    startFade.style.opacity = '1';
-    section.querySelector('.sticky').appendChild(startFade);
+  function makeFade(startOpacity) {
+    const el = document.createElement('div');
+    el.className = 'section-end-fade';
+    el.style.opacity = startOpacity;
+    if (cfg.transitionText) {
+      const txt = document.createElement('span');
+      txt.className = 'transition-text';
+      txt.textContent = cfg.transitionText;
+      el.appendChild(txt);
+    }
+    section.querySelector('.sticky').appendChild(el);
+    return el;
   }
+  const endFade = makeFade('0');
+  const startFade = cfg.fadeIn ? makeFade('1') : null;
   let loaded = 0, firstDrawn = false;
 
   for (let i = 0; i < cfg.frameCount; i++) {
