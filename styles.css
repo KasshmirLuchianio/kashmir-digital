@@ -133,8 +133,6 @@ body.cursor-hover .cursor-ring { width: 64px; height: 64px; margin: -32px 0 0 -3
 .btn svg { transition: transform .35s var(--ease); flex-shrink: 0; }
 .btn:hover svg { transform: translateX(4px); }
 
-.progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(255,255,255,.08); z-index: 4; }
-.progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent-light)); box-shadow: 0 0 14px rgba(var(--accent-rgb), .7); }
 .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 4; font-size: .62rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,.55); transition: opacity .5s; animation: hintFloat 2.4s ease-in-out infinite; }
 @keyframes hintFloat { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
 
