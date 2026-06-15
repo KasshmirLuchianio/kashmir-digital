@@ -14,10 +14,18 @@ function initScrub(cfg) {
   const bgFill = cfg.bg || '#04070f';
   const images = [];
 
-  /* end-of-section fade to black */
+  /* fade overlays: fade-to-black at end, optional fade-from-black at start */
   const endFade = document.createElement('div');
   endFade.className = 'section-end-fade';
   section.querySelector('.sticky').appendChild(endFade);
+
+  let startFade = null;
+  if (cfg.fadeIn) {
+    startFade = document.createElement('div');
+    startFade.className = 'section-end-fade';
+    startFade.style.opacity = '1';
+    section.querySelector('.sticky').appendChild(startFade);
+  }
   let loaded = 0, firstDrawn = false;
 
   for (let i = 0; i < cfg.frameCount; i++) {
@@ -60,7 +68,8 @@ function initScrub(cfg) {
     const idx = Math.min(cfg.frameCount - 1, Math.floor(p * (cfg.frameCount - 1)));
     if (idx !== current) { current = idx; draw(idx); }
     if (fill) fill.style.width = (p * 100).toFixed(2) + '%';
-    endFade.style.opacity = Math.max(0, (p - 0.82) / 0.18).toFixed(3);
+    endFade.style.opacity = Math.max(0, (p - 0.94) / 0.06).toFixed(3);
+    if (startFade) startFade.style.opacity = Math.max(0, 1 - p / 0.10).toFixed(3);
     for (const el of lines) {
       const a = parseFloat(el.dataset.in), b = parseFloat(el.dataset.out);
       const mid = (a + b) / 2, half = Math.max((b - a) / 2, 0.001);
