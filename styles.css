@@ -113,6 +113,7 @@ body.cursor-hover .cursor-ring { width: 64px; height: 64px; margin: -32px 0 0 -3
 .cinematic .sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .cinematic canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .cinematic .vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 45% at 50% 50%, rgba(2,5,12,.42) 0%, transparent 75%), radial-gradient(ellipse 95% 85% at 50% 45%, transparent 52%, rgba(2,5,12,.62) 100%), linear-gradient(180deg, rgba(2,5,12,.5) 0%, transparent 22%, transparent 78%, rgba(2,5,12,.55) 100%); }
+.section-end-fade { position: absolute; inset: 0; background: #04070f; pointer-events: none; opacity: 0; z-index: 4; }
 #hero { height: 640vh; background: #04070f; }
 #manifest { height: 480vh; background: #04070f; }
 

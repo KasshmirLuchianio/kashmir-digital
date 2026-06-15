@@ -13,6 +13,11 @@ function initScrub(cfg) {
   const fill = section.querySelector('.progress-fill');
   const bgFill = cfg.bg || '#04070f';
   const images = [];
+
+  /* end-of-section fade to black */
+  const endFade = document.createElement('div');
+  endFade.className = 'section-end-fade';
+  section.querySelector('.sticky').appendChild(endFade);
   let loaded = 0, firstDrawn = false;
 
   for (let i = 0; i < cfg.frameCount; i++) {
@@ -55,6 +60,7 @@ function initScrub(cfg) {
     const idx = Math.min(cfg.frameCount - 1, Math.floor(p * (cfg.frameCount - 1)));
     if (idx !== current) { current = idx; draw(idx); }
     if (fill) fill.style.width = (p * 100).toFixed(2) + '%';
+    endFade.style.opacity = Math.max(0, (p - 0.82) / 0.18).toFixed(3);
     for (const el of lines) {
       const a = parseFloat(el.dataset.in), b = parseFloat(el.dataset.out);
       const mid = (a + b) / 2, half = Math.max((b - a) / 2, 0.001);
