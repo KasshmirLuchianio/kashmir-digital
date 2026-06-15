@@ -69,7 +69,7 @@ function initScrub(cfg) {
     if (idx !== current) { current = idx; draw(idx); }
     if (fill) fill.style.width = (p * 100).toFixed(2) + '%';
     endFade.style.opacity = Math.max(0, (p - 0.94) / 0.06).toFixed(3);
-    if (startFade) startFade.style.opacity = Math.max(0, 1 - p / 0.10).toFixed(3);
+    if (startFade) startFade.style.opacity = Math.max(0, 1 - p / 0.03).toFixed(3);
     for (const el of lines) {
       const a = parseFloat(el.dataset.in), b = parseFloat(el.dataset.out);
       const mid = (a + b) / 2, half = Math.max((b - a) / 2, 0.001);
