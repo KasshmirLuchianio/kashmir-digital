@@ -175,24 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
     lenis.start();
   };
 
-  /* custom cursor */
-  (function cursor() {
-    if (isMobile) return;
-    const dot = document.getElementById('cDot');
-    const ring = document.getElementById('cRing');
-    let mx = -100, my = -100, rx = -100, ry = -100;
-    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
-    (function loop() {
-      rx += (mx - rx) * 0.16;
-      ry += (my - ry) * 0.16;
-      dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
-      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
-      requestAnimationFrame(loop);
-    })();
-    const hov = 'a, button, .svc-row, .faq-q, .pf-card, input, select, textarea';
-    document.addEventListener('mouseover', (e) => { if (e.target.closest(hov)) document.body.classList.add('cursor-hover'); });
-    document.addEventListener('mouseout', (e) => { if (e.target.closest(hov)) document.body.classList.remove('cursor-hover'); });
-  })();
 
   /* portfolio — 3D sticky stack (cards scale down as the next slides over) */
   (function pfStack() {
