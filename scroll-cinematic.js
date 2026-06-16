@@ -14,29 +14,11 @@ function initScrub(cfg) {
   const bgFill = cfg.bg || '#04070f';
   const images = [];
 
-  /* fade overlays: fade-to-black at end, optional fade-from-black at start */
-  function makeFade(startOpacity) {
-    const el = document.createElement('div');
-    el.className = 'section-end-fade';
-    el.style.opacity = startOpacity;
-    section.querySelector('.sticky').appendChild(el);
-    return el;
-  }
-  const endFade = makeFade('0');
-  const startFade = cfg.fadeIn ? makeFade('1') : null;
-
-  /* transition text: separate element, fades out 3x faster than the overlay */
-  let transitionTextEl = null;
-  if (cfg.fadeIn && cfg.transitionText) {
-    transitionTextEl = document.createElement('div');
-    transitionTextEl.className = 'section-end-fade transition-text-wrap';
-    transitionTextEl.style.opacity = '1';
-    const txt = document.createElement('span');
-    txt.className = 'transition-text';
-    txt.textContent = cfg.transitionText;
-    transitionTextEl.appendChild(txt);
-    section.querySelector('.sticky').appendChild(transitionTextEl);
-  }
+  /* fade-to-black overlay at end of section */
+  const endFade = document.createElement('div');
+  endFade.className = 'section-end-fade';
+  endFade.style.opacity = '0';
+  section.querySelector('.sticky').appendChild(endFade);
   let loaded = 0, firstDrawn = false;
 
   for (let i = 0; i < cfg.frameCount; i++) {
@@ -80,8 +62,6 @@ function initScrub(cfg) {
     if (idx !== current) { current = idx; draw(idx); }
     if (fill) fill.style.width = (p * 100).toFixed(2) + '%';
     endFade.style.opacity = Math.max(0, (p - 0.94) / 0.06).toFixed(3);
-    if (startFade) startFade.style.opacity = Math.max(0, 1 - p / 0.05).toFixed(3);
-    if (transitionTextEl) transitionTextEl.style.opacity = Math.max(0, 1 - p / 0.015).toFixed(3);
     for (const el of lines) {
       const a = parseFloat(el.dataset.in), b = parseFloat(el.dataset.out);
       const mid = (a + b) / 2, half = Math.max((b - a) / 2, 0.001);
