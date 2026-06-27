@@ -289,6 +289,16 @@ footer { background: var(--bg-primary); border-top: 1px solid var(--border-subtl
 .cf-trust span { display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: .72rem; }
 #contact-status { text-align: center; font-size: .85rem; color: var(--text-muted); display: none; }
 
+/* ===== mobile touch feedback (no :hover on touch) ===== */
+@media (hover: none) and (pointer: coarse) {
+  .svc-row:active { background: rgba(var(--accent-rgb), .08); }
+  .svc-row:active .svc-name { transform: translateX(10px); }
+  .svc-row:active .svc-arrow { background: var(--accent); border-color: var(--accent); transform: rotate(-45deg) scale(1.04); }
+  .pf-card:active { transform: scale(.99); border-color: rgba(var(--accent-rgb), .3); }
+  .stat-cell:active { background: var(--bg-secondary); }
+  .btn:active, .nav-cta:active { transform: translateY(1px) scale(.98); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
