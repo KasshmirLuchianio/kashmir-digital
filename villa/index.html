@@ -562,7 +562,7 @@
 <div id="canvas-container"></div>
 
 <div class="stage entry-stage" data-stage="0">
-  <h1>O vilă pe stâncă<em>pentru proiectele tale</em></h1>
+  <h1>O vilă pe plajă<em>pentru proiectele tale</em></h1>
   <p>Construim website-uri premium și agenți AI pentru brand-uri care înțeleg diferența. Intră.</p>
 </div>
 
@@ -628,7 +628,7 @@
   <div class="label">Despre noi</div>
   <h2>Construim <em>cu intenție</em> în era AI</h2>
   <p>Kashmir Digital este atelierul lui Vlad Grigorov — full-stack developer și antreprenor din București. Lucrăm la intersecția dintre web development premium, AI agents și producție de content cinematic.</p>
-  <p>Ne ferim de soluțiile generice. Fiecare proiect e construit ca o casă pe stâncă — fundație solidă, materiale alese, vedere clară.</p>
+  <p>Ne ferim de soluțiile generice. Fiecare proiect e construit ca o vilă pe plajă — fundație solidă, materiale alese, vedere deschisă spre mare.</p>
   <div class="signature">— Vlad Grigorov, fondator</div>
 </div>
 
@@ -948,69 +948,97 @@ makePine(30, -2, -30, 1.4);
 // FIX: clean rectangular doorframe, single panel pivot door
 // ============================================================================
 
-// === EXTERIOR APPROACH PAVING (warm cream concrete slabs) ===
-const approachPaving = new THREE.Mesh(new THREE.BoxGeometry(14, 0.2, 18), MATS.concreteLight);
-approachPaving.position.set(0, -0.1, 8);
-approachPaving.receiveShadow = true;
-scene.add(approachPaving);
-// Slab joints (decorative grooves)
-for (let z = -1; z <= 15; z += 2.5) {
-  const joint = new THREE.Mesh(new THREE.BoxGeometry(14, 0.02, 0.05), MATS.concreteDark);
-  joint.position.set(0, 0.01, z);
+// === BEACH (sand) — the villa sits right on the shore ===
+const beach = new THREE.Mesh(
+  new THREE.PlaneGeometry(220, 160),
+  new THREE.MeshStandardMaterial({ color: 0xe8d2a6, roughness: 1.0 })
+);
+beach.rotation.x = -Math.PI / 2;
+beach.position.set(0, -0.25, 20);
+beach.receiveShadow = true;
+scene.add(beach);
+
+// === SIDE TERRACE DECK (travertine) — the camera arcs in across this ===
+const terrace = new THREE.Mesh(new THREE.BoxGeometry(26, 0.2, 18), MATS.travertine);
+terrace.position.set(4, -0.05, 8); // extends toward +x (the approach side)
+terrace.receiveShadow = true;
+scene.add(terrace);
+// Deck joints
+for (let z = -1; z <= 15; z += 2.2) {
+  const joint = new THREE.Mesh(new THREE.BoxGeometry(26, 0.02, 0.04), MATS.concreteDark);
+  joint.position.set(4, 0.06, z);
   scene.add(joint);
 }
+// Low glass balustrade along the seaward edge of the terrace
+const balus = new THREE.Mesh(new THREE.BoxGeometry(0.06, 1.1, 16), MATS.glassTinted);
+balus.position.set(16.5, 0.5, 8);
+scene.add(balus);
+const balusCap = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.08, 16), MATS.steelBlack);
+balusCap.position.set(16.5, 1.05, 8);
+scene.add(balusCap);
+// A low planter to stage the terrace foreground
+const planterBox = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.6, 0.9), MATS.cream);
+planterBox.position.set(12, 0.3, 11);
+planterBox.castShadow = true;
+scene.add(planterBox);
 
-// === MAIN FACADE WALL (modernist, geometric, NO arch) ===
-// Single tall wall with rectangular doorway cut out
-// Left section
-const facadeLeft = new THREE.Mesh(new THREE.BoxGeometry(8, 9, 0.6), MATS.concrete);
-facadeLeft.position.set(-7, 4.5, 2);
-facadeLeft.castShadow = true; facadeLeft.receiveShadow = true;
-scene.add(facadeLeft);
-// Right section
-const facadeRight = new THREE.Mesh(new THREE.BoxGeometry(8, 9, 0.6), MATS.concrete);
-facadeRight.position.set(7, 4.5, 2);
-facadeRight.castShadow = true; facadeRight.receiveShadow = true;
-scene.add(facadeRight);
-// Top section (lintel above door)
-const facadeTop = new THREE.Mesh(new THREE.BoxGeometry(6.5, 2, 0.6), MATS.concrete);
-facadeTop.position.set(0, 8, 2);
-facadeTop.castShadow = true; facadeTop.receiveShadow = true;
-scene.add(facadeTop);
+// === MODERNIST GLASS FACADE (white concrete piers + floor-to-ceiling glazing) ===
+// Slim white concrete piers frame the glass front
+const pierL = new THREE.Mesh(new THREE.BoxGeometry(1.4, 9, 0.6), MATS.cream);
+pierL.position.set(-7.6, 4.5, 2);
+pierL.castShadow = true; pierL.receiveShadow = true;
+scene.add(pierL);
+const pierR = new THREE.Mesh(new THREE.BoxGeometry(1.4, 9, 0.6), MATS.cream);
+pierR.position.set(7.6, 4.5, 2);
+pierR.castShadow = true; pierR.receiveShadow = true;
+scene.add(pierR);
 
-// === BIG MODERNIST PIVOT DOOR (single panel, oak pale, matte black handle) ===
-// FIX: clean pivot setup with explicit Group wrapper as pivot
-// FIX: NO inner dark plane behind. The space behind opens directly into entry hall.
+// Fixed floor-to-ceiling glass panels flanking the entry (the "plină de geamuri" look)
+function makeGlassPanel(x, w) {
+  const glass = new THREE.Mesh(new THREE.BoxGeometry(w, 7.4, 0.08), MATS.glassTinted);
+  glass.position.set(x, 3.9, 2);
+  scene.add(glass);
+  for (let mx = -w / 2 + 0.5; mx <= w / 2 - 0.5; mx += 1.4) {
+    const mull = new THREE.Mesh(new THREE.BoxGeometry(0.06, 7.4, 0.12), MATS.steelBlack);
+    mull.position.set(x + mx, 3.9, 2.02);
+    scene.add(mull);
+  }
+}
+makeGlassPanel(-5.2, 3.4);  // between left pier and the door
+makeGlassPanel(5.2, 3.4);   // between the door and right pier
 
+// Flat cantilever roof slab (modernist signature) — overhangs the terrace
+const roofSlab = new THREE.Mesh(new THREE.BoxGeometry(17.5, 0.4, 7.6), MATS.cream);
+roofSlab.position.set(0, 8.05, 4.2);
+roofSlab.castShadow = true; roofSlab.receiveShadow = true;
+scene.add(roofSlab);
+// Thin spandrel above the door opening, tying roof to glazing
+const spandrel = new THREE.Mesh(new THREE.BoxGeometry(6.4, 0.5, 0.4), MATS.cream);
+spandrel.position.set(0, 7.55, 2);
+scene.add(spandrel);
+
+// === GLASS SLIDING ENTRY DOOR (replaces the oak pivot) — slides open on T1 ===
 const doorPivot = new THREE.Group();
-doorPivot.position.set(-3, 3.5, 2); // pivot at LEFT edge of door
-
+doorPivot.position.set(-3, 3.5, 2); // closed; T1 translates this along X
 const doorPanel = new THREE.Group();
-// Door panel offset from pivot (panel center = 3m from pivot = half of 6m wide door)
-doorPanel.position.x = 3;
+doorPanel.position.x = 3;           // panel centre at world x=0 when closed
 
-// Main panel — single solid slab of pale oak
-const panelMain = new THREE.Mesh(new THREE.BoxGeometry(6, 7, 0.2), MATS.oakPale);
+// Glass leaf
+const panelMain = new THREE.Mesh(new THREE.BoxGeometry(6, 7, 0.1), MATS.glass);
 panelMain.castShadow = true;
 doorPanel.add(panelMain);
-
-// Subtle vertical grain lines (modernist detail)
-for (let i = -2.5; i <= 2.5; i += 0.8) {
-  const grain = new THREE.Mesh(new THREE.BoxGeometry(0.02, 6.8, 0.01), MATS.oakWarm);
-  grain.position.set(i, 0, 0.11);
-  doorPanel.add(grain);
+// Steel frame (top + bottom rails) and vertical mullions
+const railT = new THREE.Mesh(new THREE.BoxGeometry(6, 0.12, 0.16), MATS.steelBlack); railT.position.y = 3.5; doorPanel.add(railT);
+const railB = new THREE.Mesh(new THREE.BoxGeometry(6, 0.12, 0.16), MATS.steelBlack); railB.position.y = -3.5; doorPanel.add(railB);
+for (let i = -3; i <= 3; i += 2) {
+  const mull = new THREE.Mesh(new THREE.BoxGeometry(0.08, 7, 0.14), MATS.steelBlack);
+  mull.position.set(i, 0, 0);
+  doorPanel.add(mull);
 }
-
-// Long horizontal black steel handle (modernist signature)
-const handle = new THREE.Mesh(new THREE.BoxGeometry(0.08, 1.8, 0.06), MATS.steelBlack);
-handle.position.set(2.5, 0, 0.16);
+// Vertical brushed-steel pull handle
+const handle = new THREE.Mesh(new THREE.BoxGeometry(0.07, 1.8, 0.07), MATS.steelBrushed);
+handle.position.set(2.4, 0, 0.14);
 doorPanel.add(handle);
-// Handle posts
-for (let py of [-0.85, 0.85]) {
-  const post = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.12), MATS.steelBlack);
-  post.position.set(2.5, py, 0.12);
-  doorPanel.add(post);
-}
 
 doorPivot.add(doorPanel);
 scene.add(doorPivot);
@@ -2023,11 +2051,12 @@ scene.add(particles);
 // MODULE: camera-path.js — Linear z-axis movement with precise lookAt targets
 // ============================================================================
 const stations = [
-  { p: 0.00, pos: [0, 2.6, 14], look: [0, 4, 2] },
-  { p: 0.04, pos: [0, 2.5, 8],  look: [0, 4, 2] },
-  { p: 0.08, pos: [0, 2.4, 5],  look: [0, 3.5, 0] },
-  { p: 0.12, pos: [0, 2.4, 1],  look: [0, 3.5, -2] },
-  { p: 0.14, pos: [0, 2.4, -1], look: [0, 3, -4] },
+  // Approach — arc in from the side terrace toward the glass entry
+  { p: 0.00,  pos: [15, 3.4, 13],   look: [2, 3.6, 2] },   // standing on the side terrace, the glass villa ahead
+  { p: 0.035, pos: [11, 3.0, 9],    look: [0, 3.4, 0] },   // gliding along the terrace toward the entry
+  { p: 0.07,  pos: [6, 2.7, 5.5],   look: [-1, 3.3, -2] }, // approaching the open glass slider at an angle
+  { p: 0.105, pos: [2.2, 2.5, 2.6], look: [0, 3.2, -4] },  // crossing the threshold
+  { p: 0.14,  pos: [0, 2.4, -1],    look: [0, 3, -4] },    // inside — gallery axis (unchanged from here)
   // Gallery - alternating lookAt L/R
   { p: 0.17, pos: [0, 2.4, -3],  look: [-6.5, 3.5, -4],  },  // p1
   { p: 0.22, pos: [0, 2.4, -6],  look: [6.5, 3.5, -7],   },  // p2
@@ -2133,9 +2162,9 @@ function updateStages(progress) {
 // MODULE: transitions.js — 4 animated transitions
 // ============================================================================
 function updateTransitions(progress) {
-  // T1: Front pivot door (progress 0.02 → 0.10) — opens BEFORE camera arrives
-  const doorOpen = Math.max(0, Math.min(1, (progress - 0.02) / 0.08));
-  doorPivot.rotation.y = -smootherStep(doorOpen) * (Math.PI * 0.7);
+  // T1: Glass entry door slides open (progress 0.00 → 0.09) — open before the camera passes
+  const doorOpen = Math.max(0, Math.min(1, progress / 0.09));
+  doorPivot.position.x = -3 - smootherStep(doorOpen) * 6;
 
   // T2: Library cabinet (progress 0.44 → 0.50)
   const libOpen = Math.max(0, Math.min(1, (progress - 0.44) / 0.06));
