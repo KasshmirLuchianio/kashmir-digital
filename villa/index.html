@@ -1098,11 +1098,10 @@ function makeOliveTreeSculptural(x, z, height = 3.5) {
   g.position.set(x, 0, z);
   scene.add(g);
 }
-makeOliveTreeSculptural(0, -1.5, 3.5); // visible through door
+makeOliveTreeSculptural(-3, -1.5, 3.5); // moved off the camera centreline; framed through the glass
 
-// Side flanking sculptural olives (at facade level, outside)
+// Side flanking sculptural olive — left only (the camera enters from the right, so keep that side clear)
 makeOliveTreeSculptural(-5.5, 5, 3);
-makeOliveTreeSculptural(5.5, 5, 3);
 
 // Agave plants (modernist sculptural - blue-green spiky)
 function makeAgave(x, z, scale = 1) {
