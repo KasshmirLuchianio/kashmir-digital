@@ -2171,8 +2171,9 @@ function updateTransitions(progress) {
   const libOpen = Math.max(0, Math.min(1, (progress - 0.44) / 0.06));
   cabinetPivot.position.x = -3.85 - smootherStep(libOpen) * 8;
 
-  // T3: Sliding oak panel (progress 0.82 → 0.86)
-  const panelOpen = Math.max(0, Math.min(1, (progress - 0.82) / 0.04));
+  // T3: Sliding oak panel — opens EARLY (0.74 → 0.81) so it's fully clear before
+  // the camera leaves the cabinet, instead of the lens ending up inside the slats.
+  const panelOpen = Math.max(0, Math.min(1, (progress - 0.74) / 0.07));
   panelPivot.position.x = smootherStep(panelOpen) * -7;
 
   // T4: Glass doors (progress 0.92 → 0.95) — opens BEFORE camera passes through
