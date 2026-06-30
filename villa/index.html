@@ -587,32 +587,8 @@
 </div>
 
 <div class="stage project-card" data-stage="p3">
-  <div class="meta">03 · AI Agent · 2026</div>
-  <h2>Maria & Ana</h2>
-  <div class="tagline">Asistenți telefonici AI pentru restaurante și clinici</div>
-  <p>Agenți vocali production-ready: Maria pentru restaurante (rezervări, meniu, ore), Ana pentru clinici medicale (programări, triere, follow-up). Stack: ElevenLabs + n8n + Telnyx SIP. End-to-end functional, deployment în clinici enterprise.</p>
-  <div class="tags"><span>ElevenLabs</span><span>n8n</span><span>Telnyx</span><span>RAG</span></div>
-</div>
-
-<div class="stage project-card right" data-stage="p4">
-  <div class="meta">04 · Brand · 2026</div>
-  <h2>@andreeavaleriareal</h2>
-  <div class="tagline">AI Influencer pentru piața TikTok din România</div>
-  <p>Personaj feminin AI cu Series Bible de 60 de zile, pipeline complet de producție (Higgsfield Banana Pro + Soul Cinema + Kling 3.0), 22 outfit-uri și strategie de monetizare prin brand deals și UGC ads.</p>
-  <div class="tags"><span>Higgsfield</span><span>Brand</span><span>TikTok RO</span><span>UGC</span></div>
-</div>
-
-<div class="stage project-card" data-stage="p5">
-  <div class="meta">05 · E-commerce · 2026</div>
-  <h2>Shopify Empire</h2>
-  <div class="tagline">Dropshipping framework pentru piețele US/UE</div>
-  <p>Workflow complet de product research, validation (markup 3x+), supplier sourcing (AliExpress/CJ/Zendrop), ad creative pipeline cu Higgsfield Marketing Studio și gestiune comenzi via MCP cu framework win/loss.</p>
-  <div class="tags"><span>Shopify</span><span>MCP</span><span>Higgsfield</span><span>Dropshipping</span></div>
-</div>
-
-<div class="stage project-card right" data-stage="p6">
-  <div class="meta">06 · Producție · 2026</div>
-  <h2>Gigi Gazon</h2>
+  <div class="meta">03 · Producție · 2026</div>
+  <h2>Kashmir Luchiano</h2>
   <div class="tagline">Album rap, 14 piese, regie video integrală</div>
   <p>Album lansat în 2026 sub identitatea Kashmir Luchiano. Producție, regie video, artwork digipak fizic, descrieri și strategie YouTube. Canal: @KashmirLuchiano.</p>
   <div class="tags"><span>Music</span><span>Video</span><span>YouTube</span><span>Print</span></div>
@@ -1223,60 +1199,49 @@ for (let z = -3; z >= -19; z -= 4) {
 
 // === PAINTINGS — 6 modernist color-field works on side walls ===
 // Larger, simpler, more impactful than the busy ones in v2
-// Each painting carries its full project record — shown in a modal on click.
+// Fewer, stronger pieces — each is a framed REAL preview image of the project,
+// and carries its full record (shown in a modal on click).
 const paintingData = [
-  { side: 'L', z: -4,  colors: ['#c97a4e', '#6b2a3e'],
+  { side: 'L', z: -5,  w: 2.05, h: 3.55, img: 'assets/proj-meetings.jpg',
     meta: '01 · SaaS · 2026', title: 'Meetings.ro',
     tagline: 'Transcripție și documente pentru instituții publice',
     desc: 'Platformă SaaS pentru transcriere automată și generare de procese-verbale, targetată instituțiilor publice din România. Arhitectură FastAPI + React, integrare certSIGN CSC, conformitate OUG 57/2019 și GDPR Art. 28.',
     tags: ['React', 'FastAPI', 'MongoDB', 'B2G'], url: 'https://www.meetings-ro.app' },
-  { side: 'R', z: -7,  colors: ['#2a4a7a', '#e8c87a'],
+  { side: 'R', z: -10, w: 2.05, h: 3.55, img: 'assets/proj-cartarum.jpg',
     meta: '02 · Cultural · 2026', title: 'Casa Cărtarum',
     tagline: '80+ hărți istorice ale României, multilingv',
     desc: 'Colecție digitală de hărți antice (sec. XVI–XVII) cu descrieri transcrise din spaniolă, latină și olandeză. Pipeline de producție video AI bilingv (Kling 3.0 EN + Veo 3.1 RO) pentru distribuție pe @venitdintimp.',
     tags: ['Next.js', 'MongoDB Atlas', 'Cloudinary', 'AI Video'], url: 'https://casacartarum.ro' },
-  { side: 'L', z: -10, colors: ['#7a8a5a', '#c8a87a'],
-    meta: '03 · AI Agent · 2026', title: 'Maria & Ana',
-    tagline: 'Asistenți telefonici AI pentru restaurante și clinici',
-    desc: 'Agenți vocali production-ready: Maria pentru restaurante (rezervări, meniu, ore), Ana pentru clinici medicale (programări, triere, follow-up). Stack: ElevenLabs + n8n + Telnyx SIP. End-to-end functional, deployment în clinici enterprise.',
-    tags: ['ElevenLabs', 'n8n', 'Telnyx', 'RAG'], url: null },
-  { side: 'R', z: -13, colors: ['#a85a2e', '#ede0c8'],
-    meta: '04 · Brand · 2026', title: '@andreeavaleriareal',
-    tagline: 'AI Influencer pentru piața TikTok din România',
-    desc: 'Personaj feminin AI cu Series Bible de 60 de zile, pipeline complet de producție (Higgsfield Banana Pro + Soul Cinema + Kling 3.0), 22 outfit-uri și strategie de monetizare prin brand deals și UGC ads.',
-    tags: ['Higgsfield', 'Brand', 'TikTok RO', 'UGC'], url: null },
-  { side: 'L', z: -16, colors: ['#8b4a2e', '#d8c8a0'],
-    meta: '05 · E-commerce · 2026', title: 'Shopify Empire',
-    tagline: 'Dropshipping framework pentru piețele US/UE',
-    desc: 'Workflow complet de product research, validation (markup 3x+), supplier sourcing (AliExpress/CJ/Zendrop), ad creative pipeline cu Higgsfield Marketing Studio și gestiune comenzi via MCP cu framework win/loss.',
-    tags: ['Shopify', 'MCP', 'Higgsfield', 'Dropshipping'], url: null },
-  { side: 'R', z: -19, colors: ['#1a1a1a', '#c97a4e'],
-    meta: '06 · Producție · 2026', title: 'Gigi Gazon',
+  { side: 'L', z: -15, w: 3.4, h: 2.55, img: 'assets/proj-kashmir.jpg',
+    meta: '03 · Producție · 2026', title: 'Kashmir Luchiano',
     tagline: 'Album rap, 14 piese, regie video integrală',
     desc: 'Album lansat în 2026 sub identitatea Kashmir Luchiano. Producție, regie video, artwork digipak fizic, descrieri și strategie YouTube. Canal: @KashmirLuchiano.',
     tags: ['Music', 'Video', 'YouTube', 'Print'], url: 'https://www.youtube.com/@KashmirLuchiano' },
 ];
 
 // Paintings registered here become clickable (raycaster targets).
+const texLoader = new THREE.TextureLoader();
 const clickablePaintings = [];
 
 paintingData.forEach((p) => {
   const g = new THREE.Group();
-  // Frame — matte black steel (thin, modernist)
-  const frame = new THREE.Mesh(new THREE.BoxGeometry(3, 4, 0.08), MATS.steelBlack);
+  // Frame — matte black steel, sized to the artwork
+  const frame = new THREE.Mesh(new THREE.BoxGeometry(p.w + 0.16, p.h + 0.16, 0.08), MATS.steelBlack);
   g.add(frame);
-  // Canvas (the painting itself, larger than frame inset)
-  const cvs = new THREE.Mesh(new THREE.PlaneGeometry(2.85, 3.85), makePainting(...p.colors));
+  // The real project preview image (unlit so it stays vivid, like a backlit print)
+  const tex = texLoader.load(p.img);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const cvs = new THREE.Mesh(new THREE.PlaneGeometry(p.w, p.h), new THREE.MeshBasicMaterial({ map: tex }));
   cvs.position.z = 0.05;
   g.add(cvs);
-  // Recessed warm light from above (no fixture visible — modern, hidden)
-  const pl = new THREE.PointLight(0xffd8a0, 1.0, 4);
-  pl.position.set(0, 2.3, 0.8);
+  // Recessed warm accent light
+  const pl = new THREE.PointLight(0xffd8a0, 0.7, 4);
+  pl.position.set(0, 2.0, 0.8);
   g.add(pl);
 
   const x = p.side === 'L' ? -6.78 : 6.78;
   const ry = p.side === 'L' ? Math.PI / 2 : -Math.PI / 2;
-  g.position.set(x, 3.5, p.z);
+  g.position.set(x, 3.4, p.z);
   g.rotation.y = ry;
 
   // Interactive: store the project record and register for raycasting.
@@ -2152,12 +2117,9 @@ function getCamState(progress) {
 const stageMap = [
   { range: [0, 0.07], el: '0' },
   { range: [0.14, 0.18], el: '1' },
-  { range: [0.16, 0.20], el: 'p1' },
-  { range: [0.21, 0.25], el: 'p2' },
-  { range: [0.26, 0.30], el: 'p3' },
-  { range: [0.31, 0.35], el: 'p4' },
-  { range: [0.36, 0.40], el: 'p5' },
-  { range: [0.41, 0.45], el: 'p6' },
+  { range: [0.17, 0.23], el: 'p1' },
+  { range: [0.25, 0.31], el: 'p2' },
+  { range: [0.33, 0.40], el: 'p3' },
   { range: [0.54, 0.57], el: '2' },
   { range: [0.57, 0.65], el: 'about' },
   { range: [0.67, 0.69], el: '3' },
