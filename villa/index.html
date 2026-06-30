@@ -1490,21 +1490,24 @@ sideShelf.rotation.y = -Math.PI / 2;
 scene.add(sideShelf);
 
 // Large window in studio with view to cliff/cypresses
-const studioWin = new THREE.Mesh(new THREE.PlaneGeometry(3.5, 3.5), new THREE.MeshBasicMaterial({ color: 0x6a8a5a }));
-studioWin.position.set(0, 3, -28.85);
+// Window mounted on the LEFT wall (a blue sky/sea view) — off the walking path,
+// so the camera no longer ploughs straight through a green screen.
+const studioWin = new THREE.Mesh(new THREE.PlaneGeometry(3.5, 3.5), new THREE.MeshBasicMaterial({ color: 0x9ec4dd }));
+studioWin.position.set(-5.78, 3, -25);
+studioWin.rotation.y = Math.PI / 2;
 scene.add(studioWin);
-// Window frame
-const winFrameTop = new THREE.Mesh(new THREE.BoxGeometry(3.7, 0.1, 0.1), MATS.steelBlack);
-winFrameTop.position.set(0, 4.75, -28.8);
+// Window frame (on the left wall — rails run along Z / Y)
+const winFrameTop = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 3.7), MATS.steelBlack);
+winFrameTop.position.set(-5.75, 4.75, -25);
 scene.add(winFrameTop);
-const winFrameBot = new THREE.Mesh(new THREE.BoxGeometry(3.7, 0.1, 0.1), MATS.steelBlack);
-winFrameBot.position.set(0, 1.25, -28.8);
+const winFrameBot = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 3.7), MATS.steelBlack);
+winFrameBot.position.set(-5.75, 1.25, -25);
 scene.add(winFrameBot);
 const winFrameL = new THREE.Mesh(new THREE.BoxGeometry(0.1, 3.5, 0.1), MATS.steelBlack);
-winFrameL.position.set(-1.75, 3, -28.8);
+winFrameL.position.set(-5.75, 3, -26.75);
 scene.add(winFrameL);
 const winFrameR = new THREE.Mesh(new THREE.BoxGeometry(0.1, 3.5, 0.1), MATS.steelBlack);
-winFrameR.position.set(1.75, 3, -28.8);
+winFrameR.position.set(-5.75, 3, -23.25);
 scene.add(winFrameR);
 
 // Indoor plant (monstera-style sculptural)
@@ -1572,10 +1575,10 @@ scene.add(cabCeil);
 
 // 4 plinths — each holds a REAL object tied to its service (not abstract art)
 const pedestalData = [
-  { z: -37, obj: 'monitor' }, // i.  Website-uri Premium
-  { z: -40, obj: 'phone' },   // ii. Voice Agents AI
-  { z: -43, obj: 'robot' },   // iii. Agenți AI & Automatizări
-  { z: -46, obj: 'tv' },      // iv. High-Conversion Ads
+  { x: -2.7, z: -37, ry: 0.5,  obj: 'monitor' }, // i.  Website-uri Premium (left)
+  { x: 2.7,  z: -40, ry: -0.5, obj: 'phone' },   // ii. Voice Agents AI (right)
+  { x: -2.7, z: -43, ry: 0.5,  obj: 'robot' },   // iii. Agenți AI & Automatizări (left)
+  { x: 2.7,  z: -46, ry: -0.5, obj: 'tv' },      // iv. High-Conversion Ads (right)
 ];
 
 function meshAt(geo, mat, x, y, z) { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); return m; }
@@ -1615,38 +1618,39 @@ function buildServiceObject(type) {
 }
 
 pedestalData.forEach(p => {
-  // Pedestal — solid travertine block, no decoration
+  // Pedestal — solid travertine block (off-centre, so the camera slaloms between them)
   const ped = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.6, 1.2), MATS.travertine);
-  ped.position.set(0, 1.3, p.z);
+  ped.position.set(p.x, 1.3, p.z);
   ped.castShadow = true; ped.receiveShadow = true;
   scene.add(ped);
 
-  // Real service object resting on the plinth (plinth top is at y=2.6)
+  // Real service object on the plinth, angled toward the passing camera (top at y=2.6)
   const obj = buildServiceObject(p.obj);
-  obj.position.set(0, 2.6, p.z);
+  obj.position.set(p.x, 2.6, p.z);
+  obj.rotation.y = p.ry;
   scene.add(obj);
 
   // Skylight directly above (warm panel)
   const skylight = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1.8), new THREE.MeshBasicMaterial({ color: 0xfff0c8 }));
   skylight.rotation.x = Math.PI / 2;
-  skylight.position.set(0, 6.85, p.z);
+  skylight.position.set(p.x, 6.85, p.z);
   scene.add(skylight);
   // Skylight frame (matte black)
   for (let side of [-0.95, 0.95]) {
     const fr = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.05, 1.9), MATS.steelBlack);
-    fr.position.set(side, 6.92, p.z);
+    fr.position.set(p.x + side, 6.92, p.z);
     scene.add(fr);
   }
   for (let zSide of [-0.95, 0.95]) {
     const fr = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.05, 0.06), MATS.steelBlack);
-    fr.position.set(0, 6.92, p.z + zSide);
+    fr.position.set(p.x, 6.92, p.z + zSide);
     scene.add(fr);
   }
 
   // Strong shaft light from skylight
   const sp = new THREE.SpotLight(0xffd8a0, 1.5, 8, Math.PI/4, 0.5, 1);
-  sp.position.set(0, 6.5, p.z);
-  sp.target.position.set(0, 0, p.z);
+  sp.position.set(p.x, 6.5, p.z);
+  sp.target.position.set(p.x, 0, p.z);
   scene.add(sp);
   scene.add(sp.target);
 });
@@ -2056,16 +2060,16 @@ const stations = [
   { p: 0.07,  pos: [6, 2.7, 5.5],   look: [-1, 3.3, -2] }, // approaching the open glass slider at an angle
   { p: 0.105, pos: [2.2, 2.5, 2.6], look: [0, 3.2, -4] },  // crossing the threshold
   { p: 0.14,  pos: [0, 2.4, -1],    look: [0, 3, -4] },    // inside — gallery axis (unchanged from here)
-  // Gallery — turn to FACE and dwell on each of the 3 framed pieces, gently
-  // (eye-level look, not the old 90°-up ceiling whip), so each one registers.
-  { p: 0.19, pos: [-0.4, 2.6, -4],  look: [-6.4, 3.3, -5]  }, // P1 — Meetings.ro (left)
-  { p: 0.25, pos: [-0.4, 2.6, -5],  look: [-6.4, 3.3, -5]  }, //   dwell on P1
-  { p: 0.31, pos: [0.4, 2.6, -9],   look: [6.4, 3.3, -10]  }, // P2 — Casa Cartarum (right)
-  { p: 0.36, pos: [0.4, 2.6, -10],  look: [6.4, 3.3, -10]  }, //   dwell on P2
-  { p: 0.41, pos: [-0.4, 2.6, -14], look: [-6.4, 3.3, -15] }, // P3 — Kashmir Luchiano (left)
-  { p: 0.44, pos: [-0.4, 2.6, -15], look: [-6.4, 3.3, -15] }, //   dwell on P3
+  // Gallery — glide past each piece looking forward-AND-toward it (look target
+  // kept well ahead so the lens never pitches up at the ceiling between paintings).
+  { p: 0.19, pos: [1.2, 2.8, -1.5],  look: [-5.5, 3.1, -5.5]  }, // toward P1 Meetings (left)
+  { p: 0.25, pos: [0.8, 2.8, -3.5],  look: [-6.2, 3.1, -6.5]  }, //   dwell on P1
+  { p: 0.31, pos: [-1.2, 2.8, -6.5], look: [5.5, 3.1, -10.5]  }, // toward P2 Casa Cartarum (right)
+  { p: 0.36, pos: [-0.8, 2.8, -8.5], look: [6.2, 3.1, -11.5]  }, //   dwell on P2
+  { p: 0.41, pos: [1.2, 2.8, -11.5], look: [-5.5, 3.1, -15.5] }, // toward P3 Kashmir (left)
+  { p: 0.44, pos: [0.8, 2.8, -13.5], look: [-6.2, 3.1, -16.5] }, //   dwell on P3
   // straighten and approach the library wall
-  { p: 0.48, pos: [0, 2.5, -18],   look: [0, 3.2, -20.5] },
+  { p: 0.48, pos: [0, 2.6, -18],    look: [0, 3.2, -20.5] },
   { p: 0.50, pos: [0, 2.4, -19.8], look: [0, 3, -23] },
   { p: 0.54, pos: [0, 2.4, -22],   look: [0, 3, -26] },
   // Studio
@@ -2073,11 +2077,11 @@ const stations = [
   { p: 0.62, pos: [0.5, 2.4, -26], look: [0, 1.5, -27.2] },
   // Corridor
   { p: 0.66, pos: [0, 2.4, -30], look: [0, 2.5, -33] },
-  // Cabinet
-  { p: 0.70, pos: [0, 2.4, -34.5], look: [0, 3.1, -37] },
-  { p: 0.74, pos: [0, 2.4, -38], look: [0, 3.1, -40] },
-  { p: 0.78, pos: [0, 2.4, -41], look: [0, 3.1, -43] },
-  { p: 0.81, pos: [0, 2.4, -44], look: [0, 3.1, -46] },
+  // Cabinet — eye-level slalom weaving between the alternating plinths
+  { p: 0.70, pos: [1.7, 3.1, -34.5],  look: [-2.4, 3.2, -37.5] }, // monitor (left)
+  { p: 0.74, pos: [-1.7, 3.1, -37.5], look: [2.4, 3.2, -40.5]  }, // phone (right)
+  { p: 0.78, pos: [1.7, 3.1, -40.5],  look: [-2.4, 3.2, -43.5] }, // robot (left)
+  { p: 0.81, pos: [-1.7, 3.1, -43.5], look: [2.4, 3.2, -46.5]  }, // TV (right)
   // Sliding panel
   { p: 0.84, pos: [0, 2.4, -46.5], look: [0, 3, -49] },
   // Salon
