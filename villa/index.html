@@ -580,7 +580,7 @@
 
 <div class="stage project-card right" data-stage="p2">
   <div class="meta">02 · Cultural · 2026</div>
-  <h2>Casa Cărtarum</h2>
+  <h2>Casa Cartarum</h2>
   <div class="tagline">80+ hărți istorice ale României, multilingv</div>
   <p>Colecție digitală de hărți antice (sec. XVI–XVII) cu descrieri transcrise din spaniolă, latină și olandeză. Pipeline de producție video AI bilingv (Kling 3.0 EN + Veo 3.1 RO) pentru distribuție pe @venitdintimp.</p>
   <div class="tags"><span>Next.js</span><span>MongoDB Atlas</span><span>Cloudinary</span><span>AI Video</span></div>
@@ -1202,17 +1202,17 @@ for (let z = -3; z >= -19; z -= 4) {
 // Fewer, stronger pieces — each is a framed REAL preview image of the project,
 // and carries its full record (shown in a modal on click).
 const paintingData = [
-  { side: 'L', z: -5,  w: 2.05, h: 3.55, img: 'assets/proj-meetings.jpg',
+  { side: 'L', z: -5,  w: 2.05, h: 3.55, img: 'assets/proj-meetings.jpg', focus: [0.18, 0.28],
     meta: '01 · SaaS · 2026', title: 'Meetings.ro',
     tagline: 'Transcripție și documente pentru instituții publice',
     desc: 'Platformă SaaS pentru transcriere automată și generare de procese-verbale, targetată instituțiilor publice din România. Arhitectură FastAPI + React, integrare certSIGN CSC, conformitate OUG 57/2019 și GDPR Art. 28.',
     tags: ['React', 'FastAPI', 'MongoDB', 'B2G'], url: 'https://www.meetings-ro.app' },
-  { side: 'R', z: -10, w: 2.05, h: 3.55, img: 'assets/proj-cartarum.jpg',
-    meta: '02 · Cultural · 2026', title: 'Casa Cărtarum',
+  { side: 'R', z: -10, w: 2.05, h: 3.55, img: 'assets/proj-cartarum.jpg', focus: [0.29, 0.38],
+    meta: '02 · Cultural · 2026', title: 'Casa Cartarum',
     tagline: '80+ hărți istorice ale României, multilingv',
     desc: 'Colecție digitală de hărți antice (sec. XVI–XVII) cu descrieri transcrise din spaniolă, latină și olandeză. Pipeline de producție video AI bilingv (Kling 3.0 EN + Veo 3.1 RO) pentru distribuție pe @venitdintimp.',
     tags: ['Next.js', 'MongoDB Atlas', 'Cloudinary', 'AI Video'], url: 'https://casacartarum.ro' },
-  { side: 'L', z: -15, w: 3.4, h: 2.55, img: 'assets/proj-kashmir.jpg',
+  { side: 'L', z: -15, w: 3.4, h: 2.55, img: 'assets/proj-kashmir.jpg', focus: [0.39, 0.47],
     meta: '03 · Producție · 2026', title: 'Kashmir Luchiano',
     tagline: 'Album rap, 14 piese, regie video integrală',
     desc: 'Album lansat în 2026 sub identitatea Kashmir Luchiano. Producție, regie video, artwork digipak fizic, descrieri și strategie YouTube. Canal: @KashmirLuchiano.',
@@ -2056,14 +2056,16 @@ const stations = [
   { p: 0.07,  pos: [6, 2.7, 5.5],   look: [-1, 3.3, -2] }, // approaching the open glass slider at an angle
   { p: 0.105, pos: [2.2, 2.5, 2.6], look: [0, 3.2, -4] },  // crossing the threshold
   { p: 0.14,  pos: [0, 2.4, -1],    look: [0, 3, -4] },    // inside — gallery axis (unchanged from here)
-  // Gallery — calm forward glide down the centre, near-level pitch, gentle drift
-  // toward each wall (no more whipping the lens 90° up at the ceiling for each painting).
-  { p: 0.19, pos: [0, 2.5, -5],  look: [-1.6, 2.9, -10] },
-  { p: 0.27, pos: [0, 2.5, -9],  look: [1.6, 2.9, -14]  },
-  { p: 0.35, pos: [0, 2.5, -13], look: [-1.6, 2.9, -18] },
-  { p: 0.42, pos: [0, 2.5, -17], look: [0, 2.9, -20]    },
-  // Approach library wall, then through it
-  { p: 0.46, pos: [0, 2.4, -19.5], look: [0, 3.5, -20.5] },
+  // Gallery — turn to FACE and dwell on each of the 3 framed pieces, gently
+  // (eye-level look, not the old 90°-up ceiling whip), so each one registers.
+  { p: 0.19, pos: [-0.4, 2.6, -4],  look: [-6.4, 3.3, -5]  }, // P1 — Meetings.ro (left)
+  { p: 0.25, pos: [-0.4, 2.6, -5],  look: [-6.4, 3.3, -5]  }, //   dwell on P1
+  { p: 0.31, pos: [0.4, 2.6, -9],   look: [6.4, 3.3, -10]  }, // P2 — Casa Cartarum (right)
+  { p: 0.36, pos: [0.4, 2.6, -10],  look: [6.4, 3.3, -10]  }, //   dwell on P2
+  { p: 0.41, pos: [-0.4, 2.6, -14], look: [-6.4, 3.3, -15] }, // P3 — Kashmir Luchiano (left)
+  { p: 0.44, pos: [-0.4, 2.6, -15], look: [-6.4, 3.3, -15] }, //   dwell on P3
+  // straighten and approach the library wall
+  { p: 0.48, pos: [0, 2.5, -18],   look: [0, 3.2, -20.5] },
   { p: 0.50, pos: [0, 2.4, -19.8], look: [0, 3, -23] },
   { p: 0.54, pos: [0, 2.4, -22],   look: [0, 3, -26] },
   // Studio
@@ -2117,9 +2119,9 @@ function getCamState(progress) {
 const stageMap = [
   { range: [0, 0.07], el: '0' },
   { range: [0.14, 0.18], el: '1' },
-  { range: [0.17, 0.23], el: 'p1' },
-  { range: [0.25, 0.31], el: 'p2' },
-  { range: [0.33, 0.40], el: 'p3' },
+  { range: [0.18, 0.28], el: 'p1' },
+  { range: [0.29, 0.38], el: 'p2' },
+  { range: [0.39, 0.46], el: 'p3' },
   { range: [0.54, 0.57], el: '2' },
   { range: [0.57, 0.65], el: 'about' },
   { range: [0.67, 0.69], el: '3' },
@@ -2276,6 +2278,15 @@ function animate() {
 
   // Hold the camera still while a project modal is open.
   if (!modalOpen) scrollProgress += (targetProgress - scrollProgress) * 0.085;
+
+  // Scroll focus — gently pop the painting you're currently facing.
+  if (!modalOpen) {
+    for (const g of clickablePaintings) {
+      if (g === hoveredPainting) continue;
+      const f = g.userData.project.focus;
+      g.userData.targetScale = (f && scrollProgress >= f[0] && scrollProgress < f[1]) ? 1.06 : 1;
+    }
+  }
 
   // Smooth hover lift on gallery paintings.
   for (const g of clickablePaintings) {
