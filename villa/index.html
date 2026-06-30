@@ -626,9 +626,9 @@
 
 <div class="stage about-stage" data-stage="about">
   <div class="label">Despre noi</div>
-  <h2>Construim <em>cu intenție</em> în era AI</h2>
-  <p>Kashmir Digital este atelierul lui Vlad Grigorov — full-stack developer și antreprenor din București. Lucrăm la intersecția dintre web development premium, AI agents și producție de content cinematic.</p>
-  <p>Ne ferim de soluțiile generice. Fiecare proiect e construit ca o vilă pe plajă — fundație solidă, materiale alese, vedere deschisă spre mare.</p>
+  <h2>Nu suntem doar o agenție — <em>suntem creatori compleți</em></h2>
+  <p>Combinăm tehnologia cu creativitatea pentru soluții care nu doar funcționează, ci impresionează. De la prima linie de cod până la ultimul frame de video, fiecare proiect primește atenția totală pe care o merită.</p>
+  <p>Lucrăm cu branduri și artiști care vor mai mult decât un simplu site. Vor o prezență digitală care vorbește pentru ei — și exact asta livrăm.</p>
   <div class="signature">— Vlad Grigorov, fondator</div>
 </div>
 
@@ -639,29 +639,25 @@
 <div class="stage service-card" data-stage="s1">
   <div class="num">i.</div>
   <h3>Website-uri Premium</h3>
-  <div class="price">de la 4.500 €</div>
-  <p>Site-uri custom React/Next.js cu animații cinematice, optimizate pentru conversie și performanță. SEO tehnic complet, hosting gestionat, mentenanță 6 luni inclusă.</p>
+  <p>Landing page-uri, portofolii și platforme web cu design modern, animații fluide și performanță de top.</p>
 </div>
 
 <div class="stage service-card" data-stage="s2">
   <div class="num">ii.</div>
-  <h3>Agenți AI</h3>
-  <div class="price">de la 3.200 €</div>
-  <p>Asistenți vocali și conversaționali production-ready. Telefon, WhatsApp, web chat. Integrare cu CRM, calendar, sisteme interne. Training pe documentația ta și deployment supravegheat.</p>
+  <h3>Voice Agents AI</h3>
+  <p>Agenți vocali care sună exact ca oamenii. Asistență telefonică, vânzări și suport — non-stop.</p>
 </div>
 
 <div class="stage service-card" data-stage="s3">
   <div class="num">iii.</div>
-  <h3>Producție AI Video</h3>
-  <div class="price">de la 1.800 €/lună</div>
-  <p>Pipeline complet de content: Higgsfield, Kling 3.0, Veo 3.1, Nano Banana Pro. Series Bible, regie, post-producție. Distribuție pe TikTok, Reels, YouTube Shorts.</p>
+  <h3>Agenți AI &amp; Automatizări</h3>
+  <p>Agenți inteligenți care trimit mail-uri, gestionează date și execută task-uri complexe — angajați digitali 24/7.</p>
 </div>
 
 <div class="stage service-card" data-stage="s4">
   <div class="num">iv.</div>
-  <h3>Consultanță & Strategie</h3>
-  <div class="price">220 €/oră</div>
-  <p>Arhitectură de soluții, due diligence tehnic, audit de performance. Cu o privire MIT-grade pe Computer Science plus Sloan-grade pe business — fără menajamente.</p>
+  <h3>High-Conversion Ads</h3>
+  <p>Video-uri de conversie pentru reclame și campanii — editate profesional, cu tehnici avansate.</p>
 </div>
 
 <div class="stage section-label" data-stage="4">
@@ -669,8 +665,8 @@
 </div>
 
 <div class="stage process-stage" data-stage="process">
-  <div class="head">El Proceso</div>
-  <h2>Patru pași.<br>Niciun mister.</h2>
+  <div class="head">Cum lucrăm</div>
+  <h2>Patru pași,<br>zero surprize.</h2>
   <div class="process-grid">
     <div class="step">
       <div class="n">i. Descoperire</div>
@@ -701,13 +697,13 @@
 
 <div class="stage contact-stage" data-stage="contact">
   <div class="head">La terasă, la apus</div>
-  <h2>Hai să <em>vorbim</em></h2>
-  <p>Spune-ne despre proiect. Un email, un telefon, o cafea în București. Răspundem în 24 de ore.</p>
+  <h2>Hai să construim <em>ceva excepțional</em></h2>
+  <p>Spune-ne despre proiectul tău și hai să-l transformăm în realitate digitală. Răspundem în maxim 24h.</p>
   <div class="contact-info">
     <a href="mailto:hello@kashmirdigital.ro">hello@kashmirdigital.ro</a>
-    <a href="tel:+40751234567">+40 751 234 567</a>
+    <a href="https://wa.me/40793693875" target="_blank" rel="noopener">WhatsApp · +40 793 693 875</a>
   </div>
-  <a class="contact-cta" href="mailto:hello@kashmirdigital.ro?subject=Proiect%20nou">Începe un proiect</a>
+  <a class="contact-cta" href="https://wa.me/40793693875" target="_blank" rel="noopener">Începe un proiect</a>
   <div class="footer-mark">NEDEROV COMEX SRL · București · MMXXVI</div>
 </div>
 
@@ -1313,11 +1309,20 @@ for (let bx of [-0.5, 0.5]) {
 // FIX: pivot setup using Group wrapper, pale oak instead of dark wood
 // ============================================================================
 
-// The wall around the secret passage (concrete frame)
-const libBackWall = new THREE.Mesh(new THREE.BoxGeometry(14, 7, 0.4), MATS.concrete);
-libBackWall.position.set(0, 3.5, -20.5);
-libBackWall.receiveShadow = true;
-scene.add(libBackWall);
+// Wall around the secret passage — framed OPENING so the cabinet reveals a real
+// doorway into the studio (previously a solid wall the camera clipped into → beige screen).
+const libWallL = new THREE.Mesh(new THREE.BoxGeometry(3, 7, 0.4), MATS.concrete);
+libWallL.position.set(-5.5, 3.5, -20.5);
+libWallL.receiveShadow = true;
+scene.add(libWallL);
+const libWallR = new THREE.Mesh(new THREE.BoxGeometry(3, 7, 0.4), MATS.concrete);
+libWallR.position.set(5.5, 3.5, -20.5);
+libWallR.receiveShadow = true;
+scene.add(libWallR);
+const libWallTop = new THREE.Mesh(new THREE.BoxGeometry(8, 1, 0.4), MATS.concrete);
+libWallTop.position.set(0, 6.5, -20.5);
+libWallTop.receiveShadow = true;
+scene.add(libWallTop);
 
 // Frame around the cabinet door (matte black steel)
 const libFrameTop = new THREE.Mesh(new THREE.BoxGeometry(8, 0.15, 0.5), MATS.steelBlack);
@@ -1623,7 +1628,6 @@ pedestalData.forEach(p => {
   else sculpt = new THREE.Mesh(new THREE.OctahedronGeometry(0.45, 0), p.color);
   sculpt.position.set(0, 3.1, p.z);
   sculpt.castShadow = true;
-  sculpt.userData.spin = true;
   scene.add(sculpt);
 
   // Skylight directly above (warm panel)
@@ -2056,13 +2060,12 @@ const stations = [
   { p: 0.07,  pos: [6, 2.7, 5.5],   look: [-1, 3.3, -2] }, // approaching the open glass slider at an angle
   { p: 0.105, pos: [2.2, 2.5, 2.6], look: [0, 3.2, -4] },  // crossing the threshold
   { p: 0.14,  pos: [0, 2.4, -1],    look: [0, 3, -4] },    // inside — gallery axis (unchanged from here)
-  // Gallery - alternating lookAt L/R
-  { p: 0.17, pos: [0, 2.4, -3],  look: [-6.5, 3.5, -4],  },  // p1
-  { p: 0.22, pos: [0, 2.4, -6],  look: [6.5, 3.5, -7],   },  // p2
-  { p: 0.27, pos: [0, 2.4, -9],  look: [-6.5, 3.5, -10], },  // p3
-  { p: 0.32, pos: [0, 2.4, -12], look: [6.5, 3.5, -13],  },  // p4
-  { p: 0.37, pos: [0, 2.4, -15], look: [-6.5, 3.5, -16], },  // p5
-  { p: 0.42, pos: [0, 2.4, -18], look: [6.5, 3.5, -19],  },  // p6
+  // Gallery — calm forward glide down the centre, near-level pitch, gentle drift
+  // toward each wall (no more whipping the lens 90° up at the ceiling for each painting).
+  { p: 0.19, pos: [0, 2.5, -5],  look: [-1.6, 2.9, -10] },
+  { p: 0.27, pos: [0, 2.5, -9],  look: [1.6, 2.9, -14]  },
+  { p: 0.35, pos: [0, 2.5, -13], look: [-1.6, 2.9, -18] },
+  { p: 0.42, pos: [0, 2.5, -17], look: [0, 2.9, -20]    },
   // Approach library wall, then through it
   { p: 0.46, pos: [0, 2.4, -19.5], look: [0, 3.5, -20.5] },
   { p: 0.50, pos: [0, 2.4, -19.8], look: [0, 3, -23] },
