@@ -2337,6 +2337,10 @@ function updateTransitions(progress) {
 let scrollProgress = 0;
 let targetProgress = 0;
 
+// Dev hook: jump the camera straight to a progress value (used for offline
+// captures of each journey stage; harmless in normal use).
+window.__seek = (v) => { targetProgress = v; scrollProgress = v; };
+
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const maxScroll = document.body.scrollHeight - window.innerHeight;
