@@ -66,7 +66,7 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
-  #scroll-container { height: 1150vh; position: relative; }
+  #scroll-container { height: 1320vh; position: relative; }
   #canvas-container {
     position: fixed; top: 0; left: 0;
     width: 100vw; height: 100vh;
@@ -537,6 +537,18 @@
   }
   .pm-link:hover { transform: translateX(4px); background: var(--golden); }
   .pm-soon { font-family: 'Inter', sans-serif; font-size: .8rem; color: rgba(250,246,238,.45); font-style: italic; }
+  .pm-card.has-video { max-width: 720px; }
+  .pm-video { display: none; position: relative; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 1.5rem; background: #000; border: 1px solid rgba(200,168,122,.22); overflow: hidden; }
+  .pm-card.has-video .pm-video { display: block; }
+  .pm-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .pm-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.1rem; }
+  .pm-links a {
+    font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 500; letter-spacing: .01em;
+    color: rgba(250,246,238,.85); text-decoration: none;
+    border: 1px solid rgba(200,168,122,.32); padding: .55rem 1rem;
+    transition: background .25s, border-color .25s, color .25s;
+  }
+  .pm-links a:hover { background: rgba(200,168,122,.14); border-color: rgba(200,168,122,.6); color: var(--cream); }
   @media (max-width: 600px) {
     .pm-card { padding: 2.2rem 1.5rem; }
     .pm-card h2 { font-size: 2rem; }
@@ -587,11 +599,27 @@
 </div>
 
 <div class="stage project-card" data-stage="p3">
-  <div class="meta">03 · Producție · 2026</div>
-  <h2>Kashmir Luchiano</h2>
-  <div class="tagline">Album rap, 14 piese, regie video integrală</div>
-  <p>Album lansat în 2026 sub identitatea Kashmir Luchiano. Producție, regie video, artwork digipak fizic, descrieri și strategie YouTube. Canal: @KashmirLuchiano.</p>
-  <div class="tags"><span>Music</span><span>Video</span><span>YouTube</span><span>Print</span></div>
+  <div class="meta">03 · Agent AI · 2026</div>
+  <h2>Agent GAL — Oamenii Deltei</h2>
+  <div class="tagline">Chatbot antrenat pe Strategia de Dezvoltare Locală</div>
+  <p>Asistent digital pentru accesarea fondurilor europene în zona GAL Oamenii Deltei. Are ca memorie întregul SDL al asociației — răspunde despre programele de finanțare, verifică eligibilitatea proiectelor și programează consultanță.</p>
+  <div class="tags"><span>AI Agent</span><span>RAG</span><span>SDL</span><span>Fonduri UE</span></div>
+</div>
+
+<div class="stage project-card right" data-stage="p4">
+  <div class="meta">04 · Music Site · 2026</div>
+  <h2>kashmirluchiano.com</h2>
+  <div class="tagline">Website oficial Kashmir Luchiano</div>
+  <p>Site oficial al artistului Kashmir Luchiano — hero cinematic pentru single-ul „Gigi Gazon", discografie, biografie și link-uri către toate platformele. Design, dezvoltare și branding integral.</p>
+  <div class="tags"><span>Web</span><span>Music</span><span>Branding</span></div>
+</div>
+
+<div class="stage project-card" data-stage="p5">
+  <div class="meta">05 · Music Video · 2026</div>
+  <h2>GIGI GAZON — Videoclip oficial</h2>
+  <div class="tagline">Concept, regie și producție video integrală</div>
+  <p>Unul dintre cele mai bune proiecte de producție: videoclipul oficial „Gigi Gazon" al lui Kashmir Luchiano — concept, regie, filmare, montaj și color grading. Apasă pe ecran pentru a-l vedea.</p>
+  <div class="tags"><span>Music Video</span><span>Regie</span><span>Montaj</span><span>Grading</span></div>
 </div>
 
 <!-- (narration removed — the library wall opens on its own, no caption) -->
@@ -687,6 +715,7 @@
 <div id="project-modal" aria-hidden="true">
   <div class="pm-card">
     <button id="pm-close" class="pm-close" aria-label="Închide">&#10005;</button>
+    <div class="pm-video" id="pm-video"></div>
     <div class="pm-meta" id="pm-meta"></div>
     <h2 id="pm-title"></h2>
     <div class="pm-tagline" id="pm-tagline"></div>
@@ -694,6 +723,7 @@
     <div class="pm-tags" id="pm-tags"></div>
     <a class="pm-link" id="pm-link" target="_blank" rel="noopener">Vezi proiectul &rarr;</a>
     <div class="pm-soon" id="pm-soon">Link disponibil &icirc;n cur&acirc;nd</div>
+    <div class="pm-links" id="pm-links"></div>
   </div>
 </div>
 
@@ -1202,21 +1232,32 @@ for (let z = -3; z >= -19; z -= 4) {
 // Fewer, stronger pieces — each is a framed REAL preview image of the project,
 // and carries its full record (shown in a modal on click).
 const paintingData = [
-  { side: 'L', z: -5,  w: 2.6, h: 2.6, img: 'assets/proj-meetings.jpg', focus: [0.18, 0.28],
+  { side: 'L', z: -4,  w: 2.6, h: 2.6, img: 'assets/proj-meetings.jpg', focus: [0.175, 0.245],
     meta: '01 · SaaS · 2026', title: 'Meetings.ro',
     tagline: 'Transcripție și documente pentru instituții publice',
     desc: 'Platformă SaaS pentru transcriere automată și generare de procese-verbale, targetată instituțiilor publice din România. Arhitectură FastAPI + React, integrare certSIGN CSC, conformitate OUG 57/2019 și GDPR Art. 28.',
     tags: ['React', 'FastAPI', 'MongoDB', 'B2G'], url: 'https://www.meetings-ro.app' },
-  { side: 'R', z: -10, w: 2.0, h: 3.5, img: 'assets/proj-cartarum.jpg', focus: [0.29, 0.38],
+  { side: 'R', z: -7,  w: 2.0, h: 3.5, img: 'assets/proj-cartarum.jpg', focus: [0.255, 0.325],
     meta: '02 · Cultural · 2026', title: 'Casa Cartarum',
     tagline: '80+ hărți istorice ale României, multilingv',
     desc: 'Colecție digitală de hărți antice (sec. XVI–XVII) cu descrieri transcrise din spaniolă, latină și olandeză. Pipeline de producție video AI bilingv (Kling 3.0 EN + Veo 3.1 RO) pentru distribuție pe @venitdintimp.',
     tags: ['Next.js', 'MongoDB Atlas', 'Cloudinary', 'AI Video'], url: 'https://casacartarum.ro' },
-  { side: 'L', z: -15, w: 3.4, h: 2.55, img: 'assets/proj-kashmir.jpg', focus: [0.39, 0.47],
-    meta: '03 · Producție · 2026', title: 'Kashmir Luchiano',
-    tagline: 'Album rap, 14 piese, regie video integrală',
-    desc: 'Album lansat în 2026 sub identitatea Kashmir Luchiano. Producție, regie video, artwork digipak fizic, descrieri și strategie YouTube. Canal: @KashmirLuchiano.',
-    tags: ['Music', 'Video', 'YouTube', 'Print'], url: 'https://www.youtube.com/@KashmirLuchiano' },
+  { side: 'L', z: -10, w: 3.4, h: 1.71, img: 'assets/proj-oamenii.jpg', focus: [0.335, 0.405],
+    meta: '03 · Agent AI · 2026', title: 'Agent GAL — Oamenii Deltei',
+    tagline: 'Chatbot antrenat pe Strategia de Dezvoltare Locală',
+    desc: 'Asistent digital pentru accesarea fondurilor europene în zona GAL Oamenii Deltei. Are ca memorie întregul SDL al asociației — răspunde despre programele de finanțare, verifică eligibilitatea proiectelor și programează consultanță. Retrieval pe documentele oficiale (RAG).',
+    tags: ['AI Agent', 'RAG', 'SDL', 'Fonduri UE'], url: 'https://oamenii-deltei.app' },
+  { side: 'R', z: -13, w: 3.4, h: 1.71, img: 'assets/proj-kashmirluchiano.jpg', focus: [0.41, 0.455],
+    meta: '04 · Music Site · 2026', title: 'kashmirluchiano.com',
+    tagline: 'Website oficial Kashmir Luchiano',
+    desc: 'Site oficial al artistului Kashmir Luchiano — hero cinematic pentru single-ul „Gigi Gazon", discografie, biografie și link-uri către Spotify, Apple Music, YouTube, Instagram și TikTok. Design, dezvoltare și branding integral.',
+    tags: ['Web', 'Music', 'Branding'], url: 'https://kashmirluchiano.com' },
+  { side: 'L', z: -16, w: 3.4, h: 1.91, img: 'assets/mv-gigigazon.jpg', focus: [0.46, 0.505], video: '9l3zFDCcYqc',
+    meta: '05 · Music Video · 2026', title: 'GIGI GAZON — Videoclip oficial',
+    tagline: 'Concept, regie și producție video integrală',
+    desc: 'Videoclip oficial Kashmir Luchiano — „Gigi Gazon". Unul dintre cele mai bune proiecte de producție: concept, regie, filmare, montaj și color grading. Apasă play pentru a-l vedea.',
+    tags: ['Music Video', 'Regie', 'Montaj', 'Grading'],
+    url: 'https://www.youtube.com/watch?v=9l3zFDCcYqc' },
 ];
 
 // Paintings registered here become clickable (raycaster targets).
@@ -1438,9 +1479,28 @@ for (let lx of [-1.5, 1.5]) {
 const laptopBase = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.04, 0.85), MATS.steelBlack);
 laptopBase.position.set(0, 1.17, -27.2);
 scene.add(laptopBase);
-const laptopScreen = new THREE.Mesh(new THREE.PlaneGeometry(1.25, 0.78), new THREE.MeshBasicMaterial({ color: 0xe8a878 }));
+// The laptop plays the agency's ad showreel — click it to watch the real spots.
+const adsProject = {
+  meta: 'Skill · High-Conversion Ads',
+  title: 'Reclame video de conversie',
+  tagline: 'Spoturi editate profesional pentru campanii',
+  desc: 'Producție de reclame video de mare impact — concept, filmare, montaj și color grading, gândite pentru un obiectiv clar de conversie. Apasă play pentru showreel; mai jos ai spoturile complete și studiul de caz.',
+  tags: ['Ads', 'Montaj', 'Grading', 'Performance'],
+  video: '8ajCsesQskk',
+  links: [
+    { label: 'Spot 1 — YouTube', url: 'https://www.youtube.com/watch?v=8ajCsesQskk' },
+    { label: 'Spot 2 — YouTube', url: 'https://www.youtube.com/watch?v=XL8gaRZOdhk' },
+    { label: 'Studiu de caz — LinkedIn', url: 'https://www.linkedin.com/in/vlad-grigorov/' },
+  ],
+};
+const adsTex = texLoader.load('assets/ads-showreel.jpg');
+adsTex.colorSpace = THREE.SRGBColorSpace;
+const laptopScreen = new THREE.Mesh(new THREE.PlaneGeometry(1.25, 0.78), new THREE.MeshBasicMaterial({ map: adsTex }));
 laptopScreen.position.set(0, 1.6, -27.55);
 laptopScreen.rotation.x = -0.25;
+laptopScreen.userData.project = adsProject;
+laptopScreen.userData.targetScale = 1;
+clickablePaintings.push(laptopScreen);
 scene.add(laptopScreen);
 const screenGlow = new THREE.PointLight(0xffb872, 0.8, 3);
 screenGlow.position.set(0, 1.7, -27.3);
@@ -2059,19 +2119,23 @@ const stations = [
   { p: 0.035, pos: [11, 3.0, 9],    look: [0, 3.4, 0] },   // gliding along the terrace toward the entry
   { p: 0.07,  pos: [6, 2.7, 5.5],   look: [-1, 3.3, -2] }, // approaching the open glass slider at an angle
   { p: 0.105, pos: [2.2, 2.5, 2.6], look: [0, 3.2, -4] },  // crossing the threshold
-  { p: 0.14,  pos: [0, 2.4, -1],    look: [0, 3, -4] },    // inside — gallery axis (unchanged from here)
-  // Gallery — glide past each piece looking forward-AND-toward it (look target
-  // kept well ahead so the lens never pitches up at the ceiling between paintings).
-  { p: 0.19, pos: [1.2, 2.8, -1.5],  look: [-5.5, 3.1, -5.5]  }, // toward P1 Meetings (left)
-  { p: 0.25, pos: [0.8, 2.8, -3.5],  look: [-6.2, 3.1, -6.5]  }, //   dwell on P1
-  { p: 0.31, pos: [-1.2, 2.8, -6.5], look: [5.5, 3.1, -10.5]  }, // toward P2 Casa Cartarum (right)
-  { p: 0.36, pos: [-0.8, 2.8, -8.5], look: [6.2, 3.1, -11.5]  }, //   dwell on P2
-  { p: 0.41, pos: [1.2, 2.8, -11.5], look: [-5.5, 3.1, -15.5] }, // toward P3 Kashmir (left)
-  { p: 0.44, pos: [0.8, 2.8, -13.5], look: [-6.2, 3.1, -16.5] }, //   dwell on P3
-  // straighten and approach the library wall
-  { p: 0.48, pos: [0, 2.6, -18],    look: [0, 3.2, -20.5] },
-  { p: 0.50, pos: [0, 2.4, -19.8], look: [0, 3, -23] },
-  { p: 0.54, pos: [0, 2.4, -22],   look: [0, 3, -26] },
+  { p: 0.14,  pos: [0, 2.4, -1],      look: [0, 3, -4] },        // inside — gallery axis
+  // Gallery — 5 portfolio pieces; glide + gentle turn toward each (look target
+  // kept well ahead in -z so the lens never pitches up at the ceiling between pieces).
+  { p: 0.175, pos: [1.1, 2.8, -1.4],   look: [-5.4, 3.1, -4.2]  }, // toward P1 Meetings (L, z-4)
+  { p: 0.215, pos: [0.9, 2.8, -2.5],   look: [-6.2, 3.1, -4.6]  }, //   dwell P1
+  { p: 0.255, pos: [-1.1, 2.8, -4.4],  look: [5.4, 3.1, -7.2]   }, // toward P2 Casa Cartarum (R, z-7)
+  { p: 0.295, pos: [-0.9, 2.8, -5.5],  look: [6.2, 3.1, -7.6]   }, //   dwell P2
+  { p: 0.335, pos: [1.1, 2.8, -7.4],   look: [-5.4, 3.1, -10.2] }, // toward P3 Oamenii Deltei (L, z-10)
+  { p: 0.375, pos: [0.9, 2.8, -8.5],   look: [-6.2, 3.1, -10.6] }, //   dwell P3
+  { p: 0.41,  pos: [-1.1, 2.8, -10.4], look: [5.4, 3.1, -13.2]  }, // toward P4 kashmirluchiano.com (R, z-13)
+  { p: 0.44,  pos: [-0.9, 2.8, -11.5], look: [6.2, 3.1, -13.6]  }, //   dwell P4
+  { p: 0.465, pos: [1.0, 2.75, -13.6], look: [-5.2, 3.05, -16.2]}, // toward P5 GIGI GAZON video (L, z-16)
+  { p: 0.49,  pos: [0.8, 2.7, -14.7],  look: [-6.0, 3.05, -16.6]}, //   dwell P5
+  // straighten and approach the library wall (which has slid open by now)
+  { p: 0.51,  pos: [0.3, 2.6, -16.8],  look: [-1.4, 3.15, -20.2] },
+  { p: 0.53,  pos: [0, 2.5, -19.6],    look: [0, 3, -23] },
+  { p: 0.545, pos: [0, 2.4, -22],      look: [0, 3, -26] },
   // Studio
   { p: 0.58, pos: [0, 2.4, -25], look: [0, 2, -27] },
   { p: 0.62, pos: [0.5, 2.4, -26], look: [0, 1.5, -27.2] },
@@ -2122,10 +2186,12 @@ function getCamState(progress) {
 // ============================================================================
 const stageMap = [
   { range: [0, 0.07], el: '0' },
-  { range: [0.14, 0.18], el: '1' },
-  { range: [0.18, 0.28], el: 'p1' },
-  { range: [0.29, 0.38], el: 'p2' },
-  { range: [0.39, 0.46], el: 'p3' },
+  { range: [0.14, 0.175], el: '1' },
+  { range: [0.175, 0.25], el: 'p1' },
+  { range: [0.255, 0.33], el: 'p2' },
+  { range: [0.335, 0.41], el: 'p3' },
+  { range: [0.41, 0.455], el: 'p4' },
+  { range: [0.46, 0.515], el: 'p5' },
   { range: [0.54, 0.57], el: '2' },
   { range: [0.57, 0.65], el: 'about' },
   { range: [0.67, 0.69], el: '3' },
@@ -2167,8 +2233,9 @@ function updateTransitions(progress) {
   const doorOpen = Math.max(0, Math.min(1, progress / 0.09));
   doorPivot.position.x = -3 - smootherStep(doorOpen) * 6;
 
-  // T2: Library bookshelf SLIDES open (progress 0.44 → 0.50), like the doors
-  const libOpen = Math.max(0, Math.min(1, (progress - 0.44) / 0.06));
+  // T2: Library bookshelf SLIDES open (progress 0.49 → 0.55), like the doors —
+  // timed so it's clear before the camera straightens toward it after the gallery.
+  const libOpen = Math.max(0, Math.min(1, (progress - 0.49) / 0.06));
   cabinetPivot.position.x = -3.85 - smootherStep(libOpen) * 8;
 
   // T3: Sliding oak panel — opens EARLY (0.74 → 0.81) so it's fully clear before
@@ -2242,6 +2309,10 @@ canvasEl.addEventListener('pointerup', (e) => {
   if (hit && hit.userData.project) openProjectModal(hit.userData.project);
 });
 
+const pmCard = pmEl.querySelector('.pm-card');
+const pmVideo = document.getElementById('pm-video');
+const pmLinks = document.getElementById('pm-links');
+
 function openProjectModal(proj) {
   document.getElementById('pm-meta').textContent = proj.meta || '';
   document.getElementById('pm-title').textContent = proj.title || '';
@@ -2250,10 +2321,27 @@ function openProjectModal(proj) {
   const tagsEl = document.getElementById('pm-tags');
   tagsEl.innerHTML = '';
   (proj.tags || []).forEach((t) => { const s = document.createElement('span'); s.textContent = t; tagsEl.appendChild(s); });
+  // Embedded video (music video / ad showreel) — plays inside the modal.
+  if (proj.video) {
+    pmVideo.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + proj.video +
+      '?autoplay=1&rel=0&modestbranding=1" title="' + (proj.title || '') +
+      '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    pmCard.classList.add('has-video');
+  } else {
+    pmVideo.innerHTML = '';
+    pmCard.classList.remove('has-video');
+  }
   const link = document.getElementById('pm-link');
   const soon = document.getElementById('pm-soon');
-  if (proj.url) { link.href = proj.url; link.style.display = 'inline-flex'; soon.style.display = 'none'; }
+  if (proj.url) { link.href = proj.url; link.textContent = proj.video ? 'Vezi pe YouTube →' : 'Vezi proiectul →'; link.style.display = 'inline-flex'; soon.style.display = 'none'; }
   else { link.style.display = 'none'; soon.style.display = 'block'; }
+  // Extra links (e.g. the two ad spots + LinkedIn case study).
+  pmLinks.innerHTML = '';
+  (proj.links || []).forEach((l) => {
+    const a = document.createElement('a');
+    a.href = l.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = l.label;
+    pmLinks.appendChild(a);
+  });
   modalOpen = true;
   pmEl.classList.add('open');
   pmEl.setAttribute('aria-hidden', 'false');
@@ -2268,6 +2356,9 @@ function closeProjectModal() {
   pmEl.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   document.body.classList.remove('modal-open');
+  // Stop playback by tearing down the iframe.
+  pmVideo.innerHTML = '';
+  pmCard.classList.remove('has-video');
 }
 document.getElementById('pm-close').addEventListener('click', closeProjectModal);
 pmEl.addEventListener('click', (e) => { if (e.target === pmEl) closeProjectModal(); });
