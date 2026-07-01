@@ -739,7 +739,7 @@ import * as THREE from 'three';
 // ============================================================================
 const container = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0xe8d4a8, 0.006);
+scene.fog = new THREE.FogExp2(0xcfe0bc, 0.0085);  // pale green jungle mist
 
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 800);
 
@@ -758,12 +758,12 @@ container.appendChild(renderer.domElement);
 // Modernist Spanish palette: concrete, travertine, pale oak, matte black, glass
 // ============================================================================
 const MATS = {
-  // Structural
-  concrete: new THREE.MeshStandardMaterial({ color: 0xd8c8a0, roughness: 0.92 }),
-  concreteLight: new THREE.MeshStandardMaterial({ color: 0xe8d4ac, roughness: 0.9 }),
-  concreteDark: new THREE.MeshStandardMaterial({ color: 0xb8a888, roughness: 0.95 }),
-  travertine: new THREE.MeshStandardMaterial({ color: 0xede0c8, roughness: 0.6 }),
-  travertinePolished: new THREE.MeshStandardMaterial({ color: 0xf4ebd9, roughness: 0.35, metalness: 0.0 }),
+  // Structural — brilliant white modernist villa against the jungle
+  concrete: new THREE.MeshStandardMaterial({ color: 0xf1efe9, roughness: 0.9 }),
+  concreteLight: new THREE.MeshStandardMaterial({ color: 0xf8f6f1, roughness: 0.88 }),
+  concreteDark: new THREE.MeshStandardMaterial({ color: 0xdedad2, roughness: 0.92 }),
+  travertine: new THREE.MeshStandardMaterial({ color: 0xf3f1ea, roughness: 0.6 }),
+  travertinePolished: new THREE.MeshStandardMaterial({ color: 0xfbfaf6, roughness: 0.35, metalness: 0.0 }),
 
   // Wood (modernist, pale)
   oakPale: new THREE.MeshStandardMaterial({ color: 0xc8a87a, roughness: 0.5 }),
@@ -775,25 +775,31 @@ const MATS = {
   steelBrushed: new THREE.MeshStandardMaterial({ color: 0x4a4a4a, roughness: 0.4, metalness: 0.7 }),
   brassMatte: new THREE.MeshStandardMaterial({ color: 0x8a7048, roughness: 0.5, metalness: 0.6 }),
 
-  // Stone (cliff)
-  cliffStone: new THREE.MeshStandardMaterial({ color: 0x8a7660, roughness: 0.95 }),
-  cliffDark: new THREE.MeshStandardMaterial({ color: 0x6a5848, roughness: 0.95 }),
+  // Stone (mossy jungle rock)
+  cliffStone: new THREE.MeshStandardMaterial({ color: 0x5f6a48, roughness: 0.97 }),
+  cliffDark: new THREE.MeshStandardMaterial({ color: 0x44503a, roughness: 0.97 }),
 
-  // Plants
-  oliveLeaves: new THREE.MeshStandardMaterial({ color: 0x7a8a5a, roughness: 0.85 }),
-  oliveTrunk: new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.85 }),
-  cypress: new THREE.MeshStandardMaterial({ color: 0x4a6a3a, roughness: 0.85 }),
-  agaveBlue: new THREE.MeshStandardMaterial({ color: 0x6a8a7a, roughness: 0.6 }),
-  palmFronds: new THREE.MeshStandardMaterial({ color: 0x6a7a4a, roughness: 0.8, side: THREE.DoubleSide }),
+  // Plants — lush tropical jungle palette
+  oliveLeaves: new THREE.MeshStandardMaterial({ color: 0x3f7a34, roughness: 0.85 }),
+  oliveTrunk: new THREE.MeshStandardMaterial({ color: 0x6a5a44, roughness: 0.85 }),
+  cypress: new THREE.MeshStandardMaterial({ color: 0x2f6a2c, roughness: 0.85 }),
+  agaveBlue: new THREE.MeshStandardMaterial({ color: 0x4f8a52, roughness: 0.6 }),
+  palmFronds: new THREE.MeshStandardMaterial({ color: 0x3c7a30, roughness: 0.8, side: THREE.DoubleSide }),
+  // Extra jungle greens (layered so the canopy reads as depth, not one flat green)
+  jungleDeep: new THREE.MeshStandardMaterial({ color: 0x255024, roughness: 0.9, side: THREE.DoubleSide }),
+  jungleMid: new THREE.MeshStandardMaterial({ color: 0x357a2f, roughness: 0.85, side: THREE.DoubleSide }),
+  jungleLight: new THREE.MeshStandardMaterial({ color: 0x5aa845, roughness: 0.8, side: THREE.DoubleSide }),
+  jungleFloor: new THREE.MeshStandardMaterial({ color: 0x2c3a22, roughness: 1.0 }),
+  bananaLeaf: new THREE.MeshStandardMaterial({ color: 0x4c9a3a, roughness: 0.78, side: THREE.DoubleSide }),
 
   // Glass
   glass: new THREE.MeshPhysicalMaterial({ color: 0xf8f4e8, roughness: 0.05, metalness: 0.0, transmission: 0.95, thickness: 0.5, ior: 1.5, transparent: true, opacity: 0.25 }),
   glassTinted: new THREE.MeshPhysicalMaterial({ color: 0xa8b8c8, roughness: 0.08, metalness: 0.0, transmission: 0.85, thickness: 0.5, ior: 1.5, transparent: true, opacity: 0.3 }),
 
-  // Sea & sky
-  sea: new THREE.MeshStandardMaterial({ color: 0x2a5a8a, roughness: 0.25, metalness: 0.2, emissive: 0x1a3a6a, emissiveIntensity: 0.15 }),
-  seaPool: new THREE.MeshStandardMaterial({ color: 0x4a8aaa, roughness: 0.2, metalness: 0.3, emissive: 0x2a5a7a, emissiveIntensity: 0.2 }),
-  sunset: new THREE.MeshBasicMaterial({ color: 0xffa860 }),
+  // Distant jungle sea-of-green + jungle-fed pool
+  sea: new THREE.MeshStandardMaterial({ color: 0x33562f, roughness: 0.85, metalness: 0.0, emissive: 0x1c3418, emissiveIntensity: 0.1 }),
+  seaPool: new THREE.MeshStandardMaterial({ color: 0x2f7a6a, roughness: 0.2, metalness: 0.25, emissive: 0x1c4a42, emissiveIntensity: 0.2 }),
+  sunset: new THREE.MeshBasicMaterial({ color: 0xdfeccb }),
 
   // Accent (used sparingly for warmth)
   terracottaAccent: new THREE.MeshStandardMaterial({ color: 0xc97a4e, roughness: 0.7 }),
@@ -827,10 +833,10 @@ function makePainting(c1, c2) {
 // ============================================================================
 // MODULE: lighting.js — Sun + hemisphere + ambient + sky shader
 // ============================================================================
-const hemi = new THREE.HemisphereLight(0xffd8a8, 0x6a5a48, 0.6);
+const hemi = new THREE.HemisphereLight(0xe4f2e6, 0x2f4a2c, 0.7);
 scene.add(hemi);
 
-const sun = new THREE.DirectionalLight(0xffc090, 1.6);
+const sun = new THREE.DirectionalLight(0xfff4de, 1.5);
 sun.position.set(40, 40, 25);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -840,7 +846,7 @@ sun.shadow.camera.top = 60; sun.shadow.camera.bottom = -180;
 sun.shadow.bias = -0.0005;
 scene.add(sun);
 
-const ambient = new THREE.AmbientLight(0xfff0d8, 0.45);
+const ambient = new THREE.AmbientLight(0xeaf2e2, 0.5);
 scene.add(ambient);
 
 // Sky dome with gradient shader
@@ -848,9 +854,9 @@ const skyGeo = new THREE.SphereGeometry(400, 32, 16);
 const skyMat = new THREE.ShaderMaterial({
   side: THREE.BackSide,
   uniforms: {
-    topColor: { value: new THREE.Color(0x4a7aaa) },
-    midColor: { value: new THREE.Color(0xe8a878) },
-    bottomColor: { value: new THREE.Color(0xffa860) },
+    topColor: { value: new THREE.Color(0xbcd6e2) },
+    midColor: { value: new THREE.Color(0xdcebd0) },
+    bottomColor: { value: new THREE.Color(0xc0d8ac) },
   },
   vertexShader: `varying vec3 vWorldPos; void main(){ vWorldPos = (modelMatrix * vec4(position,1.0)).xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
   fragmentShader: `varying vec3 vWorldPos; uniform vec3 topColor; uniform vec3 midColor; uniform vec3 bottomColor;
@@ -950,10 +956,10 @@ makePine(30, -2, -30, 1.4);
 // FIX: clean rectangular doorframe, single panel pivot door
 // ============================================================================
 
-// === BEACH (sand) — the villa sits right on the shore ===
+// === JUNGLE FLOOR — the villa sits on a clearing in the rainforest ===
 const beach = new THREE.Mesh(
-  new THREE.PlaneGeometry(220, 160),
-  new THREE.MeshStandardMaterial({ color: 0xe8d2a6, roughness: 1.0 })
+  new THREE.PlaneGeometry(260, 200),
+  new THREE.MeshStandardMaterial({ color: 0x2f3d24, roughness: 1.0 })
 );
 beach.rotation.x = -Math.PI / 2;
 beach.position.set(0, -0.25, 20);
@@ -1154,6 +1160,81 @@ function makePalm(x, y, z, h = 5) {
 }
 makePalm(-15, -1, 8, 6);
 makePalm(15, -1, 5, 5.5);
+
+// ============================================================================
+// MODULE: jungle.js — dense tropical foliage wrapping the white villa
+// Low-poly broad leaves / ferns / jungle palms scattered in rings around the
+// footprint (skipping the entry approach corridor and the interior envelope).
+// ============================================================================
+function makeMonstera(x, z, s = 1) {
+  const g = new THREE.Group();
+  const greens = [MATS.jungleMid, MATS.jungleLight, MATS.bananaLeaf, MATS.jungleDeep];
+  const n = 5 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + Math.random() * 0.4;
+    const len = (1.0 + Math.random() * 0.9) * s;
+    const leaf = new THREE.Mesh(new THREE.PlaneGeometry(len * 0.7, len), greens[i % greens.length]);
+    leaf.position.set(Math.cos(a) * 0.3 * s, len * 0.5, Math.sin(a) * 0.3 * s);
+    leaf.rotation.y = -a;
+    leaf.rotation.x = -0.55 - Math.random() * 0.35;
+    leaf.castShadow = true;
+    g.add(leaf);
+  }
+  g.position.set(x, 0, z);
+  scene.add(g);
+}
+function makeFern(x, z, s = 1) {
+  const g = new THREE.Group();
+  const n = 7 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2;
+    const frond = new THREE.Mesh(new THREE.PlaneGeometry(0.16 * s, (0.9 + Math.random() * 0.6) * s), MATS.jungleDeep);
+    frond.position.set(Math.cos(a) * 0.14 * s, 0.45 * s, Math.sin(a) * 0.14 * s);
+    frond.rotation.y = -a;
+    frond.rotation.x = -0.8;
+    g.add(frond);
+  }
+  g.position.set(x, 0, z);
+  scene.add(g);
+}
+function makeJunglePalm(x, z, h = 7) {
+  const g = new THREE.Group();
+  for (let i = 0; i < h * 2; i++) {
+    const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.16 - i * 0.004, 0.19 - i * 0.004, 0.5, 7), MATS.oliveTrunk);
+    ring.position.y = i * 0.5; ring.rotation.z = (Math.random() - 0.5) * 0.05; g.add(ring);
+  }
+  for (let i = 0; i < 10; i++) {
+    const frond = new THREE.Mesh(new THREE.PlaneGeometry(0.55, 3.2), MATS.palmFronds);
+    const a = (i / 10) * Math.PI * 2;
+    frond.position.set(Math.cos(a) * 0.5, h, Math.sin(a) * 0.5);
+    frond.rotation.y = a; frond.rotation.x = -0.35 - Math.random() * 0.25;
+    frond.castShadow = true; g.add(frond);
+  }
+  g.position.set(x, 0, z); scene.add(g);
+}
+function makeJungleClump(x, z, s = 1) {
+  makeMonstera(x, z, s);
+  if (Math.random() > 0.4)  makeFern(x + (Math.random() - 0.5) * 1.5, z + (Math.random() - 0.5) * 1.5, s * 0.9);
+  if (Math.random() > 0.55) makeJunglePalm(x + (Math.random() - 0.5) * 2, z + (Math.random() - 0.5) * 2, 5 + Math.random() * 4);
+}
+// Keep the entry approach corridor (camera arcs in here) clear.
+function inApproach(x, z) { return x > 1 && x < 17 && z > 1 && z < 15; }
+(function scatterJungle() {
+  for (const ring of [11, 15, 19, 23]) {
+    for (let z = 16; z >= -78; z -= (3.5 + Math.random() * 2.5)) {
+      for (const sx of [-1, 1]) {
+        const x = sx * (ring + (Math.random() - 0.5) * 3);
+        if (inApproach(x, z)) continue;
+        if (Math.random() > 0.34) continue; // leave gaps between clumps
+        makeJungleClump(x, z, 0.8 + Math.random() * 0.9);
+      }
+    }
+  }
+  // Lush plants right outside the front glass (left side, framed through the entry)
+  for (let i = 0; i < 8; i++) makeJungleClump(-6 - Math.random() * 7, 3 + Math.random() * 8, 0.9 + Math.random() * 0.7);
+  // Tall canopy palms far out as a green backdrop
+  for (let i = 0; i < 14; i++) makeJunglePalm((Math.random() < 0.5 ? -1 : 1) * (20 + Math.random() * 10), -80 + Math.random() * 95, 7 + Math.random() * 6);
+})();
 
 // Steps up to door (clean modernist slabs)
 for (let i = 0; i < 2; i++) {
