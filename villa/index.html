@@ -733,6 +733,11 @@
 
 <script type="module">
 import * as THREE from 'three';
+import { EffectComposer } from './vendor/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from './vendor/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from './vendor/jsm/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from './vendor/jsm/postprocessing/OutputPass.js';
+import { RoomEnvironment } from './vendor/jsm/environments/RoomEnvironment.js';
 
 // ============================================================================
 // MODULE: scene.js — Renderer, Scene, Camera setup
@@ -748,10 +753,24 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.25;
+renderer.toneMappingExposure = 1.0;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 container.appendChild(renderer.domElement);
+
+// Image-based environment lighting — soft studio reflections on every PBR
+// surface (this is most of the difference between "sketch" and "archviz").
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.06).texture;
+
+// Post-processing chain: render → subtle bloom (sun, skylights, LED strips) → output.
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloomPass = new UnrealBloomPass(
+  new THREE.Vector2(window.innerWidth, window.innerHeight), 0.16, 0.5, 0.92
+);
+composer.addPass(bloomPass);
+composer.addPass(new OutputPass());
 
 // ============================================================================
 // MODULE: materials.js — All material definitions
@@ -808,6 +827,145 @@ const MATS = {
   paper: new THREE.MeshStandardMaterial({ color: 0xeae0c8, roughness: 0.95 }),
 };
 
+// ============================================================================
+// MODULE: textures.js — procedural surface detail (canvas-drawn, no downloads)
+// Drawn near-white so each material's color tints it; shared via MATS so every
+// mesh picks it up. This is what removes the "flat plastic" look.
+// ============================================================================
+function makeCanvasTex(w, h, draw, repeat = 2) {
+  const cv = document.createElement('canvas');
+  cv.width = w; cv.height = h;
+  draw(cv.getContext('2d'), w, h);
+  const tex = new THREE.CanvasTexture(cv);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(repeat, repeat);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  return tex;
+}
+
+// Travertine: soft horizontal banding + fine pitting
+const travertineTex = makeCanvasTex(512, 512, (ctx, w, h) => {
+  ctx.fillStyle = '#f2efe8'; ctx.fillRect(0, 0, w, h);
+  for (let y = 0; y < h; y += 2) {
+    const band = 0.5 + 0.5 * Math.sin(y * 0.045) * Math.sin(y * 0.013 + 2);
+    ctx.fillStyle = `rgba(196,186,168,${0.05 + band * 0.07})`;
+    ctx.fillRect(0, y, w, 2);
+  }
+  for (let i = 0; i < 2200; i++) {
+    ctx.fillStyle = `rgba(150,140,120,${Math.random() * 0.12})`;
+    ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 3 + 0.5, Math.random() * 1.6 + 0.4);
+  }
+}, 3);
+
+// Stucco/limewash: fine plaster noise
+const stuccoTex = makeCanvasTex(512, 512, (ctx, w, h) => {
+  ctx.fillStyle = '#f3f1ec'; ctx.fillRect(0, 0, w, h);
+  for (let i = 0; i < 9000; i++) {
+    const g = 225 + Math.random() * 30;
+    ctx.fillStyle = `rgba(${g},${g - 3},${g - 8},${Math.random() * 0.16})`;
+    ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 2.2 + 0.4, Math.random() * 2.2 + 0.4);
+  }
+  for (let i = 0; i < 24; i++) { // faint trowel sweeps
+    ctx.strokeStyle = `rgba(205,198,184,${Math.random() * 0.07})`;
+    ctx.lineWidth = 6 + Math.random() * 16;
+    ctx.beginPath();
+    const y0 = Math.random() * h;
+    ctx.moveTo(-20, y0);
+    ctx.bezierCurveTo(w * 0.3, y0 + (Math.random() - 0.5) * 60, w * 0.7, y0 + (Math.random() - 0.5) * 60, w + 20, y0 + (Math.random() - 0.5) * 40);
+    ctx.stroke();
+  }
+}, 2);
+
+// Wood: vertical grain with knots
+const woodTex = makeCanvasTex(512, 512, (ctx, w, h) => {
+  ctx.fillStyle = '#efe6d8'; ctx.fillRect(0, 0, w, h);
+  for (let x = 0; x < w; x += 2) {
+    const wave = Math.sin(x * 0.14) * 0.5 + Math.sin(x * 0.045 + 1.7) * 0.5;
+    ctx.fillStyle = `rgba(160,132,96,${0.10 + Math.abs(wave) * 0.13})`;
+    ctx.fillRect(x, 0, 1.5, h);
+  }
+  for (let i = 0; i < 7; i++) { // knots
+    const kx = Math.random() * w, ky = Math.random() * h;
+    for (let r = 8; r > 0; r -= 2) {
+      ctx.strokeStyle = `rgba(140,110,75,${0.10 + (8 - r) * 0.015})`;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.ellipse(kx, ky, r * 2.1, r, 0.25, 0, Math.PI * 2); ctx.stroke();
+    }
+  }
+}, 1.5);
+
+MATS.travertine.map = travertineTex;
+MATS.travertinePolished.map = travertineTex;
+MATS.concrete.map = stuccoTex;
+MATS.concreteLight.map = stuccoTex;
+MATS.concreteDark.map = stuccoTex;
+MATS.oakPale.map = woodTex;
+MATS.oakWarm.map = woodTex;
+MATS.walnut.map = woodTex;
+[MATS.travertine, MATS.travertinePolished, MATS.concrete, MATS.concreteLight,
+ MATS.concreteDark, MATS.oakPale, MATS.oakWarm, MATS.walnut].forEach(m => m.needsUpdate = true);
+
+// Organic leaf silhouettes (alpha-tested) — replaces the "paper cutout" foliage.
+function makeLeafTex(kind) {
+  const cv = document.createElement('canvas');
+  cv.width = 128; cv.height = 256;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, 128, 256);
+  ctx.fillStyle = '#ffffff';
+  if (kind === 'palm') {           // feathered frond: stem + leaflets
+    ctx.fillRect(60, 0, 8, 256);
+    for (let y = 10; y < 250; y += 9) {
+      const len = 52 * Math.sin(Math.PI * (y / 256)) + 6;
+      for (const dir of [-1, 1]) {
+        ctx.beginPath();
+        ctx.moveTo(64, y);
+        ctx.quadraticCurveTo(64 + dir * len * 0.6, y + 4, 64 + dir * len, y + 14);
+        ctx.quadraticCurveTo(64 + dir * len * 0.5, y + 9, 64, y + 6);
+        ctx.fill();
+      }
+    }
+  } else if (kind === 'monstera') { // broad leaf with side slits
+    ctx.beginPath();
+    ctx.moveTo(64, 8);
+    ctx.bezierCurveTo(126, 40, 122, 170, 64, 248);
+    ctx.bezierCurveTo(6, 170, 2, 40, 64, 8);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'destination-out';
+    for (let i = 0; i < 5; i++) {
+      const y = 52 + i * 38;
+      for (const dir of [-1, 1]) {
+        ctx.beginPath();
+        ctx.moveTo(64 + dir * 62, y);
+        ctx.quadraticCurveTo(64 + dir * 26, y + 7, 64 + dir * 14, y + 3);
+        ctx.quadraticCurveTo(64 + dir * 30, y + 16, 64 + dir * 62, y + 13);
+        ctx.fill();
+      }
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  } else {                          // fern: slim tapered blade
+    ctx.fillRect(61, 0, 6, 256);
+    for (let y = 6; y < 250; y += 7) {
+      const len = 30 * Math.sin(Math.PI * (y / 256)) + 3;
+      ctx.fillRect(64 - len, y, len * 2, 3.4);
+    }
+  }
+  const tex = new THREE.CanvasTexture(cv);
+  tex.colorSpace = THREE.NoColorSpace; // alphaMap reads the green channel linearly
+  return tex;
+}
+const palmLeafTex = makeLeafTex('palm');
+const monsteraLeafTex = makeLeafTex('monstera');
+const fernLeafTex = makeLeafTex('fern');
+
+MATS.palmFronds.alphaMap = palmLeafTex; MATS.palmFronds.alphaTest = 0.45;
+MATS.jungleMid.alphaMap = monsteraLeafTex; MATS.jungleMid.alphaTest = 0.45;
+MATS.jungleLight.alphaMap = monsteraLeafTex; MATS.jungleLight.alphaTest = 0.45;
+MATS.bananaLeaf.alphaMap = monsteraLeafTex; MATS.bananaLeaf.alphaTest = 0.45;
+MATS.jungleDeep.alphaMap = fernLeafTex; MATS.jungleDeep.alphaTest = 0.45;
+[MATS.palmFronds, MATS.jungleMid, MATS.jungleLight, MATS.bananaLeaf, MATS.jungleDeep]
+  .forEach(m => { m.side = THREE.DoubleSide; m.needsUpdate = true; });
+
 // Painting texture maker — modernist gradients (Rothko-influenced, NOT busy)
 function makePainting(c1, c2) {
   const cv = document.createElement('canvas');
@@ -833,10 +991,11 @@ function makePainting(c1, c2) {
 // ============================================================================
 // MODULE: lighting.js — Sun + hemisphere + ambient + sky shader
 // ============================================================================
-const hemi = new THREE.HemisphereLight(0xe4f2e6, 0x2f4a2c, 0.7);
+// Env map now supplies the fill light, so direct fills are dialed way down.
+const hemi = new THREE.HemisphereLight(0xe4f2e6, 0x2f4a2c, 0.3);
 scene.add(hemi);
 
-const sun = new THREE.DirectionalLight(0xfff4de, 1.5);
+const sun = new THREE.DirectionalLight(0xfff4de, 1.35);
 sun.position.set(40, 40, 25);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -846,7 +1005,7 @@ sun.shadow.camera.top = 60; sun.shadow.camera.bottom = -180;
 sun.shadow.bias = -0.0005;
 scene.add(sun);
 
-const ambient = new THREE.AmbientLight(0xeaf2e2, 0.5);
+const ambient = new THREE.AmbientLight(0xeaf2e2, 0.12);
 scene.add(ambient);
 
 // Sky dome with gradient shader
@@ -866,6 +1025,27 @@ const skyMat = new THREE.ShaderMaterial({
       gl_FragColor = vec4(col, 1.0); }`
 });
 scene.add(new THREE.Mesh(skyGeo, skyMat));
+
+// Photoreal jungle backplate — the AI-generated jungle wall (already in the
+// account, zero new credits) wrapped as a panoramic cylinder around the villa.
+// Loaded with an error fallback: if the CDN blocks cross-origin WebGL use,
+// the procedural jungle simply stays as-is.
+(function addJungleBackplate() {
+  const url = 'https://d8j0ntlcm91z4.cloudfront.net/user_33Ej8t2gAxUeQ3elHCepqWYPaUg/hf_20260701_103510_985db246-5d0d-4f0b-ad6e-8a6bf8662e81.png';
+  const ldr = new THREE.TextureLoader();
+  ldr.setCrossOrigin('anonymous');
+  ldr.load(url, (tex) => {
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.repeat.set(5, 1); // tile the 21:9 wall 5× around the ring
+    const ring = new THREE.Mesh(
+      new THREE.CylinderGeometry(70, 70, 46, 48, 1, true),
+      new THREE.MeshBasicMaterial({ map: tex, side: THREE.BackSide, fog: true })
+    );
+    ring.position.set(0, 14, -28);
+    scene.add(ring);
+  }, undefined, () => { /* CORS/network blocked — keep procedural jungle */ });
+})();
 
 // ============================================================================
 // MODULE: rooms/exterior.js — Cliff, sea, sky elements
@@ -2499,13 +2679,28 @@ function animate() {
   sunDisc.scale.setScalar(1 + Math.sin(t * 0.3) * 0.04);
   sunHalo.scale.setScalar(1 + Math.sin(t * 0.3 + 0.5) * 0.06);
 
-  renderer.render(scene, camera);
+  composer.render();
 }
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Environment reflections: subtle on matte surfaces so whites stay white,
+// stronger on glass/metal so they read as real materials.
+const envTuned = new Set();
+scene.traverse(o => {
+  if (!o.isMesh) return;
+  const mats = Array.isArray(o.material) ? o.material : [o.material];
+  for (const m of mats) {
+    if (!m || envTuned.has(m)) continue;
+    envTuned.add(m);
+    if (m.isMeshPhysicalMaterial) m.envMapIntensity = 1.0;
+    else if (m.isMeshStandardMaterial) m.envMapIntensity = (m.metalness > 0.5) ? 1.1 : 0.45;
+  }
 });
 
 camera.position.set(0, 2.6, 14);
