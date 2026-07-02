@@ -238,15 +238,16 @@
   // 8 photoreal tour segments (Kling v3.0, each between two consecutive 4K
   // frames), in journey order. Served from Higgsfield's CDN. Filled once the
   // clips finish rendering.
+  const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_33Ej8t2gAxUeQ3elHCepqWYPaUg/';
   const SEGMENTS = [
-    /*1 exterior→entry*/   '',
-    /*2 entry→gallery*/    '',
-    /*3 gallery→library*/  '',
-    /*4 library→studio*/   '',
-    /*5 studio→services*/  '',
-    /*6 services→salon*/   '',
-    /*7 salon→terrace*/    '',
-    /*8 terrace→beach*/    '',
+    /*1 exterior→entry*/   CDN + 'hf_20260701_183847_7edfd944-28b5-4be2-ba1a-595be708fe24.mp4',
+    /*2 entry→gallery*/    CDN + 'hf_20260702_023751_355eeaef-9203-40f9-bd7d-658e8526b59d.mp4',
+    /*3 gallery→library*/  CDN + 'hf_20260702_023805_7044271f-855f-4f7b-a5ad-46bc5d40d3e3.mp4',
+    /*4 library→studio*/   CDN + 'hf_20260702_023814_382f0163-f4ad-490c-8af6-ba99c0ab1f54.mp4',
+    /*5 studio→services*/  CDN + 'hf_20260702_023822_802d4a0f-f827-4bce-bfa8-95849662c0c2.mp4',
+    /*6 services→salon*/   CDN + 'hf_20260702_023830_daebadc4-fbbf-485f-9e03-906ae85199fe.mp4',
+    /*7 salon→terrace*/    CDN + 'hf_20260702_023840_3f85792f-b658-4e87-b3f2-567dccacac36.mp4',
+    /*8 terrace→beach*/    CDN + 'hf_20260702_023849_ec769911-40c0-40cf-90fd-58514a9055c7.mp4',
   ];
 
   const layer = document.getElementById('video-layer');
