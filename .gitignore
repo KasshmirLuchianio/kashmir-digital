@@ -1,10 +1,1 @@
-# Large video files (>100MB - GitHub limit)
-services-video.mp4
-services-video-mobile.mp4
-hero-video.mp4
-New hero portofoliu.mov
-
-# Local dev
-kashmir-site/
-.claude/
-*.skill
+node_modules/
