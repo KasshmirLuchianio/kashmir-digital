@@ -1136,15 +1136,85 @@ makePine(30, -2, -30, 1.4);
 // FIX: clean rectangular doorframe, single panel pivot door
 // ============================================================================
 
-// === JUNGLE FLOOR — the villa sits on a clearing in the rainforest ===
+// ============================================================================
+// MODULE: foundation.js — ground level, raised concrete plinth, footing
+// The villa sits on a board-formed concrete plinth in a jungle clearing; the
+// rainforest floor drops well below it so the architecture reads as FOUNDED,
+// not floating on a flat plane.
+// ============================================================================
+const GROUND_Y = -1.7;
+
+// Leaf-litter rainforest floor texture (soil + scattered leaves).
+const groundTex = makeCanvasTex(512, 512, (ctx, w, h) => {
+  ctx.fillStyle = '#2a3620'; ctx.fillRect(0, 0, w, h);
+  for (let i = 0; i < 7000; i++) {
+    const g = Math.random();
+    ctx.fillStyle = `rgba(${38 + g * 55},${48 + g * 45},${24 + g * 28},0.22)`;
+    ctx.fillRect(Math.random() * w, Math.random() * h, Math.random() * 4 + 1, Math.random() * 2 + 1);
+  }
+  for (let i = 0; i < 500; i++) { // fallen leaves
+    ctx.fillStyle = `rgba(${64 + Math.random() * 70},${74 + Math.random() * 55},${30 + Math.random() * 34},0.42)`;
+    ctx.save(); ctx.translate(Math.random() * w, Math.random() * h); ctx.rotate(Math.random() * 6.28);
+    ctx.beginPath(); ctx.ellipse(0, 0, 4 + Math.random() * 3, 1.6, 0, 0, 6.28); ctx.fill(); ctx.restore();
+  }
+}, 10);
+
+const foundationMat = new THREE.MeshStandardMaterial({ color: 0xccc7bc, roughness: 0.95, map: stuccoTex, envMapIntensity: 0.4 });
+
 const beach = new THREE.Mesh(
-  new THREE.PlaneGeometry(260, 200),
-  new THREE.MeshStandardMaterial({ color: 0x2f3d24, roughness: 1.0 })
+  new THREE.PlaneGeometry(340, 280),
+  new THREE.MeshStandardMaterial({ color: 0x2a3620, roughness: 1.0, map: groundTex })
 );
 beach.rotation.x = -Math.PI / 2;
-beach.position.set(0, -0.25, 20);
+beach.position.set(0, GROUND_Y, 20);
 beach.receiveShadow = true;
 scene.add(beach);
+
+// Main plinth under the whole villa (enclosed rooms + finale terrace).
+const plinth = new THREE.Mesh(new THREE.BoxGeometry(18, 2.67, 78), foundationMat);
+plinth.position.set(0, -1.365, -30);
+plinth.castShadow = true; plinth.receiveShadow = true;
+scene.add(plinth);
+// Modernist shadow-gap reveal — a recessed dark band so the white villa above
+// appears to float on the base.
+const reveal = new THREE.Mesh(new THREE.BoxGeometry(17.3, 0.2, 77.3),
+  new THREE.MeshStandardMaterial({ color: 0x7c776d, roughness: 1 }));
+reveal.position.set(0, -0.16, -30);
+scene.add(reveal);
+// Battered footing that widens into the earth at ground level.
+const footing = new THREE.Mesh(new THREE.BoxGeometry(20.6, 1.0, 80.6), foundationMat);
+footing.position.set(0, GROUND_Y - 0.35, -30);
+footing.receiveShadow = true;
+scene.add(footing);
+// Support base under the wide approach terrace so it isn't a floating deck.
+const terraceBase = new THREE.Mesh(new THREE.BoxGeometry(26, 1.7, 18.4), foundationMat);
+terraceBase.position.set(4, GROUND_Y + 0.85 - 0.1, 8);
+terraceBase.receiveShadow = true;
+scene.add(terraceBase);
+
+// Grand entry stair — from the clearing up onto the terrace level.
+for (let i = 0; i < 5; i++) {
+  const st = new THREE.Mesh(new THREE.BoxGeometry(9, 0.4, 1.0), foundationMat);
+  st.position.set(9, -0.25 - i * 0.34, 12.5 + i * 1.0);
+  st.receiveShadow = true; st.castShadow = true;
+  scene.add(st);
+}
+
+// Low mossy boulders + ground-cover clusters around the base for scale/detail.
+function makeRock(x, z, s = 1) {
+  const rock = new THREE.Mesh(
+    new THREE.DodecahedronGeometry(s, 0),
+    Math.random() > 0.5 ? MATS.cliffStone : MATS.cliffDark
+  );
+  rock.position.set(x, GROUND_Y + s * 0.45, z);
+  rock.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
+  rock.scale.y = 0.7; rock.castShadow = true; rock.receiveShadow = true;
+  scene.add(rock);
+}
+for (let i = 0; i < 26; i++) {
+  const side = Math.random() < 0.5 ? -1 : 1;
+  makeRock(side * (9.5 + Math.random() * 8), 12 - Math.random() * 78, 0.5 + Math.random() * 1.1);
+}
 
 // === SIDE TERRACE DECK (travertine) — the camera arcs in across this ===
 const terrace = new THREE.Mesh(new THREE.BoxGeometry(26, 0.2, 18), MATS.travertine);
@@ -1338,8 +1408,8 @@ function makePalm(x, y, z, h = 5) {
   g.castShadow = true;
   scene.add(g);
 }
-makePalm(-15, -1, 8, 6);
-makePalm(15, -1, 5, 5.5);
+makePalm(-15, GROUND_Y, 8, 6);
+makePalm(15, GROUND_Y, 5, 5.5);
 
 // ============================================================================
 // MODULE: jungle.js — dense tropical foliage wrapping the white villa
@@ -1360,7 +1430,7 @@ function makeMonstera(x, z, s = 1) {
     leaf.castShadow = true;
     g.add(leaf);
   }
-  g.position.set(x, 0, z);
+  g.position.set(x, GROUND_Y, z);
   scene.add(g);
 }
 function makeFern(x, z, s = 1) {
@@ -1374,7 +1444,7 @@ function makeFern(x, z, s = 1) {
     frond.rotation.x = -0.8;
     g.add(frond);
   }
-  g.position.set(x, 0, z);
+  g.position.set(x, GROUND_Y, z);
   scene.add(g);
 }
 function makeJunglePalm(x, z, h = 7) {
@@ -1390,7 +1460,7 @@ function makeJunglePalm(x, z, h = 7) {
     frond.rotation.y = a; frond.rotation.x = -0.35 - Math.random() * 0.25;
     frond.castShadow = true; g.add(frond);
   }
-  g.position.set(x, 0, z); scene.add(g);
+  g.position.set(x, GROUND_Y, z); scene.add(g);
 }
 function makeJungleClump(x, z, s = 1) {
   makeMonstera(x, z, s);
