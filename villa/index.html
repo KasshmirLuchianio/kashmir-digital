@@ -744,7 +744,7 @@ import { RoomEnvironment } from './vendor/jsm/environments/RoomEnvironment.js';
 // ============================================================================
 const container = document.getElementById('canvas-container');
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0xcfe0bc, 0.0085);  // pale green jungle mist
+scene.fog = new THREE.FogExp2(0xdbe9f0, 0.0058);  // soft sea haze
 
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 800);
 
@@ -815,10 +815,10 @@ const MATS = {
   glass: new THREE.MeshPhysicalMaterial({ color: 0xf8f4e8, roughness: 0.05, metalness: 0.0, transmission: 0.95, thickness: 0.5, ior: 1.5, transparent: true, opacity: 0.25 }),
   glassTinted: new THREE.MeshPhysicalMaterial({ color: 0xa8b8c8, roughness: 0.08, metalness: 0.0, transmission: 0.85, thickness: 0.5, ior: 1.5, transparent: true, opacity: 0.3 }),
 
-  // Distant jungle sea-of-green + jungle-fed pool
-  sea: new THREE.MeshStandardMaterial({ color: 0x33562f, roughness: 0.85, metalness: 0.0, emissive: 0x1c3418, emissiveIntensity: 0.1 }),
-  seaPool: new THREE.MeshStandardMaterial({ color: 0x2f7a6a, roughness: 0.2, metalness: 0.25, emissive: 0x1c4a42, emissiveIntensity: 0.2 }),
-  sunset: new THREE.MeshBasicMaterial({ color: 0xdfeccb }),
+  // Open sea + infinity pool (both turquoise now)
+  sea: new THREE.MeshStandardMaterial({ color: 0x1c6f92, roughness: 0.14, metalness: 0.3, envMapIntensity: 1.2 }),
+  seaPool: new THREE.MeshStandardMaterial({ color: 0x38a7c2, roughness: 0.12, metalness: 0.25, envMapIntensity: 1.1 }),
+  sunset: new THREE.MeshBasicMaterial({ color: 0xfff4e0 }),
 
   // Accent (used sparingly for warmth)
   terracottaAccent: new THREE.MeshStandardMaterial({ color: 0xc97a4e, roughness: 0.7 }),
@@ -992,7 +992,7 @@ function makePainting(c1, c2) {
 // MODULE: lighting.js — Sun + hemisphere + ambient + sky shader
 // ============================================================================
 // Env map now supplies the fill light, so direct fills are dialed way down.
-const hemi = new THREE.HemisphereLight(0xe4f2e6, 0x2f4a2c, 0.3);
+const hemi = new THREE.HemisphereLight(0xdcecf6, 0x3a6f88, 0.35);
 scene.add(hemi);
 
 const sun = new THREE.DirectionalLight(0xfff4de, 1.35);
@@ -1013,9 +1013,9 @@ const skyGeo = new THREE.SphereGeometry(400, 32, 16);
 const skyMat = new THREE.ShaderMaterial({
   side: THREE.BackSide,
   uniforms: {
-    topColor: { value: new THREE.Color(0xbcd6e2) },
-    midColor: { value: new THREE.Color(0xdcebd0) },
-    bottomColor: { value: new THREE.Color(0xc0d8ac) },
+    topColor: { value: new THREE.Color(0x8fbfe0) },
+    midColor: { value: new THREE.Color(0xd6e8f2) },
+    bottomColor: { value: new THREE.Color(0xe6f0f4) },
   },
   vertexShader: `varying vec3 vWorldPos; void main(){ vWorldPos = (modelMatrix * vec4(position,1.0)).xyz; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
   fragmentShader: `varying vec3 vWorldPos; uniform vec3 topColor; uniform vec3 midColor; uniform vec3 bottomColor;
@@ -1026,26 +1026,7 @@ const skyMat = new THREE.ShaderMaterial({
 });
 scene.add(new THREE.Mesh(skyGeo, skyMat));
 
-// Photoreal jungle backplate — the AI-generated jungle wall (already in the
-// account, zero new credits) wrapped as a panoramic cylinder around the villa.
-// Loaded with an error fallback: if the CDN blocks cross-origin WebGL use,
-// the procedural jungle simply stays as-is.
-(function addJungleBackplate() {
-  const url = 'https://d8j0ntlcm91z4.cloudfront.net/user_33Ej8t2gAxUeQ3elHCepqWYPaUg/hf_20260701_103510_985db246-5d0d-4f0b-ad6e-8a6bf8662e81.png';
-  const ldr = new THREE.TextureLoader();
-  ldr.setCrossOrigin('anonymous');
-  ldr.load(url, (tex) => {
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.repeat.set(5, 1); // tile the 21:9 wall 5× around the ring
-    const ring = new THREE.Mesh(
-      new THREE.CylinderGeometry(70, 70, 46, 48, 1, true),
-      new THREE.MeshBasicMaterial({ map: tex, side: THREE.BackSide, fog: true })
-    );
-    ring.position.set(0, 14, -28);
-    scene.add(ring);
-  }, undefined, () => { /* CORS/network blocked — keep procedural jungle */ });
-})();
+// (jungle backplate removed — the villa now sits in open sea)
 
 // ============================================================================
 // MODULE: rooms/exterior.js — Cliff, sea, sky elements
@@ -1098,18 +1079,7 @@ function makeCypress(x, y, z, scale = 1) {
     scene.add(layer);
   }
 }
-makeCypress(-18, -1, 10, 1.2);
-makeCypress(-20, -1, 0, 1);
-makeCypress(18, -1, 12, 1.1);
-makeCypress(20, -1, 2, 1);
-makeCypress(-19, -1, -10, 1.3);
-makeCypress(19, -1, -8, 1);
-makeCypress(-21, -1, -25, 1);
-makeCypress(21, -1, -30, 1.2);
-makeCypress(-18, -1, -50, 1);
-makeCypress(20, -1, -55, 1.1);
-makeCypress(-17, -1, -68, 1);
-makeCypress(18, -1, -70, 1);
+// (cypresses removed — the villa now stands in the sea, not a grove)
 
 // Mediterranean pines (umbrella shape) farther away
 function makePine(x, y, z, scale = 1) {
@@ -1126,10 +1096,7 @@ function makePine(x, y, z, scale = 1) {
   canopy.castShadow = true;
   scene.add(canopy);
 }
-makePine(-28, -2, 5, 1.5);
-makePine(28, -2, 8, 1.3);
-makePine(-30, -2, -25, 1.5);
-makePine(30, -2, -30, 1.4);
+// (pines removed — open ocean horizon instead)
 
 // ============================================================================
 // MODULE: rooms/entry.js — Facade, entry door, entry hall
@@ -1161,14 +1128,23 @@ const groundTex = makeCanvasTex(512, 512, (ctx, w, h) => {
 
 const foundationMat = new THREE.MeshStandardMaterial({ color: 0xccc7bc, roughness: 0.95, map: stuccoTex, envMapIntensity: 0.4 });
 
+// The villa sits on its plinth in the sea — open water all around it.
 const beach = new THREE.Mesh(
-  new THREE.PlaneGeometry(340, 280),
-  new THREE.MeshStandardMaterial({ color: 0x2a3620, roughness: 1.0, map: groundTex })
+  new THREE.PlaneGeometry(900, 900),
+  new THREE.MeshStandardMaterial({ color: 0x1c6f92, roughness: 0.12, metalness: 0.35, envMapIntensity: 1.3 })
 );
 beach.rotation.x = -Math.PI / 2;
-beach.position.set(0, GROUND_Y, 20);
-beach.receiveShadow = true;
+beach.position.set(0, GROUND_Y, -20);
 scene.add(beach);
+// Turquoise shallows hugging the foundation.
+const shallows = new THREE.Mesh(
+  new THREE.PlaneGeometry(70, 150),
+  new THREE.MeshStandardMaterial({ color: 0x39a9bf, roughness: 0.14, metalness: 0.25, transparent: true, opacity: 0.8, envMapIntensity: 1.1 })
+);
+shallows.rotation.x = -Math.PI / 2;
+shallows.position.set(0, GROUND_Y + 0.03, -28);
+scene.add(shallows);
+void groundTex; // (kept for future terrain use)
 
 // Main plinth under the whole villa (enclosed rooms + finale terrace).
 const plinth = new THREE.Mesh(new THREE.BoxGeometry(18, 2.67, 78), foundationMat);
@@ -1469,21 +1445,51 @@ function makeJungleClump(x, z, s = 1) {
 }
 // Keep the entry approach corridor (camera arcs in here) clear.
 function inApproach(x, z) { return x > 1 && x < 17 && z > 1 && z < 15; }
-(function scatterJungle() {
-  for (const ring of [11, 15, 19, 23]) {
-    for (let z = 16; z >= -78; z -= (3.5 + Math.random() * 2.5)) {
-      for (const sx of [-1, 1]) {
-        const x = sx * (ring + (Math.random() - 0.5) * 3);
-        if (inApproach(x, z)) continue;
-        if (Math.random() > 0.34) continue; // leave gaps between clumps
-        makeJungleClump(x, z, 0.8 + Math.random() * 0.9);
-      }
+(function seaPlanting() {
+  // Palms in planters along the villa deck edges (on the plinth, at deck level).
+  function deckPalm(x, z) {
+    const planter = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.5, 1.1), MATS.cream);
+    planter.position.set(x, 0.2, z); planter.castShadow = true; planter.receiveShadow = true;
+    scene.add(planter);
+    makePalm(x, 0.45, z, 4.5 + Math.random() * 2);
+  }
+  for (let z = 5; z >= -64; z -= 8 + Math.random() * 3) {
+    if (z < 15 && z > -1) continue; // keep the entry clear
+    deckPalm(-8.2, z); deckPalm(8.2, z);
+  }
+  // Distant palm islets scattered in the sea for tropical depth.
+  for (let i = 0; i < 11; i++) {
+    const ix = (Math.random() < 0.5 ? -1 : 1) * (30 + Math.random() * 28);
+    const iz = -95 + Math.random() * 120;
+    const sand = new THREE.Mesh(
+      new THREE.CylinderGeometry(3 + Math.random() * 3, 4.5 + Math.random() * 3, 0.7, 18),
+      new THREE.MeshStandardMaterial({ color: 0xe6d9bc, roughness: 1 })
+    );
+    sand.position.set(ix, GROUND_Y + 0.15, iz); sand.receiveShadow = true; scene.add(sand);
+    const n = 1 + Math.floor(Math.random() * 3);
+    for (let k = 0; k < n; k++) makePalm(ix + (Math.random() - 0.5) * 3.5, GROUND_Y + 0.35, iz + (Math.random() - 0.5) * 3.5, 5 + Math.random() * 4);
+  }
+})();
+
+// Glass safety railing along the plinth edge over the water — the "gărduleț".
+(function seaRailing() {
+  function railRun(x1, z1, x2, z2) {
+    const dx = x2 - x1, dz = z2 - z1, len = Math.hypot(dx, dz), a = -Math.atan2(dz, dx);
+    const glass = new THREE.Mesh(new THREE.BoxGeometry(len, 1.0, 0.05), MATS.glassTinted);
+    glass.position.set((x1 + x2) / 2, 0.52, (z1 + z2) / 2); glass.rotation.y = a; scene.add(glass);
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(len, 0.07, 0.11), MATS.steelBlack);
+    cap.position.set((x1 + x2) / 2, 1.06, (z1 + z2) / 2); cap.rotation.y = a; scene.add(cap);
+    // slim posts
+    const posts = Math.max(2, Math.round(len / 3));
+    for (let i = 0; i <= posts; i++) {
+      const t = i / posts;
+      const p = new THREE.Mesh(new THREE.BoxGeometry(0.07, 1.05, 0.07), MATS.steelBlack);
+      p.position.set(x1 + dx * t, 0.52, z1 + dz * t); scene.add(p);
     }
   }
-  // Lush plants right outside the front glass (left side, framed through the entry)
-  for (let i = 0; i < 8; i++) makeJungleClump(-6 - Math.random() * 7, 3 + Math.random() * 8, 0.9 + Math.random() * 0.7);
-  // Tall canopy palms far out as a green backdrop
-  for (let i = 0; i < 14; i++) makeJunglePalm((Math.random() < 0.5 ? -1 : 1) * (20 + Math.random() * 10), -80 + Math.random() * 95, 7 + Math.random() * 6);
+  railRun(-9, 11, -9, -68); // left edge over the water
+  railRun(9, 11, 9, -68);   // right edge over the water
+  railRun(-9, -68, 9, -68); // seaward back edge
 })();
 
 // Steps up to door (clean modernist slabs)
@@ -2408,14 +2414,14 @@ makeAgave(-7, -71, 1);
 makeAgave(7, -71, 1);
 
 // === SUNSET (the final view) ===
-const sunDisc = new THREE.Mesh(new THREE.CircleGeometry(5, 32), MATS.sunset);
-sunDisc.position.set(0, 3, -130);
+const sunDisc = new THREE.Mesh(new THREE.CircleGeometry(3.4, 48), new THREE.MeshBasicMaterial({ color: 0xfff6e6, transparent: true, opacity: 0.95, depthWrite: false }));
+sunDisc.position.set(0, 9, -150);
 scene.add(sunDisc);
-const sunHalo = new THREE.Mesh(new THREE.CircleGeometry(8, 32), new THREE.MeshBasicMaterial({ color: 0xff8848, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending }));
-sunHalo.position.set(0, 3, -131);
+const sunHalo = new THREE.Mesh(new THREE.CircleGeometry(8, 48), new THREE.MeshBasicMaterial({ color: 0xffe8c4, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false }));
+sunHalo.position.set(0, 9, -151);
 scene.add(sunHalo);
-const sunHalo2 = new THREE.Mesh(new THREE.CircleGeometry(14, 32), new THREE.MeshBasicMaterial({ color: 0xff6838, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending }));
-sunHalo2.position.set(0, 3, -132);
+const sunHalo2 = new THREE.Mesh(new THREE.CircleGeometry(15, 48), new THREE.MeshBasicMaterial({ color: 0xffdca6, transparent: true, opacity: 0.08, blending: THREE.AdditiveBlending, depthWrite: false }));
+sunHalo2.position.set(0, 9, -152);
 scene.add(sunHalo2);
 
 const sunGlow = new THREE.PointLight(0xffa860, 2.5, 100);
