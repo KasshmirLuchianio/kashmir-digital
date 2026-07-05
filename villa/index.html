@@ -2200,6 +2200,74 @@ salonRug.position.set(-1.5, 0.085, -53.5);
 scene.add(salonRug);
 
 // ============================================================================
+// MODULE: interior-dressing.js — furniture, rugs & pendant lighting
+// Warms up the all-white rooms so they read as lived-in, not empty.
+// ============================================================================
+(function dressInteriors() {
+  const rugTex = makeCanvasTex(256, 256, (ctx, w, h) => {
+    ctx.fillStyle = '#c3b088'; ctx.fillRect(0, 0, w, h);
+    for (let i = 0; i < 8000; i++) { const g = Math.random() * 42; ctx.fillStyle = `rgba(${150 + g},${132 + g},${100 + g},0.14)`; ctx.fillRect(Math.random() * w, Math.random() * h, 2, 1); }
+    ctx.strokeStyle = 'rgba(92,72,50,0.5)'; ctx.lineWidth = 9; ctx.strokeRect(11, 11, w - 22, h - 22);
+    ctx.strokeStyle = 'rgba(122,100,74,0.32)'; ctx.lineWidth = 3; ctx.strokeRect(26, 26, w - 52, h - 52);
+  }, 1);
+  const rugWarm = new THREE.MeshStandardMaterial({ color: 0xcbb68e, roughness: 0.96, map: rugTex });
+  const rugCool = new THREE.MeshStandardMaterial({ color: 0x93a0ad, roughness: 0.96, map: rugTex });
+  const fabricSand = new THREE.MeshStandardMaterial({ color: 0xd8c8a2, roughness: 0.85 });
+  const fabricCream = new THREE.MeshStandardMaterial({ color: 0xefe8d9, roughness: 0.85 });
+  const cushionRust = new THREE.MeshStandardMaterial({ color: 0xb56a44, roughness: 0.8 });
+  const cushionOlive = new THREE.MeshStandardMaterial({ color: 0x77784c, roughness: 0.8 });
+  const brass = MATS.brassMatte;
+  function mAt(geo, mat, x, y, z, ry) { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); if (ry) m.rotation.y = ry; m.castShadow = true; m.receiveShadow = true; scene.add(m); return m; }
+
+  // Linear pendant chandelier — a slim rail with hanging glowing globes.
+  function pendant(x, z, len, count, ceilY, hangY) {
+    if (len > 0.1) mAt(new THREE.BoxGeometry(len, 0.05, 0.05), MATS.steelBlack, x, hangY + 0.55, z);
+    const globeMat = new THREE.MeshStandardMaterial({ color: 0xfff1d6, emissive: 0xffd89a, emissiveIntensity: 1.5, roughness: 0.3 });
+    for (let i = 0; i < count; i++) {
+      const t = count > 1 ? i / (count - 1) : 0.5;
+      const gx = x - len / 2 + t * len;
+      const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, ceilY - (hangY + 0.55), 6), MATS.steelBlack);
+      cord.position.set(gx, (ceilY + hangY + 0.55) / 2, z); scene.add(cord);
+      const globe = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 12), globeMat);
+      globe.position.set(gx, hangY, z); scene.add(globe);
+    }
+    const pl = new THREE.PointLight(0xffe6b8, 1.2, 9); pl.position.set(x, hangY - 0.25, z); scene.add(pl);
+  }
+
+  // Gallery — runner rug + a row of single pendants down the axis.
+  mAt(new THREE.BoxGeometry(2.4, 0.02, 14), rugWarm, 0, 0.095, -11);
+  pendant(0, -6, 0, 1, 6.9, 5.4);
+  pendant(0, -11, 0, 1, 6.9, 5.4);
+  pendant(0, -16, 0, 1, 6.9, 5.4);
+
+  // Studio — rug under the desk + a linear pendant over it.
+  mAt(new THREE.BoxGeometry(4, 0.02, 3), rugCool, 0, 0.095, -27);
+  pendant(0, -27, 1.6, 3, 6.8, 5.2);
+
+  // Salon — a proper living room: warm rug, low sofa, coffee table, sideboard.
+  mAt(new THREE.BoxGeometry(4.4, 0.02, 3.6), rugWarm, -1.2, 0.1, -53.4);
+  const sX = -1.2, sZ = -51.5;
+  mAt(new THREE.BoxGeometry(3.4, 0.5, 1.2), fabricSand, sX, 0.35, sZ);
+  mAt(new THREE.BoxGeometry(3.4, 0.62, 0.3), fabricSand, sX, 0.76, sZ - 0.55);
+  mAt(new THREE.BoxGeometry(0.3, 0.55, 1.2), fabricSand, sX - 1.7, 0.7, sZ);
+  mAt(new THREE.BoxGeometry(0.3, 0.55, 1.2), fabricSand, sX + 1.7, 0.7, sZ);
+  for (const cx of [-1.05, 0, 1.05]) mAt(new THREE.BoxGeometry(1.02, 0.18, 1.05), fabricCream, sX + cx, 0.67, sZ + 0.02);
+  mAt(new THREE.BoxGeometry(0.5, 0.5, 0.16), cushionRust, sX - 1.15, 0.92, sZ - 0.34, 0.2);
+  mAt(new THREE.BoxGeometry(0.5, 0.5, 0.16), cushionOlive, sX + 1.15, 0.92, sZ - 0.34, -0.2);
+  // Coffee table + objects
+  mAt(new THREE.BoxGeometry(1.6, 0.1, 0.8), MATS.oakPale, -1.2, 0.5, -53.2);
+  for (const [dx, dz] of [[-0.7, -0.3], [0.7, -0.3], [-0.7, 0.3], [0.7, 0.3]]) mAt(new THREE.CylinderGeometry(0.03, 0.03, 0.5, 10), brass, -1.2 + dx, 0.25, -53.2 + dz);
+  mAt(new THREE.BoxGeometry(0.42, 0.05, 0.3), MATS.burgundyAccent, -1.45, 0.57, -53.2);
+  mAt(new THREE.CylinderGeometry(0.06, 0.085, 0.2, 12), brass, -0.85, 0.6, -53.1);
+  // Pendant over the seating
+  pendant(-1.2, -52.6, 1.2, 3, 5.85, 4.3);
+  // Sideboard against the back wall + accent objects
+  mAt(new THREE.BoxGeometry(3, 0.7, 0.5), MATS.oakWarm, -1.2, 0.5, -55.6);
+  mAt(new THREE.CylinderGeometry(0.1, 0.13, 0.32, 12), MATS.terracottaAccent, -2.1, 0.96, -55.6);
+  mAt(new THREE.BoxGeometry(0.5, 0.35, 0.04), MATS.steelBlack, -0.4, 1.0, -55.75); // small framed art
+})();
+
+// ============================================================================
 // MODULE: rooms/glass-doors.js — TRANSITION 4: floor-to-ceiling glass pivot doors
 // ============================================================================
 
